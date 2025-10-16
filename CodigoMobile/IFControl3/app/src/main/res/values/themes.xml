@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.IFControl3" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/ifcontrolpanel</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.IFControl3" parent="Base.Theme.IFControl3" />
+</resources>

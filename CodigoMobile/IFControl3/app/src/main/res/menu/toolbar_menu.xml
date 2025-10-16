@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/user"
+        android:icon="@drawable/logo_ifcontrol_3_0"
+        android:title="User"
+        app:showAsAction="ifRoom" />
+    <item
+        android:title="Configuracoes"
+        android:id="@+id/config"/>
+    <item
+        android:title="Sobre"
+        android:id="@+id/sobre"/>
+
+
+</menu>
