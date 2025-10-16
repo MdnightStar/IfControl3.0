@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import Modelo.Sala;
 import Modelo.User;
 
+
 public class Sessao {
 
     private static final String TAG = "Sessao";
