@@ -73,7 +73,7 @@ public class SalaPanel extends javax.swing.JPanel {
     
 
     public int getN() {
-        return n;
+        return nsala;
     }
     
 

@@ -343,29 +343,7 @@ public class Sala extends javax.swing.JFrame {
         public void run() {
             while (isDisplayable()) {
                 String resposta = MainApp.sessao.verificarResposta();
-                if (resposta.contains("nSala")) {
-                    salas = gs.fromJson(resposta, tipoSala);
-                    Collections.sort(salas, Comparator.comparingInt(s -> s.getnSala()));
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (Modelo.Sala sala : salas) {
-                                if (sala.isEstadoDaConexao()) {
-                                    SalaPanel newSp = procurarSP(sala);
-                                    if (newSp == null) {
-                                        String nSala = "Sala " + sala.getnSala() + ":";
-                                        SalaPanel ps = new SalaPanel(nSala, sala.isEstadoAr(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
-                                                sala.isEstadoSala(), sala.isPresenca(), sala.getnSala());
-                                        Salas.add(ps);
-                                    } else {
-                                        newSp.atualizar(sala.isEstadoSala(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
-                                                sala.isEstadoAr(), sala.isPresenca());
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
+        
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
