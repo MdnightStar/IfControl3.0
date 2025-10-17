@@ -4,12 +4,16 @@
  */
 package Aplicacao;
 
+import java.util.Collections;
+import java.util.Comparator;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author LENOVO
  */
 public class Sala extends javax.swing.JFrame {
-
+    private Sala sala;
     /**
      * Creates new form Sala
      */
@@ -333,6 +337,45 @@ public class Sala extends javax.swing.JFrame {
             }
         });
     }
+     private class AtulizaDadosSala implements Runnable {
+
+        @Override
+        public void run() {
+            while (isDisplayable()) {
+                String resposta = MainApp.sessao.verificarResposta();
+                if (resposta.contains("nSala")) {
+                    salas = gs.fromJson(resposta, tipoSala);
+                    Collections.sort(salas, Comparator.comparingInt(s -> s.getnSala()));
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (Modelo.Sala sala : salas) {
+                                if (sala.isEstadoDaConexao()) {
+                                    SalaPanel newSp = procurarSP(sala);
+                                    if (newSp == null) {
+                                        String nSala = "Sala " + sala.getnSala() + ":";
+                                        SalaPanel ps = new SalaPanel(nSala, sala.isEstadoAr(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
+                                                sala.isEstadoSala(), sala.isPresenca(), sala.getnSala());
+                                        Salas.add(ps);
+                                    } else {
+                                        newSp.atualizar(sala.isEstadoSala(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
+                                                sala.isEstadoAr(), sala.isPresenca());
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    System.out.println("Erro ao atualizar");
+                }
+
+            }
+            System.exit(0);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboBoxModo;
@@ -359,3 +402,4 @@ public class Sala extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelPrincipal;
     // End of variables declaration//GEN-END:variables
 }
+
