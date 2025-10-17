@@ -9,6 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.app.AlertDialog;
 
+import Controle.Sessao;
+
 
 public class MainActivity extends Activity {
 
@@ -20,15 +22,24 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(MainActivity.this, AppActivity.class);
-                startActivity(i);
-                finish();
-            }
-        },2000);
+        AlertDialog.Builder msg = new AlertDialog.Builder(this);
+        msg.setTitle("Erro");
+
+        // *** CORREÇÃO: Acesso estático ao status da sessão global ***
+        boolean sessaoAberto = MainApp.isSessaoAberta();
+
+        if (sessaoAberto) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(MainActivity.this, AppActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }, 2000);
+        } else {
+            msg.setMessage("Erro ao iniciar sessão");
+            msg.show();
+        }
     }
-
-
 }
