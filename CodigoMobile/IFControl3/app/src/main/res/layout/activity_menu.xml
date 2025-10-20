@@ -7,6 +7,28 @@
     android:background="@color/ifcontrolpanel"
     tools:context=".MenuActivity">
 
+    <ImageButton
+        android:id="@+id/imgPesq"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="319dp"
+        tools:layout_editor_absoluteY="133dp" />
+
+    <TextView
+        android:id="@+id/textPesq"
+        android:layout_width="281dp"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:text="Pesquisar"
+        android:textAlignment="textStart"
+        android:textColor="#404040"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="133dp"
+        tools:ignore="MissingConstraints" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -19,4 +41,5 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_constraintTop_toTopOf="parent"
         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
