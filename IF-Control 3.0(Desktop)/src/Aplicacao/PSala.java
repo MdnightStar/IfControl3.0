@@ -46,15 +46,6 @@ public class PSala extends javax.swing.JFrame {
         new Thread(new AtulizaDadosSala()).start();
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Alerta", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) {
-                    MainApp.sessao.encerrarSessao();
-                }
-            }
-        });
 
     }
 

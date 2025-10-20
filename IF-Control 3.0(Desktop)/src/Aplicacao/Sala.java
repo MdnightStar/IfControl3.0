@@ -4,12 +4,16 @@
  */
 package Aplicacao;
 
+import java.util.Collections;
+import java.util.Comparator;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author LENOVO
  */
 public class Sala extends javax.swing.JFrame {
-
+    private Sala sala;
     /**
      * Creates new form Sala
      */
@@ -398,6 +402,23 @@ public class Sala extends javax.swing.JFrame {
             }
         });
     }
+     private class AtulizaDadosSala implements Runnable {
+
+        @Override
+        public void run() {
+            while (isDisplayable()) {
+                String resposta = MainApp.sessao.verificarResposta();
+        
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    System.out.println("Erro ao atualizar");
+                }
+
+            }
+            System.exit(0);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboBoxModo;
@@ -432,3 +453,4 @@ public class Sala extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelPrincipal;
     // End of variables declaration//GEN-END:variables
 }
+

@@ -13,7 +13,10 @@ import javax.swing.ImageIcon;
  * @author LENOVO
  */
 public class SalaPanel extends javax.swing.JPanel {
-    private int n;
+    private int nsala;
+    private String nSala;
+    private boolean estadoAr;
+    
     /**
      * Creates new form SalaPanel
      */
@@ -21,7 +24,8 @@ public class SalaPanel extends javax.swing.JPanel {
     boolean estadoSala, boolean presenca, int nsala) {
         initComponents();
         jLabelNSala.setText(nSala);
-        n=nsala;
+        this. nsala=nsala;
+        
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
         
         
@@ -69,7 +73,7 @@ public class SalaPanel extends javax.swing.JPanel {
     
 
     public int getN() {
-        return n;
+        return nsala;
     }
     
 
@@ -208,6 +212,7 @@ public class SalaPanel extends javax.swing.JPanel {
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
+        
         
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
