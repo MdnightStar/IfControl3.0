@@ -12,14 +12,16 @@ import javax.swing.SwingUtilities;
  *
  * @author LENOVO
  */
-public class Sala extends javax.swing.JFrame {
-    private Sala sala;
+public class FrameSala extends javax.swing.JFrame {
+    private FrameSala sala;
     /**
      * Creates new form Sala
      */
-    public Sala() {
+    
+    public FrameSala(){
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,12 +42,12 @@ public class Sala extends javax.swing.JFrame {
         jLabelLuz = new javax.swing.JLabel();
         jLabelDS1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabelN = new javax.swing.JLabel();
         jLabelSala = new javax.swing.JLabel();
         jLabelTemperaturaValor = new javax.swing.JLabel();
         jLabelHumidadeValor = new javax.swing.JLabel();
         jLabelHumidadeValor1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jButtonEnviar = new javax.swing.JButton();
         comboBoxTemperatura = new javax.swing.JComboBox<>();
         jLabelTemperatura1 = new javax.swing.JLabel();
         jLabelTemperatura2 = new javax.swing.JLabel();
@@ -62,11 +64,10 @@ public class Sala extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanelPrincipal.setBackground(new java.awt.Color(0, 51, 102));
-        jPanelPrincipal.setPreferredSize(new java.awt.Dimension(800, 800));
+        jPanelPrincipal.setPreferredSize(new java.awt.Dimension(800, 570));
         jPanelPrincipal.setLayout(new java.awt.GridLayout(1, 3));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
@@ -99,12 +100,8 @@ public class Sala extends javax.swing.JFrame {
 
         jLabelDS1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/data-show-on (1).png"))); // NOI18N
 
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jLabelN.setBackground(new java.awt.Color(255, 255, 255));
-        jLabelN.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 36)); // NOI18N
-        jLabelN.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelN.setText("X");
 
         jLabelSala.setBackground(new java.awt.Color(255, 255, 255));
         jLabelSala.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 36)); // NOI18N
@@ -117,18 +114,14 @@ public class Sala extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabelSala)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelN)
+                .addComponent(jLabelSala, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelSala, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelN, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabelSala, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -182,7 +175,7 @@ public class Sala extends javax.swing.JFrame {
                                     .addComponent(jLabelPresença)
                                     .addGap(18, 18, 18)
                                     .addComponent(jLabelHumidadeValor1))))))
-                .addGap(20, 69, Short.MAX_VALUE))
+                .addGap(20, 54, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +200,7 @@ public class Sala extends javax.swing.JFrame {
                             .addComponent(jLabelAr)
                             .addComponent(jLabelLuz)))
                     .addComponent(jLabelDS1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -216,6 +209,15 @@ public class Sala extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 102));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+
+        jButtonEnviar.setBackground(new java.awt.Color(204, 204, 204));
+        jButtonEnviar.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonEnviar.setText("Enviar");
+        jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEnviarActionPerformed(evt);
+            }
+        });
 
         comboBoxTemperatura.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
         comboBoxTemperatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
@@ -277,24 +279,6 @@ public class Sala extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(67, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelModo)
-                    .addComponent(jLabelTemperatura2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboBoxTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxModo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(170, 170, 170))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -316,6 +300,29 @@ public class Sala extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addGap(34, 34, 34))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(47, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelModo)
+                            .addComponent(jLabelTemperatura2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboBoxTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxModo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(170, 170, 170))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(188, 188, 188))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +337,9 @@ public class Sala extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelModo)
                     .addComponent(comboBoxModo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(85, 85, 85)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelDS2)
                 .addGap(14, 14, 14)
                 .addComponent(jLabel8)
@@ -345,7 +354,7 @@ public class Sala extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(19, 19, 19)))
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel9)
@@ -368,6 +377,11 @@ public class Sala extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxModoActionPerformed
 
+    private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
+        // TODO add your handling code here:
+        MainApp.showFrameSala();
+    }//GEN-LAST:event_jButtonEnviarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -385,28 +399,30 @@ public class Sala extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Sala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameSala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Sala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameSala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Sala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameSala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Sala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameSala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Sala().setVisible(true);
+                new FrameSala().setVisible(true);
             }
         });
     }
-     private class AtulizaDadosSala implements Runnable {
+     private class AtualizaDadosSala implements Runnable {
 
         @Override
         public void run() {
             while (isDisplayable()) {
+                MainApp.sessao.salas();
                 String resposta = MainApp.sessao.verificarResposta();
         
                 try {
@@ -423,6 +439,7 @@ public class Sala extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboBoxModo;
     private javax.swing.JComboBox<String> comboBoxTemperatura;
+    private javax.swing.JButton jButtonEnviar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -440,7 +457,6 @@ public class Sala extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelIfamLogo;
     private javax.swing.JLabel jLabelLuz;
     private javax.swing.JLabel jLabelModo;
-    private javax.swing.JLabel jLabelN;
     private javax.swing.JLabel jLabelPresença;
     private javax.swing.JLabel jLabelSala;
     private javax.swing.JLabel jLabelTemperatura;

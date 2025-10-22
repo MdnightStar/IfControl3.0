@@ -60,7 +60,7 @@ public class TrataCliente implements Runnable {
         try (Scanner s = new Scanner(this.clienteIn)) { //Declaração do fluxo de saída do cliente
             
             while (s.hasNextLine()) { //Leitura de dados do cliente
-                
+                sessao.setManager(manager);  //Insere o banco de dados na sessao
                 String msg = s.nextLine();
                 System.out.println("Mensagem recebida pelo servidor: "+msg);
                 servidor.setMessage(msg); //Print da mensagem do cliente no servidor
@@ -73,14 +73,12 @@ public class TrataCliente implements Runnable {
                     sessao.setLogin(dado[1].substring(1, dado[1].length() - 1));
                     sessao.setSenha(dado1[1].substring(1, dado1[1].length() - 2));
 
-                    sessao.setManager(manager);  //Insere o banco de dados na sessao
                     clienteOut.println(sessao.login());  //Envia para o usúario uma mensagem do tipo "LOGONOK ou LOGONOT" referente ao login
                     System.out.println(sessao.login());
 
                 } else if (msg.contains("siap")) {   //Cadastro
                     user = gson.fromJson(msg, User.class); //Deserializa a mensagem e transforma em usúario
                     sessao = new TratarAcao();
-                    sessao.setManager(manager); //Insere o banco de dados na sessao
                     clienteOut.println(sessao.cadastrarUser(user.getSiap(), user.getNome(),
                             user.getLogin(), user.getSenha())); //Envia para o cliente se o cadastro foi executado
                 } else if (msg.contains("start")) {
@@ -106,7 +104,6 @@ public class TrataCliente implements Runnable {
                     String quebra[] = texto.split("--addSala--");
                     sala=gson.fromJson(quebra[1], Sala.class);
                     sessao=new TratarAcao();
-                    sessao.setManager(manager);
                     clienteOut.println(sessao.cadastrarSala(sala.getnSala(), sala.getIP()));
                 }
             }

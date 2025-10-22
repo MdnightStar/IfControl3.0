@@ -14,17 +14,23 @@ import javax.swing.ImageIcon;
  */
 public class SalaPanel extends javax.swing.JPanel {
     private int nsala;
-    private String nSala;
-    private boolean estadoAr;
+    private String textoNSala;
+    private boolean estadoAr, estadoDS, estadoLuzes, estadoSala, presenca;
     
     /**
      * Creates new form SalaPanel
      */
-    public SalaPanel(String nSala, boolean estadoAr, boolean estadoDS, boolean estadoLuzes,
+    public SalaPanel(String textoNSala, boolean estadoAr, boolean estadoDS, boolean estadoLuzes,
     boolean estadoSala, boolean presenca, int nsala) {
         initComponents();
-        jLabelNSala.setText(nSala);
-        this. nsala=nsala;
+        jLabelNSala.setText(textoNSala);
+        this.nsala=nsala;
+        this.textoNSala=textoNSala;
+        this.estadoAr=estadoAr;
+        this.estadoDS=estadoDS;
+        this.estadoLuzes=estadoLuzes;
+        this.estadoSala=estadoSala;
+        this.presenca=presenca;
         
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
         
@@ -57,10 +63,10 @@ public class SalaPanel extends javax.swing.JPanel {
         }
         
         if(estadoSala){
-            jPanelEstadoSala.setBackground(Color.green);
+            jPanelEstadoSala.setBackground(Color.red);
             jButtonEntrar.setEnabled(estadoSala);
         }else{
-            jPanelEstadoSala.setBackground(Color.red);
+            jPanelEstadoSala.setBackground(Color.green);
             jButtonEntrar.setEnabled(estadoSala);
         }
         
@@ -212,8 +218,7 @@ public class SalaPanel extends javax.swing.JPanel {
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
-        
-        
+        MainApp.showFrameSala();
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
 

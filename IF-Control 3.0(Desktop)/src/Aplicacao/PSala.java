@@ -360,6 +360,7 @@ public class PSala extends javax.swing.JFrame {
                                         String nSala = "Sala " + sala.getnSala() + ":";
                                         SalaPanel ps = new SalaPanel(nSala, sala.isEstadoAr(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
                                                 sala.isEstadoSala(), sala.isPresenca(), sala.getnSala());
+                                        salasP.add(ps);
                                         Salas.add(ps);
                                     } else {
                                         newSp.atualizar(sala.isEstadoSala(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),

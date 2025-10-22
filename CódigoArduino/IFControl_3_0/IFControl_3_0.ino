@@ -78,29 +78,10 @@ void setup() {
 }
 
 void loop() {
-  contadorPresenca();
   delay(1000);
   receberEsp32();
 
 }  // fim do loop
-
-void contadorPresenca() {
-  temGente = digitalRead(pinSensor);
-  if (temGente) {
-    presenca = true;
-    falsos = 0;
-  } else {
-    falsos++;
-    if (falsos > 30000) {
-      falsos = 0;
-      presenca = false;
-      Serial.println("NAO TEM GENTE");
-      digitalWrite(pinRele, LOW);
-    }
-  }
-  //Serial.println(falsos);
-  delay(2000);
-}
 
 void receberEsp32(){
   if (mySerial.available()) {
@@ -115,8 +96,9 @@ void receberEsp32(){
 
 void processarString(String str) {
 
-  if (str.indexOf("CODIR") > -1) {  // Se solicitar uma operação com o ar condicionado
+  if (str.indexOf("CODIR") > -1) {  // Se solicitar uma operação com um dis
     sendRaw(extrairConfECod(str));
+     mySerial.print("OK");
   } else if (str.indexOf("TEMP") > -1) {  // se solicitar a temperatura
     float temp = dht.readTemperature();   // leitura da temperatura
     Serial.print("temperatura ");
@@ -159,6 +141,8 @@ char* extrairConfECod(String entrada){
   int idx = 0;
 
   while (configStr.length() > 0 && idx < 6) {
+
+    
     int sep = configStr.indexOf(',');
     if (sep == -1) {
       valores[idx++] = configStr;

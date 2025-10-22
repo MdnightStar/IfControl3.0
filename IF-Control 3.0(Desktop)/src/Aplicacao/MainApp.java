@@ -85,7 +85,7 @@ public class MainApp {
     public static void showSala(String nSala, boolean estadoAr, boolean estadoDS, boolean estadoLuzes,
     boolean estadoSala, boolean presenca, int nsala){
         try {
-            Sala.main(null);
+            FrameSala.main(null);
         } catch (Exception e) {
             System.err.println("Erro ao carregar sala"+ e.getMessage());
         }
@@ -96,6 +96,14 @@ public class MainApp {
             PesquisarAcao.main(null);
         } catch (Exception e) {
             System.err.println("Erro ao carregar pesquisar ação"+e.getMessage());
+        }
+    }
+    
+    public static void showFrameSala(){
+        try {
+            FrameSala.main(null);
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar frame sala"+e.getMessage());
         }
     }
     

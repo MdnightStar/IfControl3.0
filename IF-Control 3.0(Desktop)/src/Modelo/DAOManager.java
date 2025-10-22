@@ -494,7 +494,7 @@ public class DAOManager {
     public StringBuilder resgataCodIr(int nSala, String msg) throws SQLException {
         StringBuilder resp = new StringBuilder();
         resp.append(msg);
-        resp.append("CODIR.");
+        resp.append("DIR.");
 
         // Extrair tipo (2 primeiros caracteres) e função (até o ponto final, se houver)
         String tipo = msg.substring(0, 2);
@@ -523,7 +523,7 @@ public class DAOManager {
                     if (rs2.next()) {
                         String cod = rs2.getString("cod");
                         // 5. Adicionar cod ao StringBuilder
-                        resp.append(cod).append(",");
+                        resp.append(cod);
                     }
                 } catch (SQLException ex){
                     System.out.println(ex.getMessage());

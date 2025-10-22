@@ -180,6 +180,7 @@ public class TratarAcao extends SocketArduino {
             } else {
                 sala.setEstadoSala(false);
             }
+            this.acao.setStatus(true);
         } else {
             //Caso seja outra tipo de ação, que não contem HD nem HA
             if (!acao.contains("HD") && !acao.contains("HA")) {
@@ -227,24 +228,6 @@ public class TratarAcao extends SocketArduino {
                         break;
                     case "ARON.":
                         sala.setEstadoAr(true);
-                        break;
-                    case "AR20.":
-                        sala.setTempAr(20);
-                        break;
-                    case "AR21.":
-                        sala.setTempAr(21);
-                        break;
-                    case "AR22.":
-                        sala.setTempAr(22);
-                        break;
-                    case "AR23.":
-                        sala.setTempAr(23);
-                        break;
-                    case "AR24.":
-                        sala.setTempAr(24);
-                        break;
-                    case "AR25.":
-                        sala.setTempAr(25);
                         break;
                 }
             //Ajusta o horario de ativação e desativação da sala
