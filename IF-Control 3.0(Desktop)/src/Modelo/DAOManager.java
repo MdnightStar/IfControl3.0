@@ -576,4 +576,18 @@ public class DAOManager {
         }
         return false;
     }
+    public void consultarAgendamento(){
+        String sql= "SELECT * FROM agendamento";
+        try(PreparedStatement stmt= this.conexao.prepareStatement(sql); ResultSet res= stmt.executeQuery()){
+            //trazer as infos principais do agendamento como os boolean, os date e o calendar//
+            //colocar no array os id do agendamentos//
+            // com o array, procurar nas outras tabelas os num. da sala e dia da semana//
+            if(res.next()){
+                
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
