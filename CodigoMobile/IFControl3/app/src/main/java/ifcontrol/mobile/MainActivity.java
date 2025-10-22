@@ -11,7 +11,6 @@ import android.app.AlertDialog;
 
 import Controle.Sessao;
 
-
 public class MainActivity extends Activity {
 
     @Override
@@ -25,6 +24,7 @@ public class MainActivity extends Activity {
         AlertDialog.Builder msg = new AlertDialog.Builder(this);
         msg.setTitle("Erro");
 
+        MainApp sessao = new MainApp();
         // *** CORREÇÃO: Acesso estático ao status da sessão global ***
         boolean sessaoAberto = MainApp.isSessaoAberta();
 
