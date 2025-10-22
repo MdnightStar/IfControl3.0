@@ -75,7 +75,7 @@ public class Cadastro extends javax.swing.JFrame {
 
         jLabelSiap.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelSiap.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelSiap.setText("SIAP:");
+        jLabelSiap.setText("SIAPE:");
 
         jLabelUsuario.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelUsuario.setForeground(new java.awt.Color(255, 255, 255));
