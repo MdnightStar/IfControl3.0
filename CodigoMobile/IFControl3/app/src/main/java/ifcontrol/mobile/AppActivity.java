@@ -80,10 +80,10 @@ public class AppActivity extends Activity {
 
             // *** CORREÇÃO: Chamada de login adaptada para Android ***
             // Acessa o objeto Sessao inicializado na MainApp
-            String retorno = MainApp.getSessao().login(login, password);
+            String retorno = MainApp.sessaoInstance.login(login, password);
 
             // Processamento do 'retorno' da sua função de login
-            if ("SUCESSO".equalsIgnoreCase(retorno)) { // Exemplo
+            if ("LOGIN_OK".equalsIgnoreCase(retorno)) { // Exemplo
                 mostrarAlerta("SUCESSO", "Login realizado com sucesso!");
                 // Adicione aqui a navegação para a próxima Activity
             } else {

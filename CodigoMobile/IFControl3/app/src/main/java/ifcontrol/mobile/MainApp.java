@@ -4,19 +4,21 @@ import android.app.Application; // Importante: deve herdar de Application
 import android.util.Log;
 import Controle.Sessao;
 
-public class MainApp extends Application {
+public class MainApp //extends Application
+ {
 
     // VARIÁVEIS ESTÁTICAS para acesso global
-    private static Sessao sessaoInstance;
-    private static boolean isSessaoAberta = false;
+    protected static Sessao sessaoInstance;
+    protected static boolean isSessaoAberta = false;
 
     // O Android chama este método UMA VEZ no ciclo de vida da aplicação.
-    @Override
+    /*@Override
     public void onCreate() {
         super.onCreate();
+    }*/
 
+    MainApp(){
         sessaoInstance = new Sessao();
-
         // Inicializa a Sessão
         if (sessaoInstance.iniciarSessao()) {
             Log.i("MainApp", "Sessão iniciada com sucesso.");
