@@ -433,6 +433,7 @@ public class FrameSala extends javax.swing.JFrame {
 
             }
             System.exit(0);
+            
         }
     }
 

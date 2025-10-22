@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public class SalaPanel extends javax.swing.JPanel {
     private int nsala;
     private String textoNSala;
-    private boolean estadoAr, estadoDS, estadoLuzes, estadoSala, presenca;
+    private boolean estadoAr, estadoDS, estadoLuzes, estadoSala, presenca, salaAberta;
     
     /**
      * Creates new form SalaPanel
@@ -35,6 +35,10 @@ public class SalaPanel extends javax.swing.JPanel {
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
         
         
+    }
+    
+    public boolean getSalaAberta(){
+        return salaAberta;
     }
     
     public void atualizar(boolean estadoSala, boolean estadoDS, boolean estadoLuzes,
@@ -218,6 +222,7 @@ public class SalaPanel extends javax.swing.JPanel {
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
+        salaAberta=true;
         MainApp.showFrameSala();
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 

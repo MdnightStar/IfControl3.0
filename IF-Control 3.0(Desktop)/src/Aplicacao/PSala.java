@@ -332,6 +332,15 @@ public class PSala extends javax.swing.JFrame {
     }
 
     private class AtulizaDadosSala implements Runnable {
+        
+        public boolean salaAberta(){
+            for(SalaPanel panel:salasP){
+                if(panel.getSalaAberta()){
+                    return false;
+                }
+            }
+            return true;
+        }
 
         public SalaPanel procurarSP(Sala sala) {
             for (SalaPanel sp : salasP) {
@@ -345,7 +354,7 @@ public class PSala extends javax.swing.JFrame {
 
         @Override
         public void run() {
-            while (isDisplayable()) {
+            while (salaAberta()) {
                 String resposta = MainApp.sessao.verificarResposta();
                 if (resposta.contains("nSala")) {
                     salas = gs.fromJson(resposta, tipoSala);
