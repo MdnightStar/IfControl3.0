@@ -1,22 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modelo;
 
 import java.util.Calendar;
 import java.sql.Time;
-
+import java.util.Arrays; // Importação adicionada para uso do método toString
 
 /**
  *
- * @author axelm
+ * @author axelm e Adriel
  */
 public class Agendamento {
+    // Adicionado o ID do agendamento
+    int idAgendamento; 
+    
     String autor,titulo;
     Calendar dataIn,dataF;
     Time hAtv,hDesat;
     int[] diaSemana,salas;
+
+    // Getters
+    public int getIdAgendamento() {
+        return idAgendamento;
+    }
 
     public String getAutor() {
         return autor;
@@ -50,6 +54,11 @@ public class Agendamento {
         return salas;
     }
 
+    // Setters
+    public void setIdAgendamento(int idAgendamento) {
+        this.idAgendamento = idAgendamento;
+    }
+    
     public void setAutor(String autor) {
         this.autor = autor;
     }
@@ -80,5 +89,11 @@ public class Agendamento {
 
     public void setSalas(int[] salas) {
         this.salas = salas;
+    }
+    
+    // Opcional: Para ajudar na visualização/depuração
+    @Override
+    public String toString() {
+        return "Agendamento{" + "idAgendamento=" + idAgendamento + ", autor=" + autor + ", titulo=" + titulo + ", dataIn=" + (dataIn != null ? dataIn.getTime() : "null") + ", dataF=" + (dataF != null ? dataF.getTime() : "null") + ", hAtv=" + hAtv + ", hDesat=" + hDesat + ", diaSemana=" + Arrays.toString(diaSemana) + ", salas=" + Arrays.toString(salas) + '}';
     }
 }

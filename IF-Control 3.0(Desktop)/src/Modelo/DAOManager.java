@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- * @author Jeison
+ * @author Jeison e Adriel
  * @version 3.0
  */
 public class DAOManager {
@@ -576,18 +576,96 @@ public class DAOManager {
         }
         return false;
     }
-    public void consultarAgendamento(){
-        String sql= "SELECT * FROM agendamento";
-        try(PreparedStatement stmt= this.conexao.prepareStatement(sql); ResultSet res= stmt.executeQuery()){
-            //trazer as infos principais do agendamento como os boolean, os date e o calendar//
-            //colocar no array os id do agendamentos//
-            // com o array, procurar nas outras tabelas os num. da sala e dia da semana//
-            if(res.next()){
+   /**
+     * O método consultarAgendamento retorna uma lista de todos os agendamentos.
+     *
+     * @return retorna uma List de Agendamento
+     * @exception Uma excção SQLException será lançada se a comunicação falhar
+     */
+    public List<Agendamento> consultarAgendamento() {
+        List<Agendamento> agendamentos = new ArrayList<>();
+        String sqlAgendamento = "SELECT * FROM agendamento";
+
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlAgendamento); 
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Agendamento agendamento = new Agendamento();
+                int idAgendamento = rs.getInt("id");
                 
+                // 1. Setar dados principais do Agendamento
+                agendamento.setIdAgendamento(idAgendamento); // Assumindo a sugestão de adicionar idAgendamento
+                agendamento.setTitulo(rs.getString("titulo"));
+                agendamento.setAutor(rs.getString("autor"));
+                
+                // Conversão de Date para Calendar para dataInicio
+                Calendar dataIn = Calendar.getInstance();
+                dataIn.setTime(rs.getDate("dataInicio"));
+                agendamento.setDataIn(dataIn);
+                
+                // Conversão de Date para Calendar para dataFim
+                Calendar dataF = Calendar.getInstance();
+                dataF.setTime(rs.getDate("dataFim"));
+                agendamento.setDataF(dataF);
+                
+                // As colunas hAtiv e hDesat estão como DATETIME no BD, o que pode incluir data e hora. 
+                // Se o foco é apenas o tempo (Time), você deve usar o método getTime() do ResultSet.
+                // Ajustei para usar o Time, assumindo que as partes de data são irrelevantes ou fixas.
+                agendamento.sethAtv(rs.getTime("hAtiv"));
+                agendamento.sethDesat(rs.getTime("hDesat"));
+                
+                // 2. Obter os dias da semana (int[])
+                agendamento.setDiaSemana(consultarDiasDaSemana(idAgendamento));
+                
+                // 3. Obter os números das salas (int[])
+                agendamento.setSalas(consultarNSalasAgendamento(idAgendamento));
+
+                agendamentos.add(agendamento);
             }
-            
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao consultar agendamentos: " + e.getMessage());
         }
+        return agendamentos;
+    }
+
+    /**
+     * Método auxiliar para consultar os dias da semana de um agendamento.
+     */
+    private int[] consultarDiasDaSemana(int idAgendamento) throws SQLException {
+        List<Integer> dias = new ArrayList<>();
+        String sql = "SELECT dia FROM diasDaSemana WHERE agendamento_id = ?";
+        
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idAgendamento);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    dias.add(rs.getInt("dia"));
+                }
+            }
+        }
+        
+        // Converte List<Integer> para int[]
+        return dias.stream().mapToInt(i -> i).toArray();
+    }
+
+    /**
+     * Método auxiliar para consultar os números das salas de um agendamento.
+     */
+    private int[] consultarNSalasAgendamento(int idAgendamento) throws SQLException {
+        List<Integer> salas = new ArrayList<>();
+        String sql = "SELECT nSala FROM nSalaAgendamento WHERE agendamento_id = ?";
+        
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idAgendamento);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    salas.add(rs.getInt("nSala"));
+                }
+            }
+        }
+        
+        // Converte List<Integer> para int[]
+        return salas.stream().mapToInt(i -> i).toArray();
     }
 }
