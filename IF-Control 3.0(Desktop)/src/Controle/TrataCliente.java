@@ -42,7 +42,8 @@ public class TrataCliente implements Runnable {
         this.clienteOut = clienteOut;
         this.manager = manager;
         sessao=new TratarAcao();
-        clienteOut.println("CONNECTOK");
+        clienteOut.println("CONNECT"
+                + "OK");
         gson = new Gson();
     }
 
@@ -62,7 +63,7 @@ public class TrataCliente implements Runnable {
             while (s.hasNextLine()) { //Leitura de dados do cliente
                 
                 String msg = s.nextLine();
-                System.out.println("Mensagem recebida pelo servidor: "+msg);
+                System.out.println("Mensagem recebida pelo cliente: "+msg);
                 servidor.setMessage(msg); //Print da mensagem do cliente no servidor
                 if (msg.contains("_login")) {
                     String campo[] = msg.split(",");

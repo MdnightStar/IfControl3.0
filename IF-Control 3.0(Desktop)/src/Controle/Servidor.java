@@ -101,8 +101,9 @@ public class Servidor {
             *de comunicações de saida de clientes, ou seja, o trecho new PrintStream(cliente.getOutputStream()) 
             * estabelece um fluxo de saida em clientes, onde o cliente pode enviar mensagens
             */
-            int count=clientes.size();
+            
             this.clientes.put((String)cliente.getInetAddress().getHostAddress(),new PrintStream(cliente.getOutputStream()));
+            int count=clientes.size();
             System.out.println("Clientes conectados: "+clientes.size());
             
                 new Thread(new TrataCliente(cliente.getInputStream(), new PrintStream(cliente.getOutputStream()), this, manager)).start();

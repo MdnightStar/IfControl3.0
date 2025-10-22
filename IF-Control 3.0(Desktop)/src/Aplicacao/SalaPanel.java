@@ -6,7 +6,10 @@ package Aplicacao;
 
 import Modelo.Sala;
 import java.awt.Color;
+import java.awt.Window;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -16,7 +19,7 @@ public class SalaPanel extends javax.swing.JPanel {
     private int nsala;
     private String nSala;
     private boolean estadoAr;
-    
+        
     /**
      * Creates new form SalaPanel
      */
@@ -74,6 +77,17 @@ public class SalaPanel extends javax.swing.JPanel {
 
     public int getN() {
         return nsala;
+    }
+    
+    private boolean fecharFrame() {
+        Window janela = SwingUtilities.getWindowAncestor(this);
+        if (janela != null) {
+            janela.dispose();
+            return true;
+        } else {
+            System.err.println("Erro: Não foi possível encontrar a janela ancestral.");
+            return false;
+        }
     }
     
 
@@ -212,7 +226,11 @@ public class SalaPanel extends javax.swing.JPanel {
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
-        
+        if(fecharFrame()){
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro ao abrir sala");
+        }
         
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 

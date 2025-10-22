@@ -43,7 +43,7 @@ public class PSala extends javax.swing.JFrame {
         }.getType();
         adicionarSalas();
 
-        new Thread(new AtulizaDadosSala()).start();
+        new Thread(new AtualizaDadosSala()).start();
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -331,7 +331,7 @@ public class PSala extends javax.swing.JFrame {
         });
     }
 
-    private class AtulizaDadosSala implements Runnable {
+    private class AtualizaDadosSala implements Runnable {
 
         public SalaPanel procurarSP(Sala sala) {
             for (SalaPanel sp : salasP) {
