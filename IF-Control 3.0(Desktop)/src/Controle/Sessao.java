@@ -70,7 +70,7 @@ public class Sessao {
     }
     
     /**
-    * Efetua o login do cliente, enviando para o TraraCliente
+    * Efetua o login do cliente, enviando para o TrataCliente
     * 
     * @param login
     * @param senha
