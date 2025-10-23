@@ -16,6 +16,7 @@ public class SalaPanel extends javax.swing.JPanel {
     private int nsala;
     private String textoNSala;
     private boolean estadoAr, estadoDS, estadoLuzes, estadoSala, presenca, salaAberta;
+    private FrameSala novaSala;
     
     /**
      * Creates new form SalaPanel
@@ -222,8 +223,16 @@ public class SalaPanel extends javax.swing.JPanel {
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
+        novaSala= new FrameSala();
         salaAberta=true;
-        MainApp.showFrameSala();
+        new Runnable(){
+            @Override
+            public void run(){
+                while(novaSala.isDisplayable()){
+                }
+                salaAberta=false;
+            }
+        };
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
 

@@ -20,6 +20,7 @@ public class FrameSala extends javax.swing.JFrame {
     
     public FrameSala(){
         initComponents();
+        setVisible(true);
     }
     
 
@@ -379,7 +380,7 @@ public class FrameSala extends javax.swing.JFrame {
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
         // TODO add your handling code here:
-        MainApp.showFrameSala();
+        
     }//GEN-LAST:event_jButtonEnviarActionPerformed
 
     /**

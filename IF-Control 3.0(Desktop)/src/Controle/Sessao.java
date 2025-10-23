@@ -7,6 +7,8 @@ import Modelo.Sala;
 import com.google.gson.Gson;
 import java.io.IOException;
 import Modelo.User;
+import com.google.gson.reflect.TypeToken;
+import java.util.List;
 
 /**
  * @author Jeison
@@ -178,5 +180,19 @@ public class Sessao {
             System.out.println("Erro ao executar o TrataCliente");
         }
         return servidor.getResposta();
+    }
+    
+    public Sala getSala(int nSala){
+        servidor.enviar("sala:--nSala--"+nSala);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        String resp = servidor.getResposta();
+        Gson gson = new Gson();
+        Sala u = gson.fromJson(resp,new TypeToken<List<Sala>>() {
+        }.getType());
+        return u;
     }
 }

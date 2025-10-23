@@ -74,7 +74,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         setMaximumSize(new java.awt.Dimension(800, 120));
-        setPreferredSize(new java.awt.Dimension(800, 81));
+        setPreferredSize(new java.awt.Dimension(997, 81));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -221,7 +221,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
                         .addComponent(jLabelFim)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelFimEd)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(200, 200, 200)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
