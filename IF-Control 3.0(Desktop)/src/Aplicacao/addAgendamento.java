@@ -35,8 +35,6 @@ public class addAgendamento extends javax.swing.JPanel {
         jLabelAte = new javax.swing.JLabel();
         jLabelDias = new javax.swing.JLabel();
         jLabelHorario = new javax.swing.JLabel();
-        jDataInicio = new com.toedter.calendar.JDateChooser();
-        jDataInicio1 = new com.toedter.calendar.JDateChooser();
         jLabelData = new javax.swing.JLabel();
         jRadioButtonSegunda = new javax.swing.JRadioButton();
         jRadioButtonTerca = new javax.swing.JRadioButton();
@@ -183,8 +181,7 @@ public class addAgendamento extends javax.swing.JPanel {
                         .addGap(72, 72, 72)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jDataInicio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                                .addGap(0, 49, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelIF, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -193,13 +190,8 @@ public class addAgendamento extends javax.swing.JPanel {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jLabelAte)
                                                 .addGap(17, 17, 17)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(175, 175, 175)
-                                                .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(53, 53, 53)
-                                                .addComponent(jDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addGap(175, 175, 175)
+                                        .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTextFieldTitulo)
                                 .addGap(44, 44, 44))))))
@@ -247,10 +239,7 @@ public class addAgendamento extends javax.swing.JPanel {
                     .addComponent(jLabelTitulo))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jDataInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jDataInicio1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelAte, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabelAte)
                     .addComponent(jLabelData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -320,8 +309,6 @@ public class addAgendamento extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
-    private com.toedter.calendar.JDateChooser jDataInicio;
-    private com.toedter.calendar.JDateChooser jDataInicio1;
     private javax.swing.JLabel jLabelAdicionarAgendamento;
     private javax.swing.JLabel jLabelAte;
     private javax.swing.JLabel jLabelData;
