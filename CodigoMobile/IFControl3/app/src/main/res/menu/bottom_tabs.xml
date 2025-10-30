@@ -3,9 +3,9 @@
     <item
         android:title="sala"
         android:id="@+id/tab_salas"
-        android:icon="@drawable/navButtonSala"/>
+        android:icon="@drawable/icone_sala"/>
     <item
         android:title="acoes"
         android:id="@+id/tab_acoes"
-        android:icon="@drawable/navButtonAcao"/>
+        android:icon="@drawable/icone_acao"/>
 </menu>
