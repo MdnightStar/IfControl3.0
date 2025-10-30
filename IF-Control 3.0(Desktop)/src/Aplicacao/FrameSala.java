@@ -390,10 +390,8 @@ public class FrameSala extends javax.swing.JFrame {
 
     private void jLabelArMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelArMouseClicked
         // TODO add your handling code here:
-        String acao="";
+        String acao = "";
         MainApp.sessao.trataAcao(acao);
-        
-        
     }//GEN-LAST:event_jLabelArMouseClicked
 
     /**

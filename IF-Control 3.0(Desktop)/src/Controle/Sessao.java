@@ -139,9 +139,19 @@ public class Sessao {
     * 
     * @param acao
     */
-    public void trataAcao(String acao, String nSala){ 
-        System.out.println(acao);
-        servidor.enviar(acao);
+    public void trataAcao(String acao, int nSala){ 
+         Acao a = new Acao();
+        a.setDataAcao(Calendar.getInstance());
+        a.setHoraAcao(Time.valueOf( LocalTime.now()));
+        a.setTipoAcao(acao);
+        a.setnSala(nSala);
+        Gson gson = new Gson();
+        String u = gson.toJson(a);
+        
+        System.out.println(u);
+        servidor.enviar(u);
+
+        
         
     }
     
