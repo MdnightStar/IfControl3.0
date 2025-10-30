@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS `acao`;
 CREATE TABLE `acao` (
   `idAcao` int(11) NOT NULL auto_increment,
   `idUser` int(11) NOT NULL,
-  `nSala` int(11) NOT NULL,
+  `nSala` int(11),
   `tipoAcao` varchar(20) NOT NULL,
   `dataAcao` date NOT NULL,
   `horaAcao` time NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `agendamento` (
     dataInicio date not null,
     dataFim date not null,
     hAtiv datetime not null,
-    hDesat datetime not null
+    hDesacaoat datetime not null
 );
 create table `diasDaSemana`(
 	id int primary key auto_increment,
@@ -108,7 +108,7 @@ create table `nSalaAgendamento`(
     nSala int,
     foreign key (agendamento_id) references agendamento(id) on delete cascade
 );
-
+drop database ifcontrol3;
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

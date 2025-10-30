@@ -96,6 +96,11 @@ public class FrameSala extends javax.swing.JFrame {
         jLabelPresença.setToolTipText("");
 
         jLabelAr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/ar-condicionado-on (1).png"))); // NOI18N
+        jLabelAr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelArMouseClicked(evt);
+            }
+        });
 
         jLabelLuz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/luz-on (1).png"))); // NOI18N
 
@@ -382,6 +387,12 @@ public class FrameSala extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButtonEnviarActionPerformed
+
+    private void jLabelArMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelArMouseClicked
+        // TODO add your handling code here:
+        String acao = "";
+        MainApp.sessao.trataAcao(acao);
+    }//GEN-LAST:event_jLabelArMouseClicked
 
     /**
      * @param args the command line arguments
