@@ -23,7 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="497" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="515" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -71,26 +71,29 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="49" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jDataInicio" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace pref="35" max="32767" attributes="0"/>
+                                          <Component id="jLabelAte" min="-2" pref="33" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                          <Component id="jDataFim" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jTextFieldTitulo" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabelIF" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="jButtonAdd" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="jLabelAte" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="jButtonAdd" min="-2" pref="109" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="175" max="-2" attributes="0"/>
                                           <Component id="jLabelIfamLogo" min="-2" pref="51" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jTextFieldTitulo" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -149,38 +152,47 @@
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelAte" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelData" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelDias" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonSegunda" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonTerca" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonQuarta" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonQuinta" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonSexta" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonSabado" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonDomingo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jLabelHorario" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelDispositivos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonArCondicionado" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonLuzes" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonDataShow" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="34" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabelIfamLogo" min="-2" pref="43" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jDataInicio" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jButtonAdd" min="-2" pref="36" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelAte" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jDataFim" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelData" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelDias" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonSegunda" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonTerca" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonQuarta" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonQuinta" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonSexta" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonSabado" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonDomingo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jLabelHorario" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelDispositivos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonArCondicionado" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonLuzes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonDataShow" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="25" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabelIfamLogo" min="-2" pref="43" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jButtonAdd" min="-2" pref="36" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -400,6 +412,10 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="DataShow"/>
           </Properties>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="jDataInicio">
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="jDataFim">
         </Component>
       </SubComponents>
     </Container>
