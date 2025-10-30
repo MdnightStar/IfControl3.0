@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
  * @author LENOVO
  */
 public class SalaPanel extends javax.swing.JPanel {
+    
     private int nsala;
     private boolean salaAberta;
     private FrameSala novaSala;
@@ -24,7 +25,6 @@ public class SalaPanel extends javax.swing.JPanel {
     boolean estadoSala, boolean presenca, int nsala) {
         initComponents();
         jLabelNSala.setText(textoNSala);
-        this.nsala=nsala;
         salaAberta=false;
         
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
@@ -219,7 +219,6 @@ public class SalaPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         salaAberta=true;
         novaSala= new FrameSala();
-        MainApp.sessao.trataAcao("HA",nsala);
         
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 

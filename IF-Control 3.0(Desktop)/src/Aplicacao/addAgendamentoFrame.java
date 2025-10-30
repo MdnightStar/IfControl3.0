@@ -4,6 +4,16 @@
  */
 package Aplicacao;
 
+import Modelo.Agendamento;
+import com.toedter.calendar.JDateChooser;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *
  * @author cauaa
@@ -26,6 +36,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButtonCancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTextFieldTitulo = new javax.swing.JTextField();
         jButtonAdd = new javax.swing.JButton();
@@ -35,7 +46,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         jLabelTitulo = new javax.swing.JLabel();
         jLabelAte = new javax.swing.JLabel();
         jLabelDias = new javax.swing.JLabel();
-        jLabelHorario = new javax.swing.JLabel();
+        jLabelHoraIn = new javax.swing.JLabel();
         jLabelData = new javax.swing.JLabel();
         jRadioButtonSegunda = new javax.swing.JRadioButton();
         jRadioButtonTerca = new javax.swing.JRadioButton();
@@ -50,8 +61,31 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         jRadioButtonDataShow = new javax.swing.JRadioButton();
         jDataInicio = new com.toedter.calendar.JDateChooser();
         jDataFim = new com.toedter.calendar.JDateChooser();
+        jSpinnerHoraIn = new javax.swing.JSpinner();
+        jLabelSeparatorHoraIn = new javax.swing.JLabel();
+        jSpinnerMinutosIn = new javax.swing.JSpinner();
+        jLabelHoraFim = new javax.swing.JLabel();
+        jSpinnerHoraFim = new javax.swing.JSpinner();
+        jLabelSeparatorHoraFim = new javax.swing.JLabel();
+        jSpinnerMinutosFim = new javax.swing.JSpinner();
+        jButtonCancelar1 = new javax.swing.JButton();
+        jLabelSalas = new javax.swing.JLabel();
+        jTextFieldSalas = new javax.swing.JTextField();
+        jLabelDesc1 = new javax.swing.JLabel();
+        jLabelDesc2 = new javax.swing.JLabel();
+
+        jButtonCancelar.setBackground(new java.awt.Color(0, 51, 102));
+        jButtonCancelar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
+        jButtonCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
 
@@ -99,10 +133,10 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         jLabelDias.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDias.setText("Dias da Semana");
 
-        jLabelHorario.setBackground(new java.awt.Color(255, 255, 255));
-        jLabelHorario.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
-        jLabelHorario.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelHorario.setText("Horário");
+        jLabelHoraIn.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelHoraIn.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
+        jLabelHoraIn.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelHoraIn.setText("Hora Início");
 
         jLabelData.setBackground(new java.awt.Color(255, 255, 255));
         jLabelData.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
@@ -110,6 +144,11 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         jLabelData.setText("Data");
 
         jRadioButtonSegunda.setText("S");
+        jRadioButtonSegunda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonSegundaActionPerformed(evt);
+            }
+        });
 
         jRadioButtonTerca.setText("T");
         jRadioButtonTerca.addActionListener(new java.awt.event.ActionListener() {
@@ -169,179 +208,317 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
 
         jRadioButtonDataShow.setText("DataShow");
 
+        jSpinnerHoraIn.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+
+        jLabelSeparatorHoraIn.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelSeparatorHoraIn.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
+        jLabelSeparatorHoraIn.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSeparatorHoraIn.setText(":");
+
+        jSpinnerMinutosIn.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+
+        jLabelHoraFim.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelHoraFim.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
+        jLabelHoraFim.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelHoraFim.setText("Hora Fim");
+
+        jSpinnerHoraFim.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+
+        jLabelSeparatorHoraFim.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelSeparatorHoraFim.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
+        jLabelSeparatorHoraFim.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSeparatorHoraFim.setText(":");
+
+        jSpinnerMinutosFim.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+
+        jButtonCancelar1.setBackground(new java.awt.Color(0, 51, 102));
+        jButtonCancelar1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
+        jButtonCancelar1.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCancelar1.setText("Cancelar");
+        jButtonCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelar1ActionPerformed(evt);
+            }
+        });
+
+        jLabelSalas.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelSalas.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
+        jLabelSalas.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSalas.setText("Salas");
+
+        jTextFieldSalas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSalasActionPerformed(evt);
+            }
+        });
+
+        jLabelDesc1.setText("Em salas diferentes separe com \",\" Exemplo: \"1, 3, 6\"");
+
+        jLabelDesc2.setText("Em salas sequenciais utilizar \"-\" Exemplo: \"1-3\"");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTitulo)
-                    .addComponent(jLabelData))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabelAdicionarAgendamento)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                                        .addComponent(jLabelAte, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(32, 32, 32)
-                                        .addComponent(jDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextFieldTitulo))
-                                .addGap(44, 44, 44))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelIF, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(175, 175, 175)
-                                        .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                .addGap(210, 210, 210)
+                .addComponent(jLabelAdicionarAgendamento)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelHorario)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelData)
+                        .addGap(40, 40, 40)
+                        .addComponent(jDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelAte, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelDias)
-                            .addComponent(jLabelDispositivos))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabelHoraIn))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButtonArCondicionado)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButtonLuzes)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButtonDataShow))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jRadioButtonSegunda)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jRadioButtonTerca)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jRadioButtonQuarta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jRadioButtonQuinta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jRadioButtonSexta)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButtonSabado))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jSpinnerHoraIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelSeparatorHoraIn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButtonSabado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButtonDomingo)))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jSpinnerMinutosIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabelHoraFim)
+                                .addGap(5, 5, 5)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jSpinnerHoraFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelSeparatorHoraFim)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinnerMinutosFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(110, 110, 110))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButtonDomingo)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabelIF))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonCancelar1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(251, 251, 251)
+                        .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelDispositivos)
+                        .addGap(36, 36, 36)
+                        .addComponent(jRadioButtonArCondicionado)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButtonLuzes)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButtonDataShow)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelTitulo)
+                        .addGap(32, 32, 32)
+                        .addComponent(jTextFieldTitulo)
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelSalas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jTextFieldSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelDesc2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelDesc1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelIF)
-                .addGap(28, 28, 28)
+                .addGap(43, 43, 43)
                 .addComponent(jLabelAdicionarAgendamento)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTitulo))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelAte)
-                            .addComponent(jDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelData))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelDias)
-                            .addComponent(jRadioButtonSegunda)
-                            .addComponent(jRadioButtonTerca)
-                            .addComponent(jRadioButtonQuarta)
-                            .addComponent(jRadioButtonQuinta)
-                            .addComponent(jRadioButtonSexta)
-                            .addComponent(jRadioButtonSabado)
-                            .addComponent(jRadioButtonDomingo))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelHorario)
-                        .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabelData)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(50, 50, 50)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelDias)
+                                    .addComponent(jRadioButtonSegunda)
+                                    .addComponent(jRadioButtonTerca)
+                                    .addComponent(jRadioButtonQuarta)
+                                    .addComponent(jRadioButtonQuinta)
+                                    .addComponent(jRadioButtonSexta)
+                                    .addComponent(jRadioButtonSabado)
+                                    .addComponent(jRadioButtonDomingo))
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabelAte)
+                                .addGap(99, 99, 99)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelHoraIn)
+                                .addComponent(jSpinnerHoraIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelSeparatorHoraIn)
+                                .addComponent(jSpinnerMinutosIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelHoraFim))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jSpinnerHoraFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelSeparatorHoraFim)
+                                .addComponent(jSpinnerMinutosFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelDispositivos)
                             .addComponent(jRadioButtonArCondicionado)
                             .addComponent(jRadioButtonLuzes)
                             .addComponent(jRadioButtonDataShow))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41))))))
+                        .addGap(30, 30, 30)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSalas)
+                    .addComponent(jTextFieldSalas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelDesc1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelDesc2)
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonCancelar1))
+                        .addGap(41, 41, 41))))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 515, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        getContentPane().add(jPanel1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTituloActionPerformed
+    private void jRadioButtonLuzesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLuzesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTituloActionPerformed
-
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddActionPerformed
-
-    private void jRadioButtonTercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTercaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonTercaActionPerformed
-
-    private void jRadioButtonQuartaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonQuartaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonQuartaActionPerformed
-
-    private void jRadioButtonQuintaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonQuintaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonQuintaActionPerformed
-
-    private void jRadioButtonSextaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSextaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonSextaActionPerformed
-
-    private void jRadioButtonSabadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSabadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonSabadoActionPerformed
+    }//GEN-LAST:event_jRadioButtonLuzesActionPerformed
 
     private void jRadioButtonDomingoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonDomingoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonDomingoActionPerformed
 
-    private void jRadioButtonLuzesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLuzesActionPerformed
+    private void jRadioButtonSabadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSabadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonLuzesActionPerformed
+    }//GEN-LAST:event_jRadioButtonSabadoActionPerformed
+
+    private void jRadioButtonSextaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSextaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonSextaActionPerformed
+
+    private void jRadioButtonQuintaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonQuintaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonQuintaActionPerformed
+
+    private void jRadioButtonQuartaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonQuartaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonQuartaActionPerformed
+
+    private void jRadioButtonTercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTercaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonTercaActionPerformed
+
+    private void jRadioButtonSegundaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSegundaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonSegundaActionPerformed
+
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        // Cria uma nova instância do modelo
+        Agendamento novoAgendamento = new Agendamento();
+
+        // 1. Título
+        novoAgendamento.setTitulo(jTextFieldTitulo.getText());
+
+        // O campo de salas no seu código está como jTextFieldTitulo1
+        // É altamente recomendado renomear para algo como jTextFieldSalas no NetBeans!
+        String salasStr = jTextFieldSalas.getText();
+
+        // 2. Datas (JDateChooser)
+        if (jDataInicio.getCalendar() != null) {
+            novoAgendamento.setDataIn(jDataInicio.getCalendar());
+        }
+        if (jDataFim.getCalendar() != null) {
+            novoAgendamento.setDataF(jDataFim.getCalendar());
+        }
+
+        // 3. Dias da Semana (JRadioButtons)
+        novoAgendamento.setDiaSemana(coletarDiasDaSemana());
+
+        // 4. Horários (JSpinner)
+        novoAgendamento.sethAtv(coletarHora(jSpinnerHoraIn, jSpinnerMinutosIn));
+        novoAgendamento.sethDesat(coletarHora(jSpinnerHoraFim, jSpinnerMinutosFim));
+
+        // 5. Dispositivos (JRadioButtons - Múltipla Seleção)
+        JRadioButton[] chkDispositivos = {jRadioButtonArCondicionado, jRadioButtonLuzes, jRadioButtonDataShow};
+        novoAgendamento.setDispositivos(coletarDispositivos(chkDispositivos));
+
+        // 6. Salas (JTextField)
+        try {
+            novoAgendamento.setSalas(analisarStringSalas(salasStr));
+        } catch (NumberFormatException e) {
+            // Exibir erro para o usuário, ex: JOptionPane.showMessageDialog(this, "Erro no formato das Salas.");
+            System.err.println("Erro de formato de salas: " + e.getMessage());
+            return;
+        }
+
+        // A partir daqui, o objeto 'novoAgendamento' está preenchido e pronto para ser usado (ex: salvar no DB)
+        System.out.println("Agendamento criado e pronto para salvar: " + novoAgendamento.toString());
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void jTextFieldTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldTituloActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCancelar1ActionPerformed
+
+    private void jTextFieldSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSalasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSalasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -379,18 +556,125 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         });
     }
 
+    private int[] coletarDiasDaSemana() {
+        ArrayList<Integer> diasSelecionados = new ArrayList<>();
+
+        // Mapeia os JRadioButtons na ordem: Dom, Seg, Ter, Qua, Qui, Sex, Sáb
+        JRadioButton[] dias = {jRadioButtonDomingo, jRadioButtonSegunda, jRadioButtonTerca, jRadioButtonQuarta,
+            jRadioButtonQuinta, jRadioButtonSexta, jRadioButtonSabado};
+
+        // Mapeamento para os valores de Calendar: 1=DOMINGO, 2=SEGUNDA, ..., 7=SABADO
+        int[] calendarDays = {Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY,
+            Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY};
+
+        for (int i = 0; i < dias.length; i++) {
+            if (dias[i].isSelected()) {
+                diasSelecionados.add(calendarDays[i]);
+            }
+        }
+
+        return diasSelecionados.stream().mapToInt(i -> i).toArray();
+    }
+
+    /**
+     * Cria um objeto Time a partir dos valores de hora e minuto de dois
+     * Spinners.
+     */
+    private Time coletarHora(JSpinner spinnerHora, JSpinner spinnerMinuto) {
+        // Certifique-se de que os Spinners têm modelos de número
+        int hora = (int) spinnerHora.getValue();
+        int minuto = (int) spinnerMinuto.getValue();
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, hora);
+        cal.set(Calendar.MINUTE, minuto);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        // Retorna a hora como java.sql.Time
+        return new Time(cal.getTimeInMillis());
+    }
+
+    /**
+     * Coleta o texto de todos os JRadioButtons de dispositivos selecionados.
+     */
+    private ArrayList<String> coletarDispositivos(JRadioButton[] radiobuttons) {
+        ArrayList<String> dispositivos = new ArrayList<>();
+        for (JRadioButton rb : radiobuttons) {
+            if (rb.isSelected()) {
+                dispositivos.add(rb.getText());
+            }
+        }
+        return dispositivos;
+    }
+
+    /**
+     * Analisa a string de salas ("1, 3, 6" ou "1-3") e retorna um array de
+     * inteiros. (Esta lógica não precisa de alteração, pois é independente do
+     * tipo de componente.)
+     */
+    private int[] analisarStringSalas(String salasStr) throws NumberFormatException {
+        if (salasStr == null || salasStr.trim().isEmpty()) {
+            return new int[0];
+        }
+
+        salasStr = salasStr.replaceAll("\\s+", ""); // Remove espaços em branco
+        ArrayList<Integer> salas = new ArrayList<>();
+
+        String[] partes = salasStr.split(",");
+
+        for (String parte : partes) {
+            if (parte.contains("-")) {
+                // Caso de range: "1-3"
+                String[] range = parte.split("-");
+                if (range.length == 2) {
+                    try {
+                        int inicio = Integer.parseInt(range[0]);
+                        int fim = Integer.parseInt(range[1]);
+                        for (int i = inicio; i <= fim; i++) {
+                            salas.add(i);
+                        }
+                    } catch (NumberFormatException e) {
+                        throw new NumberFormatException("Formato de range inválido na parte: " + parte);
+                    }
+                } else {
+                    throw new NumberFormatException("Formato de range incompleto: " + parte);
+                }
+            } else {
+                // Caso de número único: "3"
+                try {
+                    salas.add(Integer.parseInt(parte));
+                } catch (NumberFormatException e) {
+                    throw new NumberFormatException("Número de sala inválido: " + parte);
+                }
+            }
+        }
+
+        // Converte a ArrayList para int[] e retorna
+        return salas.stream().mapToInt(i -> i).toArray();
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCancelar1;
     private com.toedter.calendar.JDateChooser jDataFim;
     private com.toedter.calendar.JDateChooser jDataInicio;
     private javax.swing.JLabel jLabelAdicionarAgendamento;
     private javax.swing.JLabel jLabelAte;
     private javax.swing.JLabel jLabelData;
+    private javax.swing.JLabel jLabelDesc1;
+    private javax.swing.JLabel jLabelDesc2;
     private javax.swing.JLabel jLabelDias;
     private javax.swing.JLabel jLabelDispositivos;
-    private javax.swing.JLabel jLabelHorario;
+    private javax.swing.JLabel jLabelHoraFim;
+    private javax.swing.JLabel jLabelHoraIn;
     private javax.swing.JLabel jLabelIF;
     private javax.swing.JLabel jLabelIfamLogo;
+    private javax.swing.JLabel jLabelSalas;
+    private javax.swing.JLabel jLabelSeparatorHoraFim;
+    private javax.swing.JLabel jLabelSeparatorHoraIn;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButtonArCondicionado;
@@ -403,6 +687,11 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButtonSegunda;
     private javax.swing.JRadioButton jRadioButtonSexta;
     private javax.swing.JRadioButton jRadioButtonTerca;
+    private javax.swing.JSpinner jSpinnerHoraFim;
+    private javax.swing.JSpinner jSpinnerHoraIn;
+    private javax.swing.JSpinner jSpinnerMinutosFim;
+    private javax.swing.JSpinner jSpinnerMinutosIn;
+    private javax.swing.JTextField jTextFieldSalas;
     private javax.swing.JTextField jTextFieldTitulo;
     // End of variables declaration//GEN-END:variables
 }
