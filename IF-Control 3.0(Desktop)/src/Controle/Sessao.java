@@ -3,11 +3,15 @@
  */
 package Controle;
 import Controle.TrataServidor;
+import Modelo.Acao;
 import Modelo.Sala;
 import com.google.gson.Gson;
 import java.io.IOException;
 import Modelo.User;
 import com.google.gson.reflect.TypeToken;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -87,6 +91,8 @@ public class Sessao {
         } catch (InterruptedException ex) {
             System.out.println("Erro ao executar o TrataCliente");
         }
+        this._login=login;
+        this._senha=senha;
         return servidor.getResposta();
     }
     
@@ -115,7 +121,25 @@ public class Sessao {
     * 
     * @param acao
     */
-    public void trataAcao(String acao){ 
+    public void trataAcao(String acao){
+        Acao a = new Acao();
+        a.setDataAcao(Calendar.getInstance());
+        a.setHoraAcao(Time.valueOf( LocalTime.now()));
+        a.setTipoAcao(acao);
+        Gson gson = new Gson();
+        String u = gson.toJson(a);
+        
+        System.out.println(u);
+        servidor.enviar(u);
+        
+    }
+    
+    /**
+    * Envia uma Acao já serializada para o TrataCliente, assim cadastrando a ação no BD
+    * 
+    * @param acao
+    */
+    public void trataAcao(String acao, String nSala){ 
         System.out.println(acao);
         servidor.enviar(acao);
         

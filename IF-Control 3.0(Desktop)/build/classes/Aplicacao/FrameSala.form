@@ -194,6 +194,9 @@
                   <Image iconType="3" name="/Imagens/ar-condicionado-on (1).png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelArMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelLuz">
               <Properties>

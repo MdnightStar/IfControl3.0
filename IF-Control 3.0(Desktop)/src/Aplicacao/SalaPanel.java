@@ -32,6 +32,7 @@ public class SalaPanel extends javax.swing.JPanel {
         this.estadoLuzes=estadoLuzes;
         this.estadoSala=estadoSala;
         this.presenca=presenca;
+        salaAberta=false;
         
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
         
@@ -223,16 +224,9 @@ public class SalaPanel extends javax.swing.JPanel {
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
-        novaSala= new FrameSala();
         salaAberta=true;
-        new Runnable(){
-            @Override
-            public void run(){
-                while(novaSala.isDisplayable()){
-                }
-                salaAberta=false;
-            }
-        };
+        novaSala= new FrameSala();
+        
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
 
