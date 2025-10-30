@@ -13,9 +13,9 @@ import javax.swing.ImageIcon;
  * @author LENOVO
  */
 public class SalaPanel extends javax.swing.JPanel {
+    
     private int nsala;
-    private String textoNSala;
-    private boolean estadoAr, estadoDS, estadoLuzes, estadoSala, presenca, salaAberta;
+    private boolean salaAberta;
     private FrameSala novaSala;
     
     /**
@@ -25,13 +25,6 @@ public class SalaPanel extends javax.swing.JPanel {
     boolean estadoSala, boolean presenca, int nsala) {
         initComponents();
         jLabelNSala.setText(textoNSala);
-        this.nsala=nsala;
-        this.textoNSala=textoNSala;
-        this.estadoAr=estadoAr;
-        this.estadoDS=estadoDS;
-        this.estadoLuzes=estadoLuzes;
-        this.estadoSala=estadoSala;
-        this.presenca=presenca;
         salaAberta=false;
         
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
