@@ -493,7 +493,7 @@ public class DAOManager {
      */
     public StringBuilder resgataCodIr(int nSala, String msg) throws SQLException {
         StringBuilder resp = new StringBuilder();
-        resp.append(msg);
+        
         resp.append("DIR.");
 
         // Extrair tipo (2 primeiros caracteres) e função (até o ponto final, se houver)

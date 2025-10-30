@@ -77,7 +77,7 @@ public class SocketArduino {
     * @param cod codIR
     * @param conf configurações do sinal
     * @throws IOException 
-    */
+    
     public void enviarDs(String str, String cod, int[] conf ) throws IOException{
         StringBuilder pacote= new StringBuilder();
         pacote.append(str).append("|").append(cod).append("|");
@@ -90,6 +90,7 @@ public class SocketArduino {
         out.writeBytes(pacote.toString());
         out.flush();
     }
+    */
 
     /**
     *O método desconectarArduino fecha a conecção com o arduino

@@ -12,6 +12,7 @@ import Modelo.DAOManager;
 import Modelo.Sala;
 import Modelo.User;
 import com.google.gson.Gson;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Jeison
@@ -90,8 +91,13 @@ public class TrataCliente implements Runnable {
                 } else if (msg.contains("tipoAcao")) {
                     System.out.println(msg); //Printa os atributos;
                     acao = gson.fromJson(msg, Acao.class); //Deserializa a msg em uma Acao
-                    String r = sessao.tratarAcao(acao.getTipoAcao(), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
-                    servidor.distribuiMsg(sessao.pegarSalas()); //Envia todas as salas serializadas para os clientes
+                    if((acao.getTipoAcao().contains("HA"))||(acao.getTipoAcao().contains("HD"))){
+                        String horaFormatada = acao.getHoraAcao().toString(); // converte para String
+                        String r = sessao.tratarAcao((acao.getTipoAcao()+horaFormatada), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
+                    }else{
+                        String r = sessao.tratarAcao(acao.getTipoAcao(), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
+                    }
+                    
                     //metodo para agendamento   servidor.iniciarAgendamentos();
                 } else if (msg.contains("logs")) {
                     clienteOut.println(sessao.pegarLogs());//Imprime todas as ações

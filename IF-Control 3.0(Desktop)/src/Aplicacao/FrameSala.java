@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
  * @author LENOVO
  */
 public class FrameSala extends javax.swing.JFrame {
+    private int nsala;
     private FrameSala sala;
     /**
      * Creates new form Sala
@@ -105,6 +106,11 @@ public class FrameSala extends javax.swing.JFrame {
         jLabelLuz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/luz-on (1).png"))); // NOI18N
 
         jLabelDS1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/data-show-on (1).png"))); // NOI18N
+        jLabelDS1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelDS1MouseClicked(evt);
+            }
+        });
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -390,9 +396,13 @@ public class FrameSala extends javax.swing.JFrame {
 
     private void jLabelArMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelArMouseClicked
         // TODO add your handling code here:
-        String acao = "";
-        MainApp.sessao.trataAcao(acao);
+        
+        
     }//GEN-LAST:event_jLabelArMouseClicked
+
+    private void jLabelDS1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDS1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelDS1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -436,6 +446,8 @@ public class FrameSala extends javax.swing.JFrame {
             while (isDisplayable()) {
                 MainApp.sessao.salas();
                 String resposta = MainApp.sessao.verificarResposta();
+                
+                
         
                 try {
                     Thread.sleep(1000);
@@ -445,8 +457,9 @@ public class FrameSala extends javax.swing.JFrame {
 
             }
             System.exit(0);
-            
+            MainApp.sessao.trataAcao("HD", nsala);
         }
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

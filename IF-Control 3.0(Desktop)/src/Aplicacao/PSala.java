@@ -355,6 +355,7 @@ public class PSala extends javax.swing.JFrame {
         @Override
         public void run() {
             while (salaAberta()) {
+                MainApp.sessao.salas();
                 String resposta = MainApp.sessao.verificarResposta();
                 if (resposta.contains("nSala")) {
                     salas = gs.fromJson(resposta, tipoSala);
