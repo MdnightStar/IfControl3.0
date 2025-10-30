@@ -2,11 +2,12 @@ package Modelo;
 
 import java.util.Calendar;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Arrays; // Importação adicionada para uso do método toString
 
 /**
  *
- * @author axelm e Adriel
+ * @author axelm e cauaa
  */
 public class Agendamento {
     // Adicionado o ID do agendamento
@@ -16,6 +17,7 @@ public class Agendamento {
     Calendar dataIn,dataF;
     Time hAtv,hDesat;
     int[] diaSemana,salas;
+    ArrayList <String> dispositivos;
 
     // Getters
     public int getIdAgendamento() {
@@ -89,6 +91,14 @@ public class Agendamento {
 
     public void setSalas(int[] salas) {
         this.salas = salas;
+    }
+    
+    public ArrayList<String> getDispositivos() {
+        return dispositivos;
+    }
+
+    public void setDispositivos(ArrayList<String> dispositivos) {
+        this.dispositivos = dispositivos;
     }
     
     // Opcional: Para ajudar na visualização/depuração
