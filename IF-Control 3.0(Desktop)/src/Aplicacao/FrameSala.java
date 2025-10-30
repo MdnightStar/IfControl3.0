@@ -4,9 +4,7 @@
  */
 package Aplicacao;
 
-import java.util.Collections;
-import java.util.Comparator;
-import javax.swing.SwingUtilities;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -14,6 +12,9 @@ import javax.swing.SwingUtilities;
  */
 public class FrameSala extends javax.swing.JFrame {
     private FrameSala sala;
+    private int nsala;
+    private String textoNSala;
+    private boolean estadoAr, estadoDS, estadoLuzes, estadoSala, presenca;
     /**
      * Creates new form Sala
      */
@@ -41,7 +42,7 @@ public class FrameSala extends javax.swing.JFrame {
         jLabelPresença = new javax.swing.JLabel();
         jLabelAr = new javax.swing.JLabel();
         jLabelLuz = new javax.swing.JLabel();
-        jLabelDS1 = new javax.swing.JLabel();
+        jLabelDS = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabelSala = new javax.swing.JLabel();
         jLabelTemperaturaValor = new javax.swing.JLabel();
@@ -55,14 +56,14 @@ public class FrameSala extends javax.swing.JFrame {
         jLabelModo = new javax.swing.JLabel();
         comboBoxModo = new javax.swing.JComboBox<>();
         jLabelDS2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabelBaixo = new javax.swing.JLabel();
+        jLabelOkey = new javax.swing.JLabel();
+        jLabelCima = new javax.swing.JLabel();
+        jLabelDireita = new javax.swing.JLabel();
+        jLabelEsquerda = new javax.swing.JLabel();
+        jLabelEsc = new javax.swing.JLabel();
+        jLabelFreeze = new javax.swing.JLabel();
+        jLabelMenu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -103,8 +104,18 @@ public class FrameSala extends javax.swing.JFrame {
         });
 
         jLabelLuz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/luz-on (1).png"))); // NOI18N
+        jLabelLuz.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelLuzMouseClicked(evt);
+            }
+        });
 
-        jLabelDS1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/data-show-on (1).png"))); // NOI18N
+        jLabelDS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/data-show-on (1).png"))); // NOI18N
+        jLabelDS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelDSMouseClicked(evt);
+            }
+        });
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -166,7 +177,7 @@ public class FrameSala extends javax.swing.JFrame {
                                 .addGap(43, 43, 43)
                                 .addComponent(jLabelLuz)
                                 .addGap(43, 43, 43)
-                                .addComponent(jLabelDS1))
+                                .addComponent(jLabelDS))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabelHumidade)
@@ -205,7 +216,7 @@ public class FrameSala extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelAr)
                             .addComponent(jLabelLuz)))
-                    .addComponent(jLabelDS1))
+                    .addComponent(jLabelDS))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -265,21 +276,85 @@ public class FrameSala extends javax.swing.JFrame {
         jLabelDS2.setText("Data-show");
         jLabelDS2.setToolTipText("");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/para-baixo.PNG"))); // NOI18N
+        jLabelBaixo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/para-baixo.PNG"))); // NOI18N
+        jLabelBaixo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelBaixoMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelBaixoMouseReleased(evt);
+            }
+        });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/ok.PNG"))); // NOI18N
+        jLabelOkey.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/ok.PNG"))); // NOI18N
+        jLabelOkey.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelOkeyMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelOkeyMouseReleased(evt);
+            }
+        });
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/para-cima.PNG"))); // NOI18N
+        jLabelCima.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/para-cima.PNG"))); // NOI18N
+        jLabelCima.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelCimaMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelCimaMouseReleased(evt);
+            }
+        });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/direita.PNG"))); // NOI18N
+        jLabelDireita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/direita.PNG"))); // NOI18N
+        jLabelDireita.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelDireitaMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelDireitaMouseReleased(evt);
+            }
+        });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/esquerda.PNG"))); // NOI18N
+        jLabelEsquerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/esquerda.PNG"))); // NOI18N
+        jLabelEsquerda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelEsquerdaMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelEsquerdaMouseReleased(evt);
+            }
+        });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/esc.PNG"))); // NOI18N
+        jLabelEsc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/esc.PNG"))); // NOI18N
+        jLabelEsc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelEscMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelEscMouseReleased(evt);
+            }
+        });
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/freeze.PNG"))); // NOI18N
+        jLabelFreeze.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/freeze.PNG"))); // NOI18N
+        jLabelFreeze.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelFreezeMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelFreezeMouseReleased(evt);
+            }
+        });
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/menu.PNG"))); // NOI18N
+        jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/dataShow/menu.PNG"))); // NOI18N
+        jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelMenuMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelMenuMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -289,7 +364,7 @@ public class FrameSala extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(177, 177, 177)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabelBaixo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,22 +372,22 @@ public class FrameSala extends javax.swing.JFrame {
                             .addComponent(jLabelDS2)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addComponent(jLabel6)
+                        .addComponent(jLabelFreeze)
                         .addGap(83, 83, 83)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabelEsc))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(176, 176, 176)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabelCima, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
+                .addComponent(jLabelMenu)
                 .addGap(34, 34, 34))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(115, 115, 115)
-                .addComponent(jLabel5)
+                .addComponent(jLabelEsquerda)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelOkey, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelDireita, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(47, Short.MAX_VALUE)
@@ -348,23 +423,23 @@ public class FrameSala extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelDS2)
                 .addGap(14, 14, 14)
-                .addComponent(jLabel8)
+                .addComponent(jLabelCima)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelOkey, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelEsquerda, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(jLabelDireita)
                         .addGap(19, 19, 19)))
-                .addComponent(jLabel3)
+                .addComponent(jLabelBaixo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabelEsc)
+                    .addComponent(jLabelMenu)
+                    .addComponent(jLabelFreeze))
                 .addGap(16, 16, 16))
         );
 
@@ -384,15 +459,159 @@ public class FrameSala extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBoxModoActionPerformed
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-        // TODO add your handling code here:
+        // botão que envia as informaçoes do ar-condicionado dos comboBox's
+        String funcao = "AR";
         
+        funcao += (String)comboBoxTemperatura.getSelectedItem();
+        funcao+=(String)comboBoxModo.getSelectedItem();
     }//GEN-LAST:event_jButtonEnviarActionPerformed
 
     private void jLabelArMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelArMouseClicked
-        // TODO add your handling code here:
-        String acao = "";
-        MainApp.sessao.trataAcao(acao);
+        // liga ou desliga a depender se o estado é true ou false
+        if(estadoAr){
+           MainApp.sessao.trataAcao("AROFF",nsala); 
+           jLabelAr.setIcon(new ImageIcon(getClass().getResource("/arCondicionado/ar-off.png")));
+        }
+        else{
+            MainApp.sessao.trataAcao("ARON",nsala);
+            jLabelAr.setIcon(new ImageIcon(getClass().getResource("/arCondicionado/ar-on.png")));
+        }
     }//GEN-LAST:event_jLabelArMouseClicked
+
+    private void jLabelLuzMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLuzMouseClicked
+        // liga ou desliga a depender se o estado é true ou false
+        if(estadoLuzes){
+           MainApp.sessao.trataAcao("LZOFF",nsala); 
+           jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/luzes/luz-off.png")));
+        }
+        else{
+            MainApp.sessao.trataAcao("LZZON",nsala);
+             jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/luzes/luz-on.png")));
+        }
+    }//GEN-LAST:event_jLabelLuzMouseClicked
+
+    private void jLabelDSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDSMouseClicked
+        // liga ou desliga a depender se o estado é true ou false
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSOFF",nsala);
+            jLabelDS.setIcon(new ImageIcon(getClass().getResource("/dataShow/data-show-off.png")));
+        }
+        else{
+            MainApp.sessao.trataAcao("DSON",nsala);
+            jLabelDS.setIcon(new ImageIcon(getClass().getResource("/dataShow/data-show-on.png")));
+        }
+    }//GEN-LAST:event_jLabelDSMouseClicked
+
+    private void jLabelFreezeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFreezeMouseClicked
+        // TODO add your handling code here:
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSFREEZE",nsala);
+            jLabelFreeze.setIcon(new ImageIcon(getClass().getResource("/dataShow/freeze-pressionado.png")));
+        }
+        else{
+            
+        }
+    }//GEN-LAST:event_jLabelFreezeMouseClicked
+
+    private void jLabelFreezeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFreezeMouseReleased
+        // TODO add your handling code here:
+        jLabelFreeze.setIcon(new ImageIcon(getClass().getResource("/dataShow/freeze.png")));
+    }//GEN-LAST:event_jLabelFreezeMouseReleased
+
+    private void jLabelEscMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEscMouseClicked
+        // TODO add your handling code here:
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSESC",nsala);
+            jLabelEsc.setIcon(new ImageIcon(getClass().getResource("/dataShow/esc-pressionado.png")));
+        }
+        else{
+            
+        }
+    }//GEN-LAST:event_jLabelEscMouseClicked
+
+    private void jLabelEscMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEscMouseReleased
+        // TODO add your handling code here:
+        jLabelEsc.setIcon(new ImageIcon(getClass().getResource("/dataShow/esc.png")));
+    }//GEN-LAST:event_jLabelEscMouseReleased
+
+    private void jLabelMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseClicked
+        // TODO add your handling code here:
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSMENU",nsala);
+            jLabelMenu.setIcon(new ImageIcon(getClass().getResource("/dataShow/menu-pressionado.png")));
+        }
+    }//GEN-LAST:event_jLabelMenuMouseClicked
+
+    private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
+        // TODO add your handling code here:
+        jLabelMenu.setIcon(new ImageIcon(getClass().getResource("/dataShow/menu.png")));
+
+    }//GEN-LAST:event_jLabelMenuMouseReleased
+
+    private void jLabelCimaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCimaMouseClicked
+        // TODO add your handling code here:
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSCIMA",nsala);
+            jLabelCima.setIcon(new ImageIcon(getClass().getResource("/dataShow/para-cima-pressionado.png")));
+        }
+    }//GEN-LAST:event_jLabelCimaMouseClicked
+
+    private void jLabelCimaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCimaMouseReleased
+        // TODO add your handling code here:
+        jLabelCima.setIcon(new ImageIcon(getClass().getResource("/dataShow/para-cima.png")));
+    }//GEN-LAST:event_jLabelCimaMouseReleased
+
+    private void jLabelEsquerdaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEsquerdaMouseClicked
+        // TODO add your handling code here:
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSESQ",nsala);
+            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/esquerda-pressionado.png")));
+        }
+    }//GEN-LAST:event_jLabelEsquerdaMouseClicked
+
+    private void jLabelEsquerdaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEsquerdaMouseReleased
+        // TODO add your handling code here:
+        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/esquerda.png")));
+    }//GEN-LAST:event_jLabelEsquerdaMouseReleased
+
+    private void jLabelBaixoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBaixoMouseClicked
+        // TODO add your handling code here:
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSBAIXO",nsala);
+            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/para-baixo-pressionado.png")));
+        }
+    }//GEN-LAST:event_jLabelBaixoMouseClicked
+
+    private void jLabelBaixoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBaixoMouseReleased
+        // TODO add your handling code here:
+        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/para-baixo.png")));
+    }//GEN-LAST:event_jLabelBaixoMouseReleased
+
+    private void jLabelDireitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDireitaMouseClicked
+        // TODO add your handling code here:
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSDIR",nsala);
+            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/direita-pressionado.png")));
+        }
+    }//GEN-LAST:event_jLabelDireitaMouseClicked
+
+    private void jLabelDireitaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDireitaMouseReleased
+        // TODO add your handling code here:
+        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/direita.png")));
+    }//GEN-LAST:event_jLabelDireitaMouseReleased
+
+    private void jLabelOkeyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelOkeyMouseClicked
+        // TODO add your handling code here:
+        if(estadoDS){
+            MainApp.sessao.trataAcao("DSOK",nsala);
+            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/ok-pressionado.png")));
+        }
+    }//GEN-LAST:event_jLabelOkeyMouseClicked
+
+    private void jLabelOkeyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelOkeyMouseReleased
+        // TODO add your handling code here:
+        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/ok.png")));
+    }//GEN-LAST:event_jLabelOkeyMouseReleased
 
     /**
      * @param args the command line arguments
@@ -453,23 +672,23 @@ public class FrameSala extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxModo;
     private javax.swing.JComboBox<String> comboBoxTemperatura;
     private javax.swing.JButton jButtonEnviar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAr;
-    private javax.swing.JLabel jLabelDS1;
+    private javax.swing.JLabel jLabelBaixo;
+    private javax.swing.JLabel jLabelCima;
+    private javax.swing.JLabel jLabelDS;
     private javax.swing.JLabel jLabelDS2;
+    private javax.swing.JLabel jLabelDireita;
+    private javax.swing.JLabel jLabelEsc;
+    private javax.swing.JLabel jLabelEsquerda;
+    private javax.swing.JLabel jLabelFreeze;
     private javax.swing.JLabel jLabelHumidade;
     private javax.swing.JLabel jLabelHumidadeValor;
     private javax.swing.JLabel jLabelHumidadeValor1;
     private javax.swing.JLabel jLabelIfamLogo;
     private javax.swing.JLabel jLabelLuz;
+    private javax.swing.JLabel jLabelMenu;
     private javax.swing.JLabel jLabelModo;
+    private javax.swing.JLabel jLabelOkey;
     private javax.swing.JLabel jLabelPresença;
     private javax.swing.JLabel jLabelSala;
     private javax.swing.JLabel jLabelTemperatura;
