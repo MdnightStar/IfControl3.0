@@ -90,8 +90,7 @@ public class TrataCliente implements Runnable {
                     clienteOut.println(sessao.estadoSala(nSala));//Envia para o cliente se a sala está ocupada ou não
                 } else if (msg.contains("--acaoSala--")) {
                     System.out.println(msg); //Printa os atributos;
-                    String quebra1[] = msg.split("--acaoSala--");
-                    acao = gson.fromJson(quebra1[1], Acao.class); //Deserializa a msg em uma Acao
+                    acao = gson.fromJson(msg, Acao.class); //Deserializa a msg em uma Acao
                     if((acao.getTipoAcao().contains("HA"))||(acao.getTipoAcao().contains("HD"))){
                         String horaFormatada = acao.getHoraAcao().toString(); // converte para String
                         String r = sessao.tratarAcao((acao.getTipoAcao()+horaFormatada), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
@@ -100,12 +99,10 @@ public class TrataCliente implements Runnable {
                     }
                     
                     //metodo para agendamento   servidor.iniciarAgendamentos();
-                 
                 }else if(msg.contains("--acao--")){
-                    String quebra2[] = msg.split("--acao--");
-                    acao = gson.fromJson(quebra2[1], Acao.class);
-                    /*String r = sessao.tratarAcao(acao.getTipoAcao());*/
-                }else if (msg.contains("logs")) {
+                
+                }
+                else if (msg.contains("logs")) {
                     clienteOut.println(sessao.pegarLogs());//Imprime todas as ações
                 } else if (msg.contains("atualizar")) {
                     servidor.distribuiMsg(sessao.pegarSalas()); //Envia todas as salas serializadas para os clientes, para poder atualizar os atributos
@@ -113,9 +110,9 @@ public class TrataCliente implements Runnable {
                     clienteOut.println(sessao.pegarSalas());//Imprime todas as salas
                 }else if(msg.contains("addSala")){
                     String texto=msg;
-                    String quebra3[] = texto.split("--addSala--");
-                    sala=gson.fromJson(quebra3[1], Sala.class);
-                    sessao=new TratarAcao();
+                    String quebra[] = texto.split("--addSala--");
+                    sala=gson.fromJson(quebra[1], Sala.class);
+                    
                     clienteOut.println(sessao.cadastrarSala(sala.getnSala(), sala.getIP()));
                 }
             }

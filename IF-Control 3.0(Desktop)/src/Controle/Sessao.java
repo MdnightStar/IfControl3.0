@@ -150,9 +150,6 @@ public class Sessao {
         
         System.out.println(u);
         servidor.enviar(u);
-
-        
-        
     }
     
     /**
