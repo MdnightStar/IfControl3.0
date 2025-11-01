@@ -4,7 +4,9 @@
  */
 package Aplicacao;
 
+import Controle.TrataServidor;
 import Modelo.Agendamento;
+import com.google.gson.Gson;
 import com.toedter.calendar.JDateChooser;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author cauaa
@@ -85,7 +89,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
 
@@ -131,17 +135,17 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         jLabelDias.setBackground(new java.awt.Color(255, 255, 255));
         jLabelDias.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelDias.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelDias.setText("Dias da Semana");
+        jLabelDias.setText("Dias da Semana:");
 
         jLabelHoraIn.setBackground(new java.awt.Color(255, 255, 255));
         jLabelHoraIn.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelHoraIn.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelHoraIn.setText("Hora Início");
+        jLabelHoraIn.setText("Hora Início:");
 
         jLabelData.setBackground(new java.awt.Color(255, 255, 255));
         jLabelData.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelData.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelData.setText("Data");
+        jLabelData.setText("Data:");
 
         jRadioButtonSegunda.setText("S");
         jRadioButtonSegunda.addActionListener(new java.awt.event.ActionListener() {
@@ -160,7 +164,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         jLabelDispositivos.setBackground(new java.awt.Color(255, 255, 255));
         jLabelDispositivos.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelDispositivos.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelDispositivos.setText("Dispositivos");
+        jLabelDispositivos.setText("Dispositivos:");
 
         jRadioButtonQuarta.setText("Q");
         jRadioButtonQuarta.addActionListener(new java.awt.event.ActionListener() {
@@ -244,7 +248,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         jLabelSalas.setBackground(new java.awt.Color(255, 255, 255));
         jLabelSalas.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelSalas.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelSalas.setText("Salas");
+        jLabelSalas.setText("Salas:");
 
         jTextFieldSalas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,8 +256,10 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabelDesc1.setBackground(new java.awt.Color(187, 187, 187));
         jLabelDesc1.setText("Em salas diferentes separe com \",\" Exemplo: \"1, 3, 6\"");
 
+        jLabelDesc2.setBackground(new java.awt.Color(187, 187, 187));
         jLabelDesc2.setText("Em salas sequenciais utilizar \"-\" Exemplo: \"1-3\"");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -280,7 +286,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelDias)
                             .addComponent(jLabelHoraIn))
-                        .addGap(18, 18, 18)
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jRadioButtonSegunda)
@@ -296,11 +302,11 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
                                 .addComponent(jRadioButtonSabado))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jSpinnerHoraIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabelSeparatorHoraIn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSpinnerMinutosIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabelHoraFim)
                                 .addGap(5, 5, 5)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,7 +346,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
                         .addGap(44, 44, 44))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelSalas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(jTextFieldSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,13 +427,25 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonCancelar1))
-                        .addGap(41, 41, 41))))
+                        .addGap(35, 35, 35))))
         );
 
         getContentPane().add(jPanel1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jTextFieldSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSalasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSalasActionPerformed
+
+    private void jButtonCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCancelar1ActionPerformed
 
     private void jRadioButtonLuzesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLuzesActionPerformed
         // TODO add your handling code here:
@@ -462,23 +480,54 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonSegundaActionPerformed
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        // --- INÍCIO DA VALIDAÇÃO ---
+        String titulo = jTextFieldTitulo.getText().trim();
+        String salasStr = jTextFieldSalas.getText().trim();
+
+        // 1. Validar Título
+        if (titulo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O campo 'Título' não pode estar vazio.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 2. Validar Datas (JDateChooser)
+        if (jDataInicio.getDate() == null || jDataFim.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "As datas de 'Data Início' e 'Data Fim' são obrigatórias.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Opcional: Validar se há pelo menos um Dia da Semana selecionado
+        if (coletarDiasDaSemana().length == 0) {
+            JOptionPane.showMessageDialog(this, "Selecione pelo menos um 'Dia da Semana'.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Opcional: Validar se há pelo menos um Dispositivo selecionado
+        JRadioButton[] radioDispositivos = {jRadioButtonArCondicionado, jRadioButtonLuzes, jRadioButtonDataShow};
+        if (coletarDispositivos(radioDispositivos).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Selecione pelo menos um 'Dispositivo' para o agendamento.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 3. Validar Salas
+        if (salasStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O campo 'Salas' não pode estar vazio.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // --- FIM DA VALIDAÇÃO ---
+
+        // --- INÍCIO DO ARMAZENAMENTO (Se a validação passou) ---
         // Cria uma nova instância do modelo
-        Agendamento novoAgendamento = new Agendamento();
+        Modelo.Agendamento novoAgendamento = new Modelo.Agendamento();
 
         // 1. Título
-        novoAgendamento.setTitulo(jTextFieldTitulo.getText());
+        novoAgendamento.setTitulo(titulo); // Usa o título já 'trimado'
 
-        // O campo de salas no seu código está como jTextFieldTitulo1
-        // É altamente recomendado renomear para algo como jTextFieldSalas no NetBeans!
-        String salasStr = jTextFieldSalas.getText();
-
+        // Campo de salas (Usa a variável 'salasStr' já 'trimada')
         // 2. Datas (JDateChooser)
-        if (jDataInicio.getCalendar() != null) {
-            novoAgendamento.setDataIn(jDataInicio.getCalendar());
-        }
-        if (jDataFim.getCalendar() != null) {
-            novoAgendamento.setDataF(jDataFim.getCalendar());
-        }
+        // As verificações jDataInicio.getCalendar() != null já foram feitas na validação.
+        novoAgendamento.setDataIn(jDataInicio.getCalendar());
+        novoAgendamento.setDataF(jDataFim.getCalendar());
 
         // 3. Dias da Semana (JRadioButtons)
         novoAgendamento.setDiaSemana(coletarDiasDaSemana());
@@ -488,37 +537,31 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         novoAgendamento.sethDesat(coletarHora(jSpinnerHoraFim, jSpinnerMinutosFim));
 
         // 5. Dispositivos (JRadioButtons - Múltipla Seleção)
-        JRadioButton[] chkDispositivos = {jRadioButtonArCondicionado, jRadioButtonLuzes, jRadioButtonDataShow};
-        novoAgendamento.setDispositivos(coletarDispositivos(chkDispositivos));
+        novoAgendamento.setDispositivos(coletarDispositivos(radioDispositivos)); // Usa o array de RBs da validação
 
         // 6. Salas (JTextField)
         try {
             novoAgendamento.setSalas(analisarStringSalas(salasStr));
         } catch (NumberFormatException e) {
-            // Exibir erro para o usuário, ex: JOptionPane.showMessageDialog(this, "Erro no formato das Salas.");
+            // Exibir erro específico de formato de salas (que é um erro diferente de campo vazio)
+            JOptionPane.showMessageDialog(this, "Erro no formato das Salas: " + e.getMessage(), "Erro de Formato", JOptionPane.ERROR_MESSAGE);
             System.err.println("Erro de formato de salas: " + e.getMessage());
             return;
         }
 
         // A partir daqui, o objeto 'novoAgendamento' está preenchido e pronto para ser usado (ex: salvar no DB)
+        JOptionPane.showMessageDialog(this, "Agendamento Adicionado com Sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         System.out.println("Agendamento criado e pronto para salvar: " + novoAgendamento.toString());
+        Gson gson = new Gson();
+        String u = "--addAgendamento--";
+        u+=gson.toJson(novoAgendamento);
+        
     }//GEN-LAST:event_jButtonAddActionPerformed
-
+         
+   
     private void jTextFieldTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldTituloActionPerformed
-
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void jButtonCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar1ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButtonCancelar1ActionPerformed
-
-    private void jTextFieldSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSalasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldSalasActionPerformed
 
     /**
      * @param args the command line arguments

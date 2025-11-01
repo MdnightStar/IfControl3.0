@@ -267,6 +267,7 @@ public class TratarAcao extends SocketArduino {
         }
     }
     
+    
 
     public String getLogin() {
         return _login;

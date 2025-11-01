@@ -75,10 +75,10 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelDias" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabelHoraIn" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelDias" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelHoraIn" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="jRadioButtonSegunda" min="-2" max="-2" attributes="0"/>
@@ -95,11 +95,11 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jSpinnerHoraIn" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabelSeparatorHoraIn" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jSpinnerMinutosIn" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jLabelHoraFim" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               </Group>
@@ -149,7 +149,7 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabelSalas" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="32" max="32767" attributes="0"/>
+                          <EmptySpace pref="28" max="32767" attributes="0"/>
                           <Component id="jTextFieldSalas" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -252,7 +252,7 @@
                               <Component id="jButtonAdd" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                               <Component id="jButtonCancelar1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -357,7 +357,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Dias da Semana"/>
+            <Property name="text" type="java.lang.String" value="Dias da Semana:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelHoraIn">
@@ -371,7 +371,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Hora In&#xed;cio"/>
+            <Property name="text" type="java.lang.String" value="Hora In&#xed;cio:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelData">
@@ -385,7 +385,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Data"/>
+            <Property name="text" type="java.lang.String" value="Data:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonSegunda">
@@ -415,7 +415,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Dispositivos"/>
+            <Property name="text" type="java.lang.String" value="Dispositivos:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonQuarta">
@@ -578,7 +578,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Salas"/>
+            <Property name="text" type="java.lang.String" value="Salas:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldSalas">
@@ -588,11 +588,17 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDesc1">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="bb" green="bb" red="bb" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Em salas diferentes separe com &quot;,&quot; Exemplo: &quot;1, 3, 6&quot;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDesc2">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="bb" green="bb" red="bb" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Em salas sequenciais utilizar &quot;-&quot; Exemplo: &quot;1-3&quot;"/>
           </Properties>
         </Component>
