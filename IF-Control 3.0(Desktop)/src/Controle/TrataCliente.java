@@ -88,7 +88,7 @@ public class TrataCliente implements Runnable {
                     String quebra[] = texto.split(";");
                     int nSala = Integer.parseInt(quebra[1]);
                     clienteOut.println(sessao.estadoSala(nSala));//Envia para o cliente se a sala está ocupada ou não
-                } else if (msg.contains("tipoAcao")) {
+                } else if (msg.contains("--acaoSala--")) {
                     System.out.println(msg); //Printa os atributos;
                     acao = gson.fromJson(msg, Acao.class); //Deserializa a msg em uma Acao
                     if((acao.getTipoAcao().contains("HA"))||(acao.getTipoAcao().contains("HD"))){
@@ -99,7 +99,10 @@ public class TrataCliente implements Runnable {
                     }
                     
                     //metodo para agendamento   servidor.iniciarAgendamentos();
-                } else if (msg.contains("logs")) {
+                }else if(msg.contains("--acao--")){
+                
+                }
+                else if (msg.contains("logs")) {
                     clienteOut.println(sessao.pegarLogs());//Imprime todas as ações
                 } else if (msg.contains("atualizar")) {
                     servidor.distribuiMsg(sessao.pegarSalas()); //Envia todas as salas serializadas para os clientes, para poder atualizar os atributos
@@ -109,7 +112,7 @@ public class TrataCliente implements Runnable {
                     String texto=msg;
                     String quebra[] = texto.split("--addSala--");
                     sala=gson.fromJson(quebra[1], Sala.class);
-                    sessao=new TratarAcao();
+                    
                     clienteOut.println(sessao.cadastrarSala(sala.getnSala(), sala.getIP()));
                 }
             }

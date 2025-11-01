@@ -4,17 +4,26 @@
  */
 package Aplicacao;
 
+import Modelo.Sala;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author LENOVO
  */
 public class FrameSala extends javax.swing.JFrame {
-    private FrameSala sala;
+    private Sala sala;
     private int nsala;
     private String textoNSala;
     private boolean estadoAr, estadoDS, estadoLuzes, estadoSala, presenca;
+    private Gson gs;
+    private java.lang.reflect.Type tipoSala;
     /**
      * Creates new form Sala
      */
@@ -22,6 +31,9 @@ public class FrameSala extends javax.swing.JFrame {
     public FrameSala(){
         initComponents();
         setVisible(true);
+         gs = new Gson();
+        tipoSala = new TypeToken<Sala>() {
+        }.getType();
     }
     
 
@@ -47,7 +59,7 @@ public class FrameSala extends javax.swing.JFrame {
         jLabelSala = new javax.swing.JLabel();
         jLabelTemperaturaValor = new javax.swing.JLabel();
         jLabelHumidadeValor = new javax.swing.JLabel();
-        jLabelHumidadeValor1 = new javax.swing.JLabel();
+        jLabelPresencaValor = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButtonEnviar = new javax.swing.JButton();
         comboBoxTemperatura = new javax.swing.JComboBox<>();
@@ -154,11 +166,11 @@ public class FrameSala extends javax.swing.JFrame {
         jLabelHumidadeValor.setText("XX");
         jLabelHumidadeValor.setToolTipText("");
 
-        jLabelHumidadeValor1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabelHumidadeValor1.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 18)); // NOI18N
-        jLabelHumidadeValor1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelHumidadeValor1.setText("XX");
-        jLabelHumidadeValor1.setToolTipText("");
+        jLabelPresencaValor.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelPresencaValor.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 18)); // NOI18N
+        jLabelPresencaValor.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPresencaValor.setText("XX");
+        jLabelPresencaValor.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -191,7 +203,7 @@ public class FrameSala extends javax.swing.JFrame {
                                     .addGap(70, 70, 70)
                                     .addComponent(jLabelPresença)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jLabelHumidadeValor1))))))
+                                    .addComponent(jLabelPresencaValor))))))
                 .addGap(20, 54, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -211,7 +223,7 @@ public class FrameSala extends javax.swing.JFrame {
                         .addGap(50, 50, 50)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelPresença)
-                            .addComponent(jLabelHumidadeValor1))
+                            .addComponent(jLabelPresencaValor))
                         .addGap(84, 84, 84)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelAr)
@@ -230,6 +242,11 @@ public class FrameSala extends javax.swing.JFrame {
         jButtonEnviar.setBackground(new java.awt.Color(204, 204, 204));
         jButtonEnviar.setForeground(new java.awt.Color(0, 0, 0));
         jButtonEnviar.setText("Enviar");
+        jButtonEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonEnviarMouseClicked(evt);
+            }
+        });
         jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEnviarActionPerformed(evt);
@@ -485,7 +502,7 @@ public class FrameSala extends javax.swing.JFrame {
            jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/luzes/luz-off.png")));
         }
         else{
-            MainApp.sessao.trataAcao("LZZON",nsala);
+            MainApp.sessao.trataAcao("LZON",nsala);
              jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/luzes/luz-on.png")));
         }
     }//GEN-LAST:event_jLabelLuzMouseClicked
@@ -613,6 +630,10 @@ public class FrameSala extends javax.swing.JFrame {
         jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/dataShow/ok.png")));
     }//GEN-LAST:event_jLabelOkeyMouseReleased
 
+    private void jButtonEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEnviarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEnviarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -653,9 +674,21 @@ public class FrameSala extends javax.swing.JFrame {
         @Override
         public void run() {
             while (isDisplayable()) {
-                MainApp.sessao.salas();
+                MainApp.sessao.getSala(nsala);
                 String resposta = MainApp.sessao.verificarResposta();
-        
+                if(resposta.contains("nSala")){
+                    sala= gs.fromJson(resposta, tipoSala);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            jLabelTemperaturaValor.setText(sala.getTemperatura()+"ºC");
+                            jLabelHumidadeValor.setText(sala.getUmidade()+"%");
+                            if(sala.isPresenca()){
+                                
+                            }
+                        }
+                    });
+                }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -683,12 +716,12 @@ public class FrameSala extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFreeze;
     private javax.swing.JLabel jLabelHumidade;
     private javax.swing.JLabel jLabelHumidadeValor;
-    private javax.swing.JLabel jLabelHumidadeValor1;
     private javax.swing.JLabel jLabelIfamLogo;
     private javax.swing.JLabel jLabelLuz;
     private javax.swing.JLabel jLabelMenu;
     private javax.swing.JLabel jLabelModo;
     private javax.swing.JLabel jLabelOkey;
+    private javax.swing.JLabel jLabelPresencaValor;
     private javax.swing.JLabel jLabelPresença;
     private javax.swing.JLabel jLabelSala;
     private javax.swing.JLabel jLabelTemperatura;
