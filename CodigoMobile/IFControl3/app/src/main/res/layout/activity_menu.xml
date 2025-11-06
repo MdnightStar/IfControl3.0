@@ -32,14 +32,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_tabs" />
+        app:menu="@menu/bottom_tabs"/>
 
     <ScrollView
         android:id="@+id/scroll_panel"
         android:layout_width="409dp"
         android:layout_height="553dp"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="65dp">
+        tools:layout_editor_absoluteY="65dp"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
