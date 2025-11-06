@@ -88,30 +88,46 @@ public class TrataCliente implements Runnable {
                     String quebra[] = texto.split(";");
                     int nSala = Integer.parseInt(quebra[1]);
                     clienteOut.println(sessao.estadoSala(nSala));//Envia para o cliente se a sala está ocupada ou não
-                } else if (msg.contains("tipoAcao")) {
+                } else if (msg.contains("--acaoSala--")) {
                     System.out.println(msg); //Printa os atributos;
                     acao = gson.fromJson(msg, Acao.class); //Deserializa a msg em uma Acao
+                    String r;
                     if((acao.getTipoAcao().contains("HA"))||(acao.getTipoAcao().contains("HD"))){
                         String horaFormatada = acao.getHoraAcao().toString(); // converte para String
-                        String r = sessao.tratarAcao((acao.getTipoAcao()+horaFormatada), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
+                        r = sessao.tratarAcao((acao.getTipoAcao()+horaFormatada), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
                     }else{
-                        String r = sessao.tratarAcao(acao.getTipoAcao(), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
+                        r = sessao.tratarAcao(acao.getTipoAcao(), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
                     }
+                    clienteOut.println(r);
                     
                     //metodo para agendamento   servidor.iniciarAgendamentos();
-                } else if (msg.contains("logs")) {
+                }else if(msg.contains("--acao--")){
+                     System.out.println(msg); //Printa os atributos;
+                     acao = gson.fromJson(msg, Acao.class); //Deserializa a msg em uma Acao
+                     String r=sessao.tratarAcao(acao.getTipoAcao());
+                     clienteOut.println(r);
+                     if(acao.getTipoAcao().contains("--addAgendamento--")){
+                         servidor.distribuiMsg("--modAgendamento--"+sessao.pegarAngemadamento());
+                     }
+                }
+                else if (msg.contains("logs")) {
                     clienteOut.println(sessao.pegarLogs());//Imprime todas as ações
                 } else if (msg.contains("atualizar")) {
                     servidor.distribuiMsg(sessao.pegarSalas()); //Envia todas as salas serializadas para os clientes, para poder atualizar os atributos
                 }else if(msg.contains("salas")){
                     clienteOut.println(sessao.pegarSalas());//Imprime todas as salas
-                }else if(msg.contains("addSala")){
+                }else if(msg.contains("--getSala--")){
+                    String nSala[]=msg.split("--getSala--");
+                    int u = Integer.parseInt(nSala[1]);
+                    clienteOut.println(sessao.getSala(u));
+                }
+                /*else if(msg.contains("addSala")){
                     String texto=msg;
                     String quebra[] = texto.split("--addSala--");
                     sala=gson.fromJson(quebra[1], Sala.class);
-                    sessao=new TratarAcao();
+                    
                     clienteOut.println(sessao.cadastrarSala(sala.getnSala(), sala.getIP()));
-                }
+                }*/
             }
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());

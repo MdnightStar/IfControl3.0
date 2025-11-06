@@ -44,9 +44,6 @@ public class PSala extends javax.swing.JFrame {
         adicionarSalas();
 
         new Thread(new AtulizaDadosSala()).start();
-
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
     }
 
     public void adicionarSalas() {
@@ -140,19 +137,20 @@ public class PSala extends javax.swing.JFrame {
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelPrincipalLayout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
-                                .addComponent(jScrollPaneSala)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelIfamLogo))
-                            .addComponent(jButtonAdicionar, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonAdicionar))
+                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelIfamLogo))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelPrincipalLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(jLabelSalas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1020, Short.MAX_VALUE)
-                        .addComponent(jLabelIF1)))
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneSala, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                                .addComponent(jLabelSalas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1020, Short.MAX_VALUE)
+                                .addComponent(jLabelIF1)))))
                 .addGap(27, 27, 27))
         );
         jPanelPrincipalLayout.setVerticalGroup(
@@ -161,18 +159,13 @@ public class PSala extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelSalas)
-                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabelIF1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonAdicionar)))
-                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(jScrollPaneSala, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jLabelIF1))
+                .addGap(7, 7, 7)
+                .addComponent(jButtonAdicionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPaneSala, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(jPanelPrincipal);
@@ -354,18 +347,18 @@ public class PSala extends javax.swing.JFrame {
 
         @Override
         public void run() {
-            while (salaAberta()) {
-                MainApp.sessao.salas();
-                String resposta = MainApp.sessao.verificarResposta();
+            while ((salaAberta() && isDisplayable())) {
+                String resposta =MainApp.sessao.salas();
                 if (resposta.contains("nSala")) {
                     salas = gs.fromJson(resposta, tipoSala);
                     Collections.sort(salas, Comparator.comparingInt(s -> s.getnSala()));
+                    //Para o proximo: tenta fazer metodos para organizar os panel da esquerda a direita a partir do nome
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             for (Sala sala : salas) {
+                                SalaPanel newSp = procurarSP(sala);
                                 if (sala.isEstadoDaConexao()) {
-                                    SalaPanel newSp = procurarSP(sala);
                                     if (newSp == null) {
                                         String nSala = "Sala " + sala.getnSala() + ":";
                                         SalaPanel ps = new SalaPanel(nSala, sala.isEstadoAr(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
@@ -375,6 +368,16 @@ public class PSala extends javax.swing.JFrame {
                                     } else {
                                         newSp.atualizar(sala.isEstadoSala(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
                                                 sala.isEstadoAr(), sala.isPresenca());
+                                    }
+                                }else{
+                                    if(newSp==null){
+                                        String nSala = "Sala " + sala.getnSala() + ":";
+                                        SalaPanel ps = new SalaPanel(nSala, sala.isEstadoAr(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
+                                                sala.isEstadoSala(), sala.isPresenca(), sala.getnSala());
+                                        salasP.add(ps);
+                                        Salas.add(ps);
+                                    }else{
+                                        Salas.remove(newSp);
                                     }
                                 }
                             }

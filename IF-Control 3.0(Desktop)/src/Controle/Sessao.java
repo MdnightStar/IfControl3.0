@@ -121,16 +121,23 @@ public class Sessao {
     * 
     * @param acao
     */
-    public void trataAcao(String acao){
+    public String trataAcao(String acao){
         Acao a = new Acao();
         a.setDataAcao(Calendar.getInstance());
         a.setHoraAcao(Time.valueOf( LocalTime.now()));
         a.setTipoAcao(acao);
         Gson gson = new Gson();
-        String u = gson.toJson(a);
+        String u = "--acao--";
+        u=gson.toJson(a);
         
         System.out.println(u);
         servidor.enviar(u);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        return servidor.getResposta();
         
     }
     
@@ -139,20 +146,24 @@ public class Sessao {
     * 
     * @param acao
     */
-    public void trataAcao(String acao, int nSala){ 
+    public String trataAcao(String acao, int nSala){ 
          Acao a = new Acao();
         a.setDataAcao(Calendar.getInstance());
         a.setHoraAcao(Time.valueOf( LocalTime.now()));
         a.setTipoAcao(acao);
         a.setnSala(nSala);
         Gson gson = new Gson();
-        String u = gson.toJson(a);
+        String u = "--acaoSala--";
+        u=gson.toJson(a);
         
         System.out.println(u);
         servidor.enviar(u);
-
-        
-        
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        return servidor.getResposta();
     }
     
     /**
@@ -195,20 +206,9 @@ public class Sessao {
     * Pede para o TrataCliente enviar todas as salas serializadas
     *
     */
-    public void salas(){
+    public String salas(){
         servidor.enviar("salas");
-    }
-    
-    /**
-    * Pede para o TrataCliente cadastrar uma sala no bd
-    *
-    */
-    public String addSala(Sala sala){
-        Gson gson = new Gson();
-        String u = gson.toJson(sala);
-        
-        servidor.enviar("sala:--addSala--"+u);
-        try {
+         try {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
             System.out.println("Erro ao executar o TrataCliente");
@@ -216,17 +216,14 @@ public class Sessao {
         return servidor.getResposta();
     }
     
-    public Sala getSala(int nSala){
-        servidor.enviar("sala:--nSala--"+nSala);
+    public String getSala(int nSala){
+        servidor.enviar("--getSala--"+nSala);
         try {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
             System.out.println("Erro ao executar o TrataCliente");
         }
-        String resp = servidor.getResposta();
-        Gson gson = new Gson();
-        Sala u = gson.fromJson(resp,new TypeToken<List<Sala>>() {
-        }.getType());
-        return u;
+        return servidor.getResposta();
+       
     }
 }

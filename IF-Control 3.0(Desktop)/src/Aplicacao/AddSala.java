@@ -5,6 +5,7 @@
 package Aplicacao;
 
 import Modelo.Sala;
+import com.google.gson.Gson;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -19,6 +20,16 @@ public class AddSala extends javax.swing.JFrame {
      */
     public AddSala() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+    
+    public boolean verificarFomato(String text){
+        try {
+            int n=Integer.parseInt(text);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     /**
@@ -42,7 +53,7 @@ public class AddSala extends javax.swing.JFrame {
         jButtonAdd = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
 
@@ -69,6 +80,7 @@ public class AddSala extends javax.swing.JFrame {
         jLabelCadastrarSala.setForeground(new java.awt.Color(255, 255, 255));
         jLabelCadastrarSala.setText("Cadastrar sala ");
 
+        jTextFieldIP.setText("192.168.43.241");
         jTextFieldIP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldIPActionPerformed(evt);
@@ -117,7 +129,6 @@ public class AddSala extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabelIP)
                                         .addComponent(jLabelNSala))
-                                    .addGap(18, 18, 18)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGap(264, 264, 264)
@@ -184,11 +195,13 @@ public class AddSala extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Insira o IP!", "ERRO", JOptionPane.ERROR_MESSAGE);
         } else if ("".equals(jTextFieldNSala.getText())) {
             JOptionPane.showMessageDialog(null, "Insira o número da Sala!", "ERRO", JOptionPane.ERROR_MESSAGE);
-        } else {
-
+        } else if(verificarFomato(jTextFieldNSala.getText())){
             int n = Integer.parseInt(jTextFieldNSala.getText());
             Sala o = new Sala(n, jTextFieldIP.getText());
-            String retorno = MainApp.sessao.addSala(o);
+            Gson gson=new Gson();
+            String msg="--addSala--";
+            msg+=gson.toJson(o);
+            String retorno=MainApp.sessao.trataAcao(msg);
             if (retorno.contains("INVALID")) {
                 if (retorno.contains("NSALA")) {
                     JOptionPane.showMessageDialog(null, "Número de sala já existe", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -204,6 +217,8 @@ public class AddSala extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Problema no banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
                 
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro no formato do campo Nº Sala", "Alerta", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAddActionPerformed
 

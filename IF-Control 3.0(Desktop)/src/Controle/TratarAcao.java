@@ -26,6 +26,7 @@ public class TratarAcao extends SocketArduino {
     private Acao acao;
     private Sala sala;
     private Gson gson;
+    private String quebra[];
     
 
     /**
@@ -99,13 +100,21 @@ public class TratarAcao extends SocketArduino {
         }else if(manager.IPexiste(IP)){
             return "INVALID_IP";
         }else{
-            sala = new Sala(nSala, IP);
             if(manager.adicionarSala(nSala, IP)){
                 return "CAD_SALA_OK";
             }else{
                 return "ERROR_BD_INSERT";
             }
         }
+    }
+    
+    public String cadastrarAgendamento(Agendamento agendamento){
+        if(manager.adicionarAgendamento(agendamento)){
+            return "CAD_AGENDAMENTO_OK";
+        }else{
+            return"ERROR_BD_INSERT";
+        }
+        
     }
 
     /**
@@ -134,7 +143,16 @@ public class TratarAcao extends SocketArduino {
         if (salas != null) {
             return gson.toJson(salas);
         } else {
-            return "ERROR_SELECT_LOGS";
+            return "ERROR_SELECT_SALAS";
+        }
+    }
+    
+    public String pegarAngemadamento(){
+        List<Agendamento> agendamentos = manager.consultarAgendamento();
+        if (agendamentos != null) {
+            return gson.toJson(agendamentos);
+        } else {
+            return "ERROR_SELECT_AGENDAMENTO";
         }
     }
 
@@ -152,6 +170,16 @@ public class TratarAcao extends SocketArduino {
         } else {
             return ("LIVRE: SALA:" + nSala);
         }
+    }
+    
+    
+    public String getSala(int nSala){
+         Sala sala=manager.procuraSala(nSala);
+         if(sala!=null){
+             return gson.toJson(sala);
+         }else{
+             return "ERROR_SELECT_SALA";
+         }
     }
 
     /**
@@ -208,8 +236,18 @@ public class TratarAcao extends SocketArduino {
                     }
                     //Até essa parte do código, se envia uma ação para o arduino e 
                     //verifica o recebimento
+                } else if(acao.contains("LZ")){
+                    try {
+                        conectarArduino(nSala);
+                        enviar(acao);
+                        resposta=ler();
+                        desconectarArduino();
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi se conectar com o arduino",
+                                "ERRO", JOptionPane.ERROR_MESSAGE);
+                    }
+                
                 }
-
                 switch (acao) {
                     case "DSON.":
                         sala.setEstadoDataShow(true);
@@ -217,10 +255,10 @@ public class TratarAcao extends SocketArduino {
                     case "DSOFF.":
                         sala.setEstadoDataShow(false);
                         break;
-                    case "LUZOFF.":
+                    case "LZOFF.":
                         sala.setEstadoLuzes(false);
                         break;
-                    case "LUZON.":
+                    case "LZON.":
                         sala.setEstadoLuzes(true);
                         break;
                     case "AROFF.":
@@ -267,7 +305,31 @@ public class TratarAcao extends SocketArduino {
         }
     }
     
+    public String tratarAcao(String acao) throws ParseException {
+        this.acao = new Acao(); // zera a ação do método
+        String resposta = "";
 
+        //Preenche dados da ação do metodo
+        this.acao.setTipoAcao(acao);
+        this.acao.setIdUser(user.getIdUser()); //seta id do usuario da classe user
+        this.acao.setLogin(_login); //seta o login desta classe sessao
+        
+        if(acao.contains("--addSala--")){
+            quebra=acao.split("--addSala--");
+            sala=gson.fromJson(quebra[1], Sala.class);
+            return cadastrarSala(sala.getnSala(), sala.getIP());
+        }else if(acao.contains("--addAgendamento--")){
+            quebra=acao.split("--addAgendamento--");
+            Agendamento agendamento=gson.fromJson(quebra[1], Agendamento.class);
+            return cadastrarAgendamento(agendamento);
+            
+        }else{
+            return "COMANDO_IMPOSSIVEL";
+        }
+        
+    }
+    
+    
     public String getLogin() {
         return _login;
     }
