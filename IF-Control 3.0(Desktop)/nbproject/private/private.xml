@@ -3,18 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TrataCliente.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PAgendamento.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PSala.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/Servidor.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/MainApp.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddAgendamento.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/AtualizaSala.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/FrameSala.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TratarAcao.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/DAOManager.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddSala.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/Sessao.java</file>
+            <file>file:/C:/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/Sessao.java</file>
+            <file>file:/C:/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TratarAcao.java</file>
+            <file>file:/C:/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/DAOManager.java</file>
+            <file>file:/C:/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TrataCliente.java</file>
         </group>
     </open-files>
 </project-private>
