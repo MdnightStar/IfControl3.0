@@ -7,6 +7,7 @@ package Aplicacao;
 import Modelo.Sala;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -26,7 +27,6 @@ public class SalaPanel extends javax.swing.JPanel {
         initComponents();
         jLabelNSala.setText(textoNSala);
         salaAberta=false;
-        
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
         
         
@@ -218,8 +218,16 @@ public class SalaPanel extends javax.swing.JPanel {
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
         salaAberta=true;
-        novaSala= new FrameSala();
-        
+        novaSala= new FrameSala(nsala);
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run() {
+                while(novaSala.isDisplayable()){
+                    salaAberta=true;
+                }
+                salaAberta=false;
+            }
+        });
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
 

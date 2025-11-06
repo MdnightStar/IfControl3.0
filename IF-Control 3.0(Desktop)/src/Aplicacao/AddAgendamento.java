@@ -16,19 +16,21 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author cauaa
  */
-public class addAgendamentoFrame extends javax.swing.JFrame {
+public class AddAgendamento extends javax.swing.JFrame {
 
     /**
      * Creates new form g
      */
-    public addAgendamentoFrame() {
+    public AddAgendamento() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -224,7 +226,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         jLabelHoraFim.setBackground(new java.awt.Color(255, 255, 255));
         jLabelHoraFim.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelHoraFim.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelHoraFim.setText("Hora Fim");
+        jLabelHoraFim.setText("Hora Fim:");
 
         jSpinnerHoraFim.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
 
@@ -285,9 +287,12 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelDias)
-                            .addComponent(jLabelHoraIn))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelHoraIn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpinnerHoraIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jRadioButtonSegunda)
                                 .addGap(18, 18, 18)
@@ -301,8 +306,6 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioButtonSabado))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jSpinnerHoraIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabelSeparatorHoraIn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSpinnerMinutosIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -346,7 +349,7 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
                         .addGap(44, 44, 44))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelSalas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextFieldSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -555,6 +558,12 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
         Gson gson = new Gson();
         String u = "--addAgendamento--";
         u+=gson.toJson(novoAgendamento);
+        String resp=MainApp.sessao.trataAcao(u);
+        if (resp.equals("CAD_ANGENDAMENTO_OK")) {
+            JOptionPane.showMessageDialog(null, "Cadastro do agendamento reaalizado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Erro no banco de dados", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
         
     }//GEN-LAST:event_jButtonAddActionPerformed
          
@@ -580,21 +589,23 @@ public class addAgendamentoFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addAgendamentoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addAgendamentoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addAgendamentoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addAgendamentoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new addAgendamentoFrame().setVisible(true);
+                new AddAgendamento().setVisible(true);
             }
         });
     }

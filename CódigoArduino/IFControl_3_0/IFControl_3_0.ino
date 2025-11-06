@@ -120,7 +120,7 @@ void processarString(String str) {
       mySerial.print("TRUE");
     else
       mySerial.print("FALSE");
-  } else if (str.indexOf("LUZ") > -1) {
+  } else if (str.indexOf("LZ") > -1) {
     if (str.indexOf("ON") > -1) {
       digitalWrite(pinRele, HIGH);
       mySerial.print("OK");

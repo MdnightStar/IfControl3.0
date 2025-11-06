@@ -107,6 +107,14 @@ public class MainApp {
         }
     }
     
+    public static void showAddAgendamento(){
+        try {
+            AddAgendamento.main(null);
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar adicionar agendamento"+e.getMessage());
+        }
+    }
+    
     public static void main(String[]args){
         MainApp aplicacao=new MainApp();
     }

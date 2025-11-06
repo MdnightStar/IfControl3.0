@@ -3,32 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/Login.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PesquisarAcao.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/DAOManager.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/addAgendamentoFrame.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/User.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/SalaPanel.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/Agendamento.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PSala.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PDispositivos.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AgendamentoPanel.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AcoesPanel.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/FrameSala.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/Cadastro.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/Sessao.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PAAcoes.java</file>
             <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TrataCliente.java</file>
             <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PAgendamento.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TrataServidor.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddSala.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/TestarMainApp.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/Acao.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/SocketArduino.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/TesteBD.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PSala.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/Servidor.java</file>
             <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/MainApp.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddAgendamento.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/AtualizaSala.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/FrameSala.java</file>
             <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TratarAcao.java</file>
-            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/ConexaoSalas.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/DAOManager.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddSala.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/Sessao.java</file>
         </group>
     </open-files>
 </project-private>

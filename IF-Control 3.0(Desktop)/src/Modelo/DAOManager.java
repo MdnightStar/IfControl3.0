@@ -668,4 +668,81 @@ public class DAOManager {
         // Converte List<Integer> para int[]
         return salas.stream().mapToInt(i -> i).toArray();
     }
+    
+    /**
+     * O método adicionarAgendamento insere um novo agendamento, seus dias da
+     * semana e as salas associadas no banco de dados.
+     *
+     * @param agendamento, instância da classe Agendamento
+     * @return V se o agendamento for bem sucedido e F caso falhe
+     */
+    public boolean adicionarAgendamento(Agendamento agendamento) {
+        // 1. Inserir o Agendamento principal
+        String sqlAgendamento = "INSERT INTO agendamento "
+                + "(titulo, autor, dataInicio, dataFim, hAtiv, hDesat) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try {
+            // PreparedStatement com RETURN_GENERATED_KEYS para obter o ID gerado
+            PreparedStatement stmt = this.conexao.prepareStatement(sqlAgendamento, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            // Conversão de Calendar para java.sql.Date
+            java.sql.Date dataInicio = new java.sql.Date(agendamento.getDataIn().getTimeInMillis());
+            java.sql.Date dataFim = new java.sql.Date(agendamento.getDataF().getTimeInMillis());
+
+            stmt.setString(1, agendamento.getTitulo());
+            stmt.setString(2, agendamento.getAutor());
+            stmt.setDate(3, dataInicio);
+            stmt.setDate(4, dataFim);
+            stmt.setTime(5, agendamento.gethAtv());
+            stmt.setTime(6, agendamento.gethDesat());
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Falha ao criar o agendamento, nenhuma linha afetada.");
+            }
+
+            // 2. Obter o ID gerado
+            int idAgendamento = -1;
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    idAgendamento = generatedKeys.getInt(1);
+                    agendamento.setIdAgendamento(idAgendamento); // Atualiza o objeto Agendamento com o ID
+                } else {
+                    throw new SQLException("Falha ao criar o agendamento, não foi possível obter o ID.");
+                }
+            }
+            stmt.close();
+
+            // 3. Inserir dias da semana
+            String sqlDias = "INSERT INTO diasDaSemana (agendamento_id, dia) VALUES (?, ?)";
+            try (PreparedStatement stmtDias = conexao.prepareStatement(sqlDias)) {
+                for (int dia : agendamento.getDiaSemana()) {
+                    stmtDias.setInt(1, idAgendamento);
+                    stmtDias.setInt(2, dia);
+                    stmtDias.addBatch(); // Adiciona o comando ao lote
+                }
+                stmtDias.executeBatch(); // Executa todos os comandos no lote
+            }
+
+            // 4. Inserir salas
+            String sqlSalas = "INSERT INTO nSalaAgendamento (agendamento_id, nSala) VALUES (?, ?)";
+            try (PreparedStatement stmtSalas = conexao.prepareStatement(sqlSalas)) {
+                for (int nSala : agendamento.getSalas()) {
+                    stmtSalas.setInt(1, idAgendamento);
+                    stmtSalas.setInt(2, nSala);
+                    stmtSalas.addBatch(); // Adiciona o comando ao lote
+                }
+                stmtSalas.executeBatch(); // Executa todos os comandos no lote
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao adicionar agendamento: " + e.getMessage());
+            // Em um ambiente de produção, você consideraria um rollback aqui se não estivesse usando autocommit.
+            return false;
+        }
+    }
 }

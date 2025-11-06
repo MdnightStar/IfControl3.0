@@ -3,4 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="ifcontrolpanel">#003267</color>
+    <color name="cinza">#3c3c3c</color>
 </resources>

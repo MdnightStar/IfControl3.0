@@ -26,7 +26,6 @@ public class AgendamentoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabelAutor = new javax.swing.JLabel();
         jLabelInicio = new javax.swing.JLabel();
@@ -41,13 +40,13 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
+        jRadioButtonSegunda = new javax.swing.JRadioButton();
+        jRadioButtonTerca = new javax.swing.JRadioButton();
+        jRadioButtonQuarta = new javax.swing.JRadioButton();
+        jRadioButtonQuinta = new javax.swing.JRadioButton();
+        jRadioButtonSexta = new javax.swing.JRadioButton();
+        jRadioButtonSabado = new javax.swing.JRadioButton();
+        jRadioButtonDomingo = new javax.swing.JRadioButton();
         jPanel5 = new javax.swing.JPanel();
         jRadioButton8 = new javax.swing.JRadioButton();
         jRadioButton9 = new javax.swing.JRadioButton();
@@ -59,23 +58,9 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         jLabelhoraAtivEd = new javax.swing.JLabel();
         jLabelhoraDesativEd = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
-
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel2.setMaximumSize(new java.awt.Dimension(32767, 70));
-        jPanel2.setName(""); // NOI18N
-        jPanel2.setPreferredSize(new java.awt.Dimension(800, 120));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 803, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
-        );
+        jLabelSalas = new javax.swing.JLabel();
+        jLabelSalasEd = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -137,26 +122,26 @@ public class AgendamentoPanel extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("  S   T    Q   Q   S   S   D");
+        jLabel6.setText(" S    T   Q   Q   S   S   D");
         jPanel3.add(jLabel6);
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
         jPanel4.setPreferredSize(new java.awt.Dimension(50, 25));
-        jPanel4.setLayout(new java.awt.GridLayout(1, 7));
+        jPanel4.setLayout(new java.awt.GridLayout(1, 7, 5, 0));
 
-        jRadioButton2.setPreferredSize(new java.awt.Dimension(10, 20));
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonSegunda.setPreferredSize(new java.awt.Dimension(10, 20));
+        jRadioButtonSegunda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                jRadioButtonSegundaActionPerformed(evt);
             }
         });
-        jPanel4.add(jRadioButton2);
-        jPanel4.add(jRadioButton1);
-        jPanel4.add(jRadioButton3);
-        jPanel4.add(jRadioButton4);
-        jPanel4.add(jRadioButton5);
-        jPanel4.add(jRadioButton6);
-        jPanel4.add(jRadioButton7);
+        jPanel4.add(jRadioButtonSegunda);
+        jPanel4.add(jRadioButtonTerca);
+        jPanel4.add(jRadioButtonQuarta);
+        jPanel4.add(jRadioButtonQuinta);
+        jPanel4.add(jRadioButtonSexta);
+        jPanel4.add(jRadioButtonSabado);
+        jPanel4.add(jRadioButtonDomingo);
 
         jPanel3.add(jPanel4);
 
@@ -221,6 +206,17 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         jSeparator4.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jLabelSalas.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelSalas.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelSalas.setText("Salas:");
+
+        jLabelSalasEd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelSalasEd.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelSalasEd.setText("XXXXXXXXX");
+
+        jSeparator5.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -252,24 +248,31 @@ public class AgendamentoPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelhoraAtiv)
+                    .addComponent(jLabelhoraDesativ))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelhoraAtiv)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabelhoraAtivEd))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelhoraDesativ)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelhoraDesativEd)))
-                .addGap(34, 34, 34)
+                        .addComponent(jLabelhoraDesativEd))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabelhoraAtivEd)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(jLabelSalas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelSalasEd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonEditar)
@@ -283,9 +286,6 @@ public class AgendamentoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -298,7 +298,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
                                 .addComponent(jLabelAutor)
                                 .addComponent(jLabelAutorEd)
                                 .addComponent(jLabelInicioEd)
-                                .addComponent(jLabelhoraAtiv, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelhoraAtiv)
                                 .addComponent(jLabelhoraAtivEd)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,12 +309,20 @@ public class AgendamentoPanel extends javax.swing.JPanel {
                                 .addComponent(jLabelhoraDesativEd))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabelTitulo)
-                                .addComponent(jLabelTituloEd)))))
+                                .addComponent(jLabelTituloEd))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelSalasEd))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -335,9 +343,9 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void jRadioButtonSegundaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSegundaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_jRadioButtonSegundaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -350,29 +358,31 @@ public class AgendamentoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelFimEd;
     private javax.swing.JLabel jLabelInicio;
     private javax.swing.JLabel jLabelInicioEd;
+    private javax.swing.JLabel jLabelSalas;
+    private javax.swing.JLabel jLabelSalasEd;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JLabel jLabelTituloEd;
     private javax.swing.JLabel jLabelhoraAtiv;
     private javax.swing.JLabel jLabelhoraAtivEd;
     private javax.swing.JLabel jLabelhoraDesativ;
     private javax.swing.JLabel jLabelhoraDesativEd;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JRadioButton jRadioButton8;
     private javax.swing.JRadioButton jRadioButton9;
+    private javax.swing.JRadioButton jRadioButtonDomingo;
+    private javax.swing.JRadioButton jRadioButtonQuarta;
+    private javax.swing.JRadioButton jRadioButtonQuinta;
+    private javax.swing.JRadioButton jRadioButtonSabado;
+    private javax.swing.JRadioButton jRadioButtonSegunda;
+    private javax.swing.JRadioButton jRadioButtonSexta;
+    private javax.swing.JRadioButton jRadioButtonTerca;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     // End of variables declaration//GEN-END:variables
 }
