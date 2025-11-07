@@ -18,6 +18,23 @@ public class Agendamento {
     Time hAtv,hDesat;
     int[] diaSemana,salas;
     ArrayList <String> dispositivos;
+    
+    public Agendamento(){
+    }
+
+    public Agendamento(String autor, String titulo, Calendar dataIn, Calendar dataF, Time hAtv, Time hDesat, int[] diaSemana, int[] salas, ArrayList<String> dispositivos) {
+        this.autor = autor;
+        this.titulo = titulo;
+        this.dataIn = dataIn;
+        this.dataF = dataF;
+        this.hAtv = hAtv;
+        this.hDesat = hDesat;
+        this.diaSemana = diaSemana;
+        this.salas = salas;
+        this.dispositivos = dispositivos;
+    }
+    
+    
 
     // Getters
     public int getIdAgendamento() {

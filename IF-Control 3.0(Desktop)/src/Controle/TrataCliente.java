@@ -106,7 +106,11 @@ public class TrataCliente implements Runnable {
                      acao = gson.fromJson(msg, Acao.class); //Deserializa a msg em uma Acao
                      String r=sessao.tratarAcao(acao.getTipoAcao());
                      clienteOut.println(r);
-                     if(acao.getTipoAcao().contains("--addAgendamento--")){
+                     if(msg.contains("--addAgendamento--")){
+                         servidor.distribuiMsg("--modAgendamento--"+sessao.pegarAngemadamento());
+                     }else if(msg.contains("--editAgendamento--")){
+                         servidor.distribuiMsg("--modAgendamento--"+sessao.pegarAngemadamento());
+                     }else if(msg.contains("--deletAgendamento--")){
                          servidor.distribuiMsg("--modAgendamento--"+sessao.pegarAngemadamento());
                      }
                 }

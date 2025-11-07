@@ -172,6 +172,24 @@ public class TratarAcao extends SocketArduino {
         }
     }
     
+    public String deletAgendamento(int idAgendamneto) {
+        boolean resp = manager.eliminarAgendamento(idAgendamneto);
+        if (resp) {
+            return ("SUCESSO_DELET_AGENDAMENTO");
+        } else {
+            return ("ERRO_DELET_AGENDAMENTO");
+        }
+    }
+    
+    public String editAgendamento(Agendamento agen) {
+        boolean resp = manager.atualizarAgendamento(agen);
+        if (resp) {
+            return ("SUCESSO_EDIT_AGENDAMENTO");
+        } else {
+            return ("ERRO_EDIT_AGENDAMENTO");
+        }
+    }
+    
     
     public String getSala(int nSala){
          Sala sala=manager.procuraSala(nSala);
@@ -323,6 +341,15 @@ public class TratarAcao extends SocketArduino {
             Agendamento agendamento=gson.fromJson(quebra[1], Agendamento.class);
             return cadastrarAgendamento(agendamento);
             
+        }else if(acao.contains("--deletAgendamento--")){
+            quebra=acao.split("--deletAgendamento--");
+            int id=Integer.parseInt(quebra[1]);
+            return deletAgendamento(id);
+            
+        }else if(acao.contains("--editAgendamento--")){
+            quebra=acao.split("--editAgendamento--");
+            Agendamento agendamento=gson.fromJson(quebra[1], Agendamento.class);
+            return editAgendamento(agendamento);
         }else{
             return "COMANDO_IMPOSSIVEL";
         }
