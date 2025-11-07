@@ -1,6 +1,8 @@
 package ifcontrol.mobile;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Handler;
 import android.widget.EditText;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -86,6 +88,16 @@ public class AppActivity extends Activity {
             if ("LOGIN_OK".equalsIgnoreCase(retorno)) { // Exemplo
                 mostrarAlerta("SUCESSO", "Login realizado com sucesso!");
                 // Adicione aqui a navegação para a próxima Activity
+                //navegação para a pagina menuActivity
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(AppActivity.this, MenuActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }, 2000);
             } else {
                 mostrarAlerta("FALHA", "Credenciais inválidas ou erro no servidor.");
             }
