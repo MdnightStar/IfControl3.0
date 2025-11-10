@@ -28,6 +28,7 @@ public class TrataCliente implements Runnable {
     private Acao acao;
     private Gson gson;
     private DAOManager manager;
+    
 
     /**
      * Construtor da classe TrataCliente
@@ -59,18 +60,17 @@ public class TrataCliente implements Runnable {
     @Override
     public void run() {
         try (Scanner s = new Scanner(this.clienteIn)) { //Declaração do fluxo de saída do cliente
-            
+            System.out.println("Iniciando");
             while (s.hasNextLine()) { //Leitura de dados do cliente
                 sessao.setManager(manager);  //Insere o banco de dados na sessao
                 String msg = s.nextLine();
                 System.out.println("Mensagem recebida pelo servidor: "+msg);
-                servidor.setMessage(msg); //Print da mensagem do cliente no servidor
                 if (msg.contains("_login")) {
                     String campo[] = msg.split(",");
                     String dado[] = campo[0].split(":");
                     String dado1[] = campo[1].split(":");
 
-                    sessao = new TratarAcao();
+                    
                     sessao.setLogin(dado[1].substring(1, dado[1].length() - 1));
                     sessao.setSenha(dado1[1].substring(1, dado1[1].length() - 2));
 
@@ -89,8 +89,8 @@ public class TrataCliente implements Runnable {
                     int nSala = Integer.parseInt(quebra[1]);
                     clienteOut.println(sessao.estadoSala(nSala));//Envia para o cliente se a sala está ocupada ou não
                 } else if (msg.contains("--acaoSala--")) {
-                    System.out.println(msg); //Printa os atributos;
-                    acao = gson.fromJson(msg, Acao.class); //Deserializa a msg em uma Acao
+                    String parteAcaoSala[]=msg.split("--acaoSala--");
+                    acao = gson.fromJson(parteAcaoSala[1], Acao.class); //Deserializa a msg em uma Acao
                     String r;
                     if((acao.getTipoAcao().contains("HA"))||(acao.getTipoAcao().contains("HD"))){
                         String horaFormatada = acao.getHoraAcao().toString(); // converte para String
@@ -98,14 +98,14 @@ public class TrataCliente implements Runnable {
                     }else{
                         r = sessao.tratarAcao(acao.getTipoAcao(), acao.getnSala()); //Efetua a ação e retorna se deu falho ou não
                     }
-                    clienteOut.println(r);
+                    
                     
                     //metodo para agendamento   servidor.iniciarAgendamentos();
                 }else if(msg.contains("--acao--")){
-                     System.out.println(msg); //Printa os atributos;
-                     acao = gson.fromJson(msg, Acao.class); //Deserializa a msg em uma Acao
+                     String parteAcao[]=msg.split("--acao--");
+                     acao = gson.fromJson(parteAcao[1], Acao.class); //Deserializa a msg em uma Acao
                      String r=sessao.tratarAcao(acao.getTipoAcao());
-                     clienteOut.println(r);
+                     
                      if(msg.contains("--addAgendamento--")){
                          servidor.distribuiMsg("--modAgendamento--"+sessao.pegarAngemadamento());
                      }else if(msg.contains("--editAgendamento--")){

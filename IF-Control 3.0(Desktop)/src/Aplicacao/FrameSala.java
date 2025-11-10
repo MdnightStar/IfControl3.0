@@ -19,28 +19,28 @@ import javax.swing.SwingUtilities;
  * @author LENOVO
  */
 public class FrameSala extends javax.swing.JFrame {
+
     private Sala sala;
     private int nsala;
     private boolean estadoAr, estadoDS, estadoLuzes;
     private Gson gs;
     private java.lang.reflect.Type tipoSala;
+
     /**
      * Creates new form Sala
      */
-    
-    public FrameSala(int nsala){
+    public FrameSala(int nsala) {
         initComponents();
-        this.nsala=nsala;
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setVisible(true);
+        this.nsala = nsala;
         MainApp.sessao.trataAcao("HA", nsala);
         MainApp.sessao.trataAcao("OCP", nsala);
-         gs = new Gson();
-        tipoSala = new TypeToken<Sala>() {
-        }.getType();
-        
+        gs = new Gson();
+        this.tipoSala = new TypeToken<Sala>() {}.getType();
         new Thread(new AtualizaDadosSala()).start();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -483,157 +483,152 @@ public class FrameSala extends javax.swing.JFrame {
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
         // botão que envia as informaçoes do ar-condicionado dos comboBox's
         String funcao = "AR";
-        
-        funcao += (String)comboBoxTemperatura.getSelectedItem();
-        funcao+=(String)comboBoxModo.getSelectedItem();
-        MainApp.sessao.trataAcao(funcao,nsala);
+
+        funcao += (String) comboBoxTemperatura.getSelectedItem();
+        funcao += (String) comboBoxModo.getSelectedItem();
+        MainApp.sessao.trataAcao(funcao, nsala);
     }//GEN-LAST:event_jButtonEnviarActionPerformed
 
     private void jLabelArMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelArMouseClicked
         // liga ou desliga a depender se o estado é true ou false
-        if(estadoAr){
-           MainApp.sessao.trataAcao("AROFF",nsala); 
-           jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens.arCondicionado/ar-off.png")));
-        }
-        else{
-            MainApp.sessao.trataAcao("ARON",nsala);
-            jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens.arCondicionado/ar-on.png")));
+        if (estadoAr) {
+            MainApp.sessao.trataAcao("AROFF", nsala);
+            jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens/ar-condicionado-off (1).png")));
+        } else {
+            MainApp.sessao.trataAcao("ARON", nsala);
+            jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens/ar-condicionado-on (1).png")));
         }
     }//GEN-LAST:event_jLabelArMouseClicked
 
     private void jLabelLuzMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLuzMouseClicked
         // liga ou desliga a depender se o estado é true ou false
-        if(estadoLuzes){
-           MainApp.sessao.trataAcao("LZOFF",nsala); 
-           jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/Imagens.luzes/luz-off.png")));
-        }
-        else{
-            MainApp.sessao.trataAcao("LZON",nsala);
-             jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/Imagens.luzes/luz-on.png")));
+        if (estadoLuzes) {
+            MainApp.sessao.trataAcao("LZOFF", nsala);
+            jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/Imagens/luz-off (1).png")));
+        } else {
+            MainApp.sessao.trataAcao("LZON", nsala);
+            jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/Imagens/luz-on (1).png")));
         }
     }//GEN-LAST:event_jLabelLuzMouseClicked
 
     private void jLabelDSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDSMouseClicked
         // liga ou desliga a depender se o estado é true ou false
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSOFF",nsala);
-            jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/data-show-off.png")));
-        }
-        else{
-            MainApp.sessao.trataAcao("DSON",nsala);
-            jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/data-show-on.png")));
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSOFF", nsala);
+            jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens/data-show-off (1).png")));
+        } else {
+            MainApp.sessao.trataAcao("DSON", nsala);
+            jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens/data-show-on (1).png")));
         }
     }//GEN-LAST:event_jLabelDSMouseClicked
 
     private void jLabelFreezeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFreezeMouseClicked
         // TODO add your handling code here:
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSFREEZE",nsala);
-            jLabelFreeze.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/freeze-pressionado.png")));
-        }
-        else{
-            
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSFREEZE", nsala);
+            jLabelFreeze.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/freeze-pressionado.png")));
+        } else {
+
         }
     }//GEN-LAST:event_jLabelFreezeMouseClicked
 
     private void jLabelFreezeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFreezeMouseReleased
         // TODO add your handling code here:
-        jLabelFreeze.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/freeze.png")));
+        jLabelFreeze.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/freeze.png")));
     }//GEN-LAST:event_jLabelFreezeMouseReleased
 
     private void jLabelEscMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEscMouseClicked
         // TODO add your handling code here:
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSESC",nsala);
-            jLabelEsc.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/esc-pressionado.png")));
-        }
-        else{
-            
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSESC", nsala);
+            jLabelEsc.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/esc-pressionado.png")));
+        } else {
+
         }
     }//GEN-LAST:event_jLabelEscMouseClicked
 
     private void jLabelEscMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEscMouseReleased
         // TODO add your handling code here:
-        jLabelEsc.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/esc.png")));
+        jLabelEsc.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/esc.png")));
     }//GEN-LAST:event_jLabelEscMouseReleased
 
     private void jLabelMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseClicked
         // TODO add your handling code here:
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSMENU",nsala);
-            jLabelMenu.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/menu-pressionado.png")));
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSMENU", nsala);
+            jLabelMenu.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/menu-pressionado.png")));
         }
     }//GEN-LAST:event_jLabelMenuMouseClicked
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
         // TODO add your handling code here:
-        jLabelMenu.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/menu.png")));
+        jLabelMenu.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/menu.png")));
 
     }//GEN-LAST:event_jLabelMenuMouseReleased
 
     private void jLabelCimaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCimaMouseClicked
         // TODO add your handling code here:
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSCIMA",nsala);
-            jLabelCima.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/para-cima-pressionado.png")));
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSCIMA", nsala);
+            jLabelCima.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/para-cima-pressionado.png")));
         }
     }//GEN-LAST:event_jLabelCimaMouseClicked
 
     private void jLabelCimaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCimaMouseReleased
         // TODO add your handling code here:
-        jLabelCima.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/para-cima.png")));
+        jLabelCima.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/para-cima.png")));
     }//GEN-LAST:event_jLabelCimaMouseReleased
 
     private void jLabelEsquerdaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEsquerdaMouseClicked
         // TODO add your handling code here:
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSESQ",nsala);
-            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/esquerda-pressionado.png")));
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSESQ", nsala);
+            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/esquerda-pressionado.png")));
         }
     }//GEN-LAST:event_jLabelEsquerdaMouseClicked
 
     private void jLabelEsquerdaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEsquerdaMouseReleased
         // TODO add your handling code here:
-        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/esquerda.png")));
+        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/esquerda.png")));
     }//GEN-LAST:event_jLabelEsquerdaMouseReleased
 
     private void jLabelBaixoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBaixoMouseClicked
         // TODO add your handling code here:
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSBAIXO",nsala);
-            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/para-baixo-pressionado.png")));
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSBAIXO", nsala);
+            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/para-baixo-pressionado.png")));
         }
     }//GEN-LAST:event_jLabelBaixoMouseClicked
 
     private void jLabelBaixoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBaixoMouseReleased
         // TODO add your handling code here:
-        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/para-baixo.png")));
+        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/para-baixo.png")));
     }//GEN-LAST:event_jLabelBaixoMouseReleased
 
     private void jLabelDireitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDireitaMouseClicked
         // TODO add your handling code here:
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSDIR",nsala);
-            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/direita-pressionado.png")));
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSDIR", nsala);
+            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/direita-pressionado.png")));
         }
     }//GEN-LAST:event_jLabelDireitaMouseClicked
 
     private void jLabelDireitaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDireitaMouseReleased
         // TODO add your handling code here:
-        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/direita.png")));
+        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/direita.png")));
     }//GEN-LAST:event_jLabelDireitaMouseReleased
 
     private void jLabelOkeyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelOkeyMouseClicked
         // TODO add your handling code here:
-        if(estadoDS){
-            MainApp.sessao.trataAcao("DSOK",nsala);
-            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/ok-pressionado.png")));
+        if (estadoDS) {
+            MainApp.sessao.trataAcao("DSOK", nsala);
+            jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/ok-pressionado.png")));
         }
     }//GEN-LAST:event_jLabelOkeyMouseClicked
 
     private void jLabelOkeyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelOkeyMouseReleased
         // TODO add your handling code here:
-        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens.dataShow/ok.png")));
+        jLabelEsquerda.setIcon(new ImageIcon(getClass().getResource("/Imagens/dataShow/ok.png")));
     }//GEN-LAST:event_jLabelOkeyMouseReleased
 
     private void jButtonEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEnviarMouseClicked
@@ -675,39 +670,41 @@ public class FrameSala extends javax.swing.JFrame {
             }
         });
     }
-     private class AtualizaDadosSala implements Runnable {
+
+    private class AtualizaDadosSala implements Runnable {
 
         @Override
         public void run() {
             while (isDisplayable()) {
                 String resposta = MainApp.sessao.getSala(nsala);
-                if(resposta.contains("nSala")){
-                    sala= gs.fromJson(resposta, tipoSala);
+                if (resposta.contains("nSala")) {
+                    sala = gs.fromJson(resposta, tipoSala);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            jLabelTemperaturaValor.setText(sala.getTemperatura()+"ºC");
-                            jLabelHumidadeValor.setText(sala.getUmidade()+"%");
-                            if(sala.isPresenca()){
+                            jLabelTemperaturaValor.setText(sala.getTemperatura() + "ºC");
+                            jLabelHumidadeValor.setText(sala.getUmidade() + "%");
+                            if (sala.isPresenca()) {
                                 jLabelPresencaValor.setText("Com movimento");
-                            }else{
+                            } else {
                                 jLabelPresencaValor.setText("Sem movimento");
                             }
-                            estadoAr=sala.isEstadoAr();
-                            estadoDS=sala.isEstadoDataShow();
-                            estadoLuzes=sala.isEstadoLuzes();
+                            estadoAr = sala.isEstadoAr();
+                            estadoDS = sala.isEstadoDataShow();
+                            estadoLuzes = sala.isEstadoLuzes();
                         }
                     });
                 }
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException ex) {
                     System.out.println("Erro ao atualizar");
                 }
 
             }
+            SalaPanel.salaAberta=false;
             MainApp.sessao.trataAcao("DSC", nsala);
-            MainApp.sessao.trataAcao("HD",nsala);
+            MainApp.sessao.trataAcao("HD", nsala);
         }
     }
 
@@ -744,4 +741,3 @@ public class FrameSala extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelPrincipal;
     // End of variables declaration//GEN-END:variables
 }
-

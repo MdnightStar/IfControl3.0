@@ -339,9 +339,11 @@ public class PSala extends javax.swing.JFrame {
             for (SalaPanel sp : salasP) {
                 if (sp.getN()==sala.getnSala()) {
                     return sp;
+                }else{
+                    System.out.println("Não foi posssivel encontrar nem um Panel para a sala: " + sala.getnSala());
+                    return null;
                 }
             }
-            System.out.println("Não foi posssivel encontrar nem um Panel para a sala: " + sala.getnSala());
             return null;
         }
 
@@ -385,7 +387,7 @@ public class PSala extends javax.swing.JFrame {
                 }
 
             }
-            System.exit(0);
+            
         }
     }
 

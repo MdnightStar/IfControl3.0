@@ -4,12 +4,17 @@
  */
 package Aplicacao;
 
+import Controle.SocketArduino;
+import java.io.IOException;
+
 /**
  *
  * @author LENOVO
  */
 public class TestarMainApp {
-    public static void main(String[] args) {
-        MainApp.showPSalas();
+    public static void main(String[] args) throws IOException {
+        
+        SocketArduino socketArduino= new SocketArduino();
+        socketArduino.enviar("LZON");
     }
 }

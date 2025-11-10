@@ -128,7 +128,7 @@ public class Sessao {
         a.setTipoAcao(acao);
         Gson gson = new Gson();
         String u = "--acao--";
-        u=gson.toJson(a);
+        u+=gson.toJson(a);
         
         System.out.println(u);
         servidor.enviar(u);
@@ -154,7 +154,7 @@ public class Sessao {
         a.setnSala(nSala);
         Gson gson = new Gson();
         String u = "--acaoSala--";
-        u=gson.toJson(a);
+        u+=gson.toJson(a);
         
         System.out.println(u);
         servidor.enviar(u);

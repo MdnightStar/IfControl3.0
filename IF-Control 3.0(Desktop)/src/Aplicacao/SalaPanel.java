@@ -15,8 +15,8 @@ import javax.swing.SwingUtilities;
  */
 public class SalaPanel extends javax.swing.JPanel {
     
-    private int nsala;
-    private boolean salaAberta;
+    protected int nsala;
+    protected static boolean salaAberta;
     private FrameSala novaSala;
     
     /**
@@ -28,7 +28,7 @@ public class SalaPanel extends javax.swing.JPanel {
         jLabelNSala.setText(textoNSala);
         salaAberta=false;
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
-        
+        this.nsala=nsala;
         
     }
     
@@ -63,10 +63,10 @@ public class SalaPanel extends javax.swing.JPanel {
         
         if(estadoSala){
             jPanelEstadoSala.setBackground(Color.red);
-            jButtonEntrar.setEnabled(estadoSala);
+            jButtonEntrar.setEnabled(!estadoSala);
         }else{
             jPanelEstadoSala.setBackground(Color.green);
-            jButtonEntrar.setEnabled(estadoSala);
+            jButtonEntrar.setEnabled(!estadoSala);
         }
         
         if(presenca){
@@ -219,15 +219,7 @@ public class SalaPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         salaAberta=true;
         novaSala= new FrameSala(nsala);
-        SwingUtilities.invokeLater(new Runnable(){
-            @Override
-            public void run() {
-                while(novaSala.isDisplayable()){
-                    salaAberta=true;
-                }
-                salaAberta=false;
-            }
-        });
+        
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
 

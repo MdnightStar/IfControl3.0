@@ -218,6 +218,7 @@ public class TratarAcao extends SocketArduino {
         this.acao.setLogin(_login); //seta o login desta classe sessao
 
         sala = manager.procuraSala(nSala); // pega a sala do BD
+        System.out.println("Tratando acao: "+acao);
 
         //Muda o estado da sala e da ação a partir da mensagem enviada
         if ((acao.contains("OCP")) || (acao.contains("DSC"))) {
