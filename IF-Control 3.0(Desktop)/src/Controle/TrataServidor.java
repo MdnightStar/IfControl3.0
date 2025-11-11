@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class TrataServidor implements Runnable {
 
-    private final String host = "0.0.0.0";
+    private final String host = "10.0.0.92";
     private final int porta = 808;
     private Socket cliente;
     private PrintStream out;

@@ -7,10 +7,22 @@
     android:background="@color/ifcontrolpanel"
     tools:context=".MenuActivity">
 
+    <TextView
+        android:id="@+id/labelTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="188dp"
+        android:text="Temperatura:"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,39 +30,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="IFControl"
         app:titleMarginStart="30dp"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintBottom_toTopOf="@+id/bnv_botton">
-
-        <!-- O ScrollView DEVE ter apenas UM filho direto. Usamos um LinearLayout vertical. -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="16dp"
-            android:gravity="center_horizontal"> <!-- Centraliza as salas horizontalmente -->
-
-        <!-- ADICIONANDO AS SALAS AQUI: Use o nome completo do seu pacote + SalaView -->
-
-        <!-- INSTÂNCIA 1: Sala 1 -->
-            <ifcontrol.mobile.SalaView
-                android:id="@+id/salaView1"
-                android:layout_width="wrap_content"
-                android:layout_height="167dp"
-                android:layout_marginBottom="16dp" />
-            <!-- INSTÂNCIA 1: Sala 1 -->
-            <ifcontrol.mobile.SalaView
-                android:id="@+id/salaView2"
-                android:layout_width="wrap_content"
-                android:layout_height="167dp"
-                android:layout_marginBottom="16dp" />
-        </LinearLayout>
-    </ScrollView>
+        tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_botton"
