@@ -101,8 +101,6 @@ void processarString(String str) {
      mySerial.print("OK");
   } else if (str.indexOf("TEMP") > -1) {  // se solicitar a temperatura
     float temp = dht.readTemperature();   // leitura da temperatura
-    Serial.print("temperatura ");
-    Serial.println(temp);
     if ((isnan(temp))) {  // caso ocorra falha da obtenção dos valores
       mySerial.print(0);
     } else {
@@ -121,7 +119,7 @@ void processarString(String str) {
     else
       mySerial.print("FALSE");
   } else if (str.indexOf("LZ") > -1) {
-    if (str.indexOf("ON") > -1) {
+     if (str.indexOf("ON") > -1) {
       digitalWrite(pinRele, HIGH);
       mySerial.print("OK");
     } else {

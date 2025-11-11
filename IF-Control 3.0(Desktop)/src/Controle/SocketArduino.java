@@ -34,7 +34,21 @@ public class SocketArduino {
         try{
             System.out.println("Começando conexão com o arduino, IP: "+pack);
             arduino=new Socket(pack,808);
-            System.out.println("Conectou");
+            System.out.println(arduino.isConnected());
+            out = new DataOutputStream(arduino.getOutputStream());
+            input = new BufferedReader(new InputStreamReader(arduino.getInputStream()));
+            return true;
+        }catch (IOException e) {
+            return false;
+
+        }
+    }
+    
+    public boolean conectarArduinoIP(String ip) throws IOException{
+        
+        try{
+            System.out.println("Começando conexão com o arduino, IP: "+pack);
+            arduino=new Socket(ip,808);
             System.out.println(arduino.isConnected());
             out = new DataOutputStream(arduino.getOutputStream());
             input = new BufferedReader(new InputStreamReader(arduino.getInputStream()));
@@ -64,7 +78,6 @@ public class SocketArduino {
     */
     public String ler() throws IOException {
         String str = input.readLine();
-        System.out.println("str");
         return str;
     }
     

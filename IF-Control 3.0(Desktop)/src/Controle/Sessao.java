@@ -123,6 +123,7 @@ public class Sessao {
     */
     public String trataAcao(String acao){
         Acao a = new Acao();
+        a.setLogin(_login);
         a.setDataAcao(Calendar.getInstance());
         a.setHoraAcao(Time.valueOf( LocalTime.now()));
         a.setTipoAcao(acao);
@@ -148,6 +149,7 @@ public class Sessao {
     */
     public String trataAcao(String acao, int nSala){ 
          Acao a = new Acao();
+         a.setLogin(_login);
         a.setDataAcao(Calendar.getInstance());
         a.setHoraAcao(Time.valueOf( LocalTime.now()));
         a.setTipoAcao(acao);
