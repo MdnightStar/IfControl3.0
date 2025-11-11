@@ -17,7 +17,34 @@
         app:logo="@drawable/ifcontrol3_logo"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="IFControl"
-        app:titleMarginStart="30dp" />
+        app:titleMarginStart="30dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/bnv_botton">
+
+        <!-- O ScrollView DEVE ter apenas UM filho direto. Usamos um LinearLayout vertical. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="16dp"
+            android:gravity="center_horizontal"> <!-- Centraliza as salas horizontalmente -->
+
+        <!-- ADICIONANDO AS SALAS AQUI: Use o nome completo do seu pacote + SalaView -->
+
+        <!-- INSTÂNCIA 1: Sala 1 -->
+        <ifcontrol.mobile.SalaView
+            android:id="@+id/salaView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_botton"
@@ -33,19 +60,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_tabs"/>
-
-    <ScrollView
-        android:id="@+id/scroll_panel"
-        android:layout_width="409dp"
-        android:layout_height="553dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="65dp"
-        >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
