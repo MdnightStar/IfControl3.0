@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
  */
 public class PAgendamento extends javax.swing.JFrame {
     private List<AgendamentoPanel> agendamentoP;
-    private List<Agendamento> agendamento;
+    private List<Agendamento> agendamentos;
     private Gson gs;
     private java.lang.reflect.Type tipoAgendamento;
     /**
@@ -48,7 +48,6 @@ public class PAgendamento extends javax.swing.JFrame {
         jPanelAgendamentos = new javax.swing.JPanel();
         jLabelAgendamentos = new javax.swing.JLabel();
         jLabelIF1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabelIfamLogo1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -83,9 +82,6 @@ public class PAgendamento extends javax.swing.JFrame {
         jLabelIF1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelIF1.setText("IFControl 3.0");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa.png"))); // NOI18N
-        jButton3.setText("Pesquisar");
-
         jButton2.setBackground(new java.awt.Color(0, 51, 102));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/mais.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -111,12 +107,9 @@ public class PAgendamento extends javax.swing.JFrame {
                             .addComponent(jScrollPaneAgendamentos, javax.swing.GroupLayout.DEFAULT_SIZE, 1343, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabelAgendamentos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 940, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButton3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton2))
+                                    .addComponent(jButton2)
                                     .addComponent(jLabelIF1))))))
                 .addGap(27, 27, 27))
         );
@@ -128,9 +121,7 @@ public class PAgendamento extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelIF1)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2)))
+                        .addComponent(jButton2))
                     .addComponent(jLabelAgendamentos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneAgendamentos, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
@@ -270,18 +261,41 @@ public class PAgendamento extends javax.swing.JFrame {
     }
     
     private class AtualizaDadosAgendamento implements Runnable{
-
+        
+        public AgendamentoPanel procurarAP(Agendamento agen) {
+            for (AgendamentoPanel ap : agendamentoP) {
+                if (ap.getIdAgendamento()==agen.getIdAgendamento()) {
+                    return ap;
+                }
+            }
+            System.out.println("Não foi posssivel encontrar nem um Panel para o agendamento: " + agen.getIdAgendamento());
+            return null;
+        }
+        
         @Override
         public void run() {
             while(isDisplayable()){
                 String resp=MainApp.sessao.verificarResposta();
                 if(resp.contains("--modAgendamento--")){
                     String parte[]=resp.split("--modAgendamento--");
-                    agendamento = gs.fromJson(parte[1],tipoAgendamento);
+                    agendamentos = gs.fromJson(parte[1],tipoAgendamento);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                             
+                             for(Agendamento agen:agendamentos){
+                                 AgendamentoPanel agenP=procurarAP(agen);
+                                 if(agenP==null){
+                                    AgendamentoPanel novoP=new AgendamentoPanel(agen.getIdAgendamento(),agen.getAutor(), 
+                                            agen.getTitulo(), agen.getDataIn(), agen.getDataF(),agen.gethAtv(), agen.gethDesat(), agen.getDiaSemana(), 
+                                            agen.getSalas(), agen.getDispositivos());
+                                    agendamentoP.add(novoP);
+                                    jPanelAgendamentos.add(novoP);
+                                 }else{
+                                     agenP.atualizar(agen.getAutor(), 
+                                            agen.getTitulo(), agen.getDataIn(), agen.getDataF(),agen.gethAtv(), agen.gethDesat(), agen.getDiaSemana(), 
+                                            agen.getSalas(), agen.getDispositivos());
+                                 }
+                             }
                         }
                     });
                 }
@@ -292,7 +306,6 @@ public class PAgendamento extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabelAgendamentos;
     private javax.swing.JLabel jLabelIF1;
     private javax.swing.JLabel jLabelIfamLogo1;

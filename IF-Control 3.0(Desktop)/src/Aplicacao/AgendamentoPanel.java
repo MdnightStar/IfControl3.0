@@ -4,17 +4,119 @@
  */
 package Aplicacao;
 
+
+import Modelo.Agendamento;
+import java.awt.Color;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+
+
 /**
  *
  * @author LENOVO
  */
 public class AgendamentoPanel extends javax.swing.JPanel {
+    private int idAgendamento;
+    private Agendamento agen;
 
+    public AgendamentoPanel(){
+        initComponents();
+    }
     /**
      * Creates new form AgendamentoPanel
      */
-    public AgendamentoPanel() {
+    public AgendamentoPanel(int idAgendamento, String autor, String titulo, Calendar dataIn, Calendar dataF, 
+            Time hAtv, Time hDesat, int[] diaSemana, int[] salas, ArrayList<String> dispositivos) {
         initComponents();
+        this.idAgendamento=idAgendamento;
+        atualizar(autor, titulo, dataIn, dataF, hAtv, hDesat, diaSemana, salas, dispositivos);
+        
+    }
+
+    public void setIdAgendamento(int idAgendamento) {
+        this.idAgendamento = idAgendamento;
+    }
+
+    public int getIdAgendamento() {
+        return idAgendamento;
+    }
+    
+    public void atualizar(String autor, String titulo, Calendar dataIn, Calendar dataF, 
+            Time hAtv, Time hDesat, int[] diaSemana, int[] salas, ArrayList<String> dispositivos){
+        agen=new Agendamento(autor, titulo, dataIn, dataF, hAtv, hDesat, diaSemana, salas, dispositivos);
+        
+        jLabelAutor.setText(autor);
+        jLabelTituloEd.setText(titulo);
+        
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        // 2. Converta o Calendar para Date (getTime())
+        Date dateAtv = dataIn.getTime();
+        Date dateDesat = dataF.getTime();
+        // 3. Formate o objeto Date para String
+        jLabelInicioEd.setText(formatador.format(dateAtv));
+        jLabelFimEd.setText(formatador.format(dateDesat));
+        
+        List<JRadioButton> radioSemana = null;
+        JRadioButton[] radioSemanaArray={jRadioButtonDomingo,jRadioButtonSegunda, jRadioButtonTerca, jRadioButtonQuarta,
+        jRadioButtonQuinta, jRadioButtonSexta, jRadioButtonSabado};
+        Collections.addAll(radioSemana,radioSemanaArray );
+        
+       radioSemana.forEach(rb->rb.setSelected(false));
+        for(int dia:diaSemana){
+            int indice = dia-1;
+            if(indice>=0 && indice<radioSemana.size()){
+                radioSemana.get(indice).setSelected(true);
+            }
+        }
+        
+   
+        String horaAtvFormatada =timeParaStringHHMM(hAtv);
+        String horaDesatFormatada =timeParaStringHHMM(hDesat);
+        jLabelInicioEd.setText(horaAtvFormatada);
+        jLabelhoraDesativEd.setText(horaDesatFormatada);
+        
+        jLabelSalasEd.setText(Arrays.stream(salas).boxed().map(Object::toString).collect(Collectors.joining(", ")));
+        
+        for(String dis:dispositivos){
+            switch (dis) {
+                case "AR":
+                    jRadioButtonAR.setSelected(true);
+                    break;
+                case "LZ":
+                    jRadioButtonLZ.setSelected(true);
+                    break;
+                case "DS":
+                    jRadioButtonDS.setSelected(true);
+                    break;
+            }
+        }
+    }
+    
+    public String timeParaStringHHMM(Time horaSql) {
+        if (horaSql == null) {
+            return ""; // Ou lance uma exceção, dependendo da sua regra de negócio
+        }
+
+        // 1. Converter java.sql.Time para LocalTime
+        LocalTime localTime = horaSql.toLocalTime();
+
+        // 2. Definir o formato desejado (HH:mm)
+        // 'HH' para hora em formato 24h, 'mm' para minuto.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        // 3. Formatar e retornar a String
+        return localTime.format(formatter);
     }
 
     /**
@@ -48,9 +150,15 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         jRadioButtonSabado = new javax.swing.JRadioButton();
         jRadioButtonDomingo = new javax.swing.JRadioButton();
         jPanel5 = new javax.swing.JPanel();
-        jRadioButton8 = new javax.swing.JRadioButton();
-        jRadioButton9 = new javax.swing.JRadioButton();
-        jRadioButton10 = new javax.swing.JRadioButton();
+        jPanel1 = new javax.swing.JPanel();
+        jRadioButtonLZ = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jRadioButtonAR = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jRadioButtonDS = new javax.swing.JRadioButton();
+        jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabelhoraAtiv = new javax.swing.JLabel();
         jLabelhoraDesativ = new javax.swing.JLabel();
@@ -129,6 +237,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         jPanel4.setPreferredSize(new java.awt.Dimension(50, 25));
         jPanel4.setLayout(new java.awt.GridLayout(1, 7, 5, 0));
 
+        jRadioButtonSegunda.setEnabled(false);
         jRadioButtonSegunda.setPreferredSize(new java.awt.Dimension(10, 20));
         jRadioButtonSegunda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,11 +245,23 @@ public class AgendamentoPanel extends javax.swing.JPanel {
             }
         });
         jPanel4.add(jRadioButtonSegunda);
+
+        jRadioButtonTerca.setEnabled(false);
         jPanel4.add(jRadioButtonTerca);
+
+        jRadioButtonQuarta.setEnabled(false);
         jPanel4.add(jRadioButtonQuarta);
+
+        jRadioButtonQuinta.setEnabled(false);
         jPanel4.add(jRadioButtonQuinta);
+
+        jRadioButtonSexta.setEnabled(false);
         jPanel4.add(jRadioButtonSexta);
+
+        jRadioButtonSabado.setEnabled(false);
         jPanel4.add(jRadioButtonSabado);
+
+        jRadioButtonDomingo.setEnabled(false);
         jPanel4.add(jRadioButtonDomingo);
 
         jPanel3.add(jPanel4);
@@ -151,28 +272,66 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(25, 25));
         jPanel5.setLayout(new java.awt.GridLayout(2, 2));
 
-        jRadioButton8.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton8.setText("Ar-cond.");
-        jRadioButton8.setPreferredSize(new java.awt.Dimension(10, 20));
-        jRadioButton8.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+
+        jRadioButtonLZ.setForeground(new java.awt.Color(0, 0, 0));
+        jRadioButtonLZ.setEnabled(false);
+        jRadioButtonLZ.setMargin(new java.awt.Insets(2, 1, 3, 2));
+        jRadioButtonLZ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton8ActionPerformed(evt);
+                jRadioButtonLZActionPerformed(evt);
             }
         });
-        jPanel5.add(jRadioButton8);
+        jPanel1.add(jRadioButtonLZ);
 
-        jRadioButton9.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton9.setText("Data-Show");
-        jRadioButton9.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Luzes");
+        jPanel1.add(jLabel1);
+
+        jPanel5.add(jPanel1);
+
+        jPanel6.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
+
+        jRadioButtonAR.setForeground(new java.awt.Color(0, 0, 0));
+        jRadioButtonAR.setEnabled(false);
+        jRadioButtonAR.setMargin(new java.awt.Insets(2, 1, 3, 2));
+        jRadioButtonAR.setPreferredSize(new java.awt.Dimension(10, 20));
+        jRadioButtonAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton9ActionPerformed(evt);
+                jRadioButtonARActionPerformed(evt);
             }
         });
-        jPanel5.add(jRadioButton9);
+        jPanel6.add(jRadioButtonAR);
 
-        jRadioButton10.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton10.setText("Luzes");
-        jPanel5.add(jRadioButton10);
+        jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Ar-condionado");
+        jPanel6.add(jLabel2);
+
+        jPanel5.add(jPanel6);
+
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
+
+        jRadioButtonDS.setForeground(new java.awt.Color(204, 204, 204));
+        jRadioButtonDS.setEnabled(false);
+        jRadioButtonDS.setMargin(new java.awt.Insets(2, 1, 3, 2));
+        jRadioButtonDS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonDSActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jRadioButtonDS);
+
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("DataShow");
+        jPanel2.add(jLabel3);
+
+        jPanel5.add(jPanel2);
 
         jButton4.setBackground(new java.awt.Color(153, 153, 153));
         jButton4.setForeground(new java.awt.Color(0, 0, 0));
@@ -271,8 +430,8 @@ public class AgendamentoPanel extends javax.swing.JPanel {
                 .addGap(8, 8, 8)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonEditar)
@@ -329,28 +488,52 @@ public class AgendamentoPanel extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        int resultado = JOptionPane.showConfirmDialog(
+            null, // Componente pai (null para centralizar na tela)
+            "Você tem certeza que deseja apagar o seguinte item?", // Mensagem
+            "Confirmação de Exclusão", // Título da Janela
+            JOptionPane.OK_CANCEL_OPTION, // Opções de Botão: OK e Cancel
+            JOptionPane.WARNING_MESSAGE // Tipo de Mensagem (Geralmente um aviso)
+        );
+        if(resultado==JOptionPane.OK_OPTION){
+        String resp=MainApp.sessao.trataAcao("--deletAgendamento--"+Integer.toString(idAgendamento));
+        if(resp.contains("SUCESSO")){
+            JOptionPane.showMessageDialog(null, "Agendamento eliminado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro ao eliminar", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jRadioButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton9ActionPerformed
-
-    private void jRadioButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton8ActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
+        EditarAgendamento edit= new EditarAgendamento(agen);
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jRadioButtonSegundaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSegundaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonSegundaActionPerformed
 
+    private void jRadioButtonARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonARActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonARActionPerformed
+
+    private void jRadioButtonDSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonDSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonDSActionPerformed
+
+    private void jRadioButtonLZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLZActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonLZActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonEditar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelAutor;
     private javax.swing.JLabel jLabelAutorEd;
@@ -366,13 +549,16 @@ public class AgendamentoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelhoraAtivEd;
     private javax.swing.JLabel jLabelhoraDesativ;
     private javax.swing.JLabel jLabelhoraDesativEd;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JRadioButton jRadioButtonAR;
+    private javax.swing.JRadioButton jRadioButtonDS;
     private javax.swing.JRadioButton jRadioButtonDomingo;
+    private javax.swing.JRadioButton jRadioButtonLZ;
     private javax.swing.JRadioButton jRadioButtonQuarta;
     private javax.swing.JRadioButton jRadioButtonQuinta;
     private javax.swing.JRadioButton jRadioButtonSabado;

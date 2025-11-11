@@ -115,6 +115,14 @@ public class MainApp {
         }
     }
     
+    public static void showEditAgendamento(){
+        try {
+            EditarAgendamento.main(null);
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar editar agendamento"+e.getMessage());
+        }
+    }
+    
     public static void main(String[]args){
         MainApp aplicacao=new MainApp();
     }

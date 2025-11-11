@@ -32,11 +32,12 @@ public class DAOManager {
      * @return F se aconexão falhar ou V se houver conexão
      * @exception Uma excção SQLException será lançada se a conexão falhar
      */
-    public DAOManager(){
-       connect();
+    public DAOManager() {
+        connect();
     }
+
     public boolean connect() {
-         
+
         try {
             this.conexao = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/ifcontrol3", "root", "meo0511"); //alterei o nome do banco
@@ -107,13 +108,13 @@ public class DAOManager {
      */
     public boolean[] statusConexao() {
         ArrayList<Boolean> salasDisponiveis = new ArrayList();
-    
+
         try {
             PreparedStatement stmt = this.conexao.prepareStatement("SELECT * FROM sala");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                salasDisponiveis.add((boolean)rs.getBoolean("conexao")); //insere estado da conexao
-                
+                salasDisponiveis.add((boolean) rs.getBoolean("conexao")); //insere estado da conexao
+
             }
             stmt.close();
             rs.close();
@@ -121,10 +122,10 @@ public class DAOManager {
             System.out.println("Erro ao consultar as salas: " + e.getMessage());
         }
         boolean[] salasDisponiveisC = new boolean[salasDisponiveis.size()];
-        
-        for(int i=0;i<salasDisponiveis.size();i++){
-            salasDisponiveisC[i]=salasDisponiveis.get(i);
-            
+
+        for (int i = 0; i < salasDisponiveis.size(); i++) {
+            salasDisponiveisC[i] = salasDisponiveis.get(i);
+
         }
         return salasDisponiveisC;
     }
@@ -375,7 +376,7 @@ public class DAOManager {
      */
     public boolean siapExiste(Long siap) {
         try {
-            var sql ="SELECT * FROM user WHERE siap = ?";
+            var sql = "SELECT * FROM user WHERE siap = ?";
             PreparedStatement stmt = this.conexao.prepareStatement(sql);
             stmt.setLong(1, siap);
             ResultSet rs = stmt.executeQuery();
@@ -493,7 +494,7 @@ public class DAOManager {
      */
     public StringBuilder resgataCodIr(int nSala, String msg) throws SQLException {
         StringBuilder resp = new StringBuilder();
-        
+
         resp.append("DIR.");
 
         // Extrair tipo (2 primeiros caracteres) e função (até o ponto final, se houver)
@@ -502,11 +503,10 @@ public class DAOManager {
 
         // 1. Buscar dispositivos da sala com o tipo especificado
         String sqlDis = "SELECT id, config FROM dis WHERE sala_id = ? AND tipo = ?";
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlDis);ResultSet rs = stmt.executeQuery()){
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlDis); ResultSet rs = stmt.executeQuery()) {
             stmt.setInt(1, nSala);
             stmt.setString(2, tipo);
 
-            
             while (rs.next()) {
                 int disId = rs.getInt("id");
                 String config = rs.getString("config");
@@ -525,11 +525,11 @@ public class DAOManager {
                         // 5. Adicionar cod ao StringBuilder
                         resp.append(cod);
                     }
-                } catch (SQLException ex){
+                } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return resp;
@@ -537,24 +537,55 @@ public class DAOManager {
 
     public boolean adicionarSala(int nSala, String ip) {
         String sql = "INSERT INTO sala (nSala, ip) VALUES (?, ?)";
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)){
-           
-                stmt.setInt(1, nSala);
-                stmt.setString(2, sql);
-                stmt.execute();
-                return true;
-            
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, nSala);
+            stmt.setString(2, sql);
+            stmt.execute();
+            return true;
+
         } catch (SQLException ex) {
             return false;
         }
     }
-    
-    public boolean IPexiste(String IP){
-        String sql= "SELECT * FROM sala WHERE ip = ?";
-        try (PreparedStatement stmt= this.conexao.prepareStatement(sql); ResultSet res = stmt.executeQuery()){
+
+    /**
+     * Elimina um agendamento e todos os seus registros relacionados (dias da
+     * semana, salas e dispositivos) a partir do ID.
+     *
+     * * @param idAgendamento O ID do agendamento a ser eliminado.
+     * @return true se a eliminação for bem-sucedida, false caso contrário.
+     */
+    public boolean eliminarAgendamento(int idAgendamento) {
+        // A instrução DELETE afetará apenas a tabela principal 'agendamento'
+        // As tabelas filhas serão limpas automaticamente pelo ON DELETE CASCADE.
+        String sql = "DELETE FROM agendamento WHERE id = ?";
+
+        // Uso de try-with-resources para garantir o fechamento do PreparedStatement
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+
+            // 1. Define o ID do agendamento
+            stmt.setInt(1, idAgendamento);
+
+            // 2. Executa a deleção e obtém o número de linhas afetadas
+            int linhasAfetadas = stmt.executeUpdate();
+
+            // Se linhasAfetadas > 0, significa que o agendamento foi encontrado e deletado.
+            return linhasAfetadas > 0;
+
+        } catch (SQLException ex) {
+            System.err.println("Erro ao eliminar agendamento: " + ex.getMessage());
+            // Logar o erro completo aqui seria útil em produção
+            return false;
+        }
+    }
+
+    public boolean IPexiste(String IP) {
+        String sql = "SELECT * FROM sala WHERE ip = ?";
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             stmt.setString(0, IP);
-            
-            if(res.next()){
+
+            if (res.next()) {
                 return true;
             }
         } catch (Exception e) {
@@ -562,13 +593,13 @@ public class DAOManager {
         }
         return false;
     }
-    
-    public boolean NSalaexiste(int nSala){
-        String sql= "SELECT * FROM sala WHERE nSala = ?";
-        try (PreparedStatement stmt= this.conexao.prepareStatement(sql); ResultSet res = stmt.executeQuery()){
+
+    public boolean NSalaexiste(int nSala) {
+        String sql = "SELECT * FROM sala WHERE nSala = ?";
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql); ResultSet res = stmt.executeQuery()) {
             stmt.setInt(0, nSala);
-            
-            if(res.next()){
+
+            if (res.next()) {
                 return true;
             }
         } catch (Exception e) {
@@ -576,7 +607,8 @@ public class DAOManager {
         }
         return false;
     }
-   /**
+
+    /**
      * O método consultarAgendamento retorna uma lista de todos os agendamentos.
      *
      * @return retorna uma List de Agendamento
@@ -586,39 +618,39 @@ public class DAOManager {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sqlAgendamento = "SELECT * FROM agendamento";
 
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlAgendamento); 
-             ResultSet rs = stmt.executeQuery()) {
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlAgendamento); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Agendamento agendamento = new Agendamento();
                 int idAgendamento = rs.getInt("id");
-                
+
                 // 1. Setar dados principais do Agendamento
                 agendamento.setIdAgendamento(idAgendamento); // Assumindo a sugestão de adicionar idAgendamento
                 agendamento.setTitulo(rs.getString("titulo"));
                 agendamento.setAutor(rs.getString("autor"));
-                
+
                 // Conversão de Date para Calendar para dataInicio
                 Calendar dataIn = Calendar.getInstance();
                 dataIn.setTime(rs.getDate("dataInicio"));
                 agendamento.setDataIn(dataIn);
-                
+
                 // Conversão de Date para Calendar para dataFim
                 Calendar dataF = Calendar.getInstance();
                 dataF.setTime(rs.getDate("dataFim"));
                 agendamento.setDataF(dataF);
-                
+
                 // As colunas hAtiv e hDesat estão como DATETIME no BD, o que pode incluir data e hora. 
                 // Se o foco é apenas o tempo (Time), você deve usar o método getTime() do ResultSet.
                 // Ajustei para usar o Time, assumindo que as partes de data são irrelevantes ou fixas.
                 agendamento.sethAtv(rs.getTime("hAtiv"));
                 agendamento.sethDesat(rs.getTime("hDesat"));
-                
+
                 // 2. Obter os dias da semana (int[])
                 agendamento.setDiaSemana(consultarDiasDaSemana(idAgendamento));
-                
+
                 // 3. Obter os números das salas (int[])
                 agendamento.setSalas(consultarNSalasAgendamento(idAgendamento));
+                agendamento.setDispositivos(consultarDispositivosAgendamento(idAgendamento));
 
                 agendamentos.add(agendamento);
             }
@@ -635,7 +667,7 @@ public class DAOManager {
     private int[] consultarDiasDaSemana(int idAgendamento) throws SQLException {
         List<Integer> dias = new ArrayList<>();
         String sql = "SELECT dia FROM diasDaSemana WHERE agendamento_id = ?";
-        
+
         try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
             stmt.setInt(1, idAgendamento);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -644,7 +676,7 @@ public class DAOManager {
                 }
             }
         }
-        
+
         // Converte List<Integer> para int[]
         return dias.stream().mapToInt(i -> i).toArray();
     }
@@ -655,7 +687,7 @@ public class DAOManager {
     private int[] consultarNSalasAgendamento(int idAgendamento) throws SQLException {
         List<Integer> salas = new ArrayList<>();
         String sql = "SELECT nSala FROM nSalaAgendamento WHERE agendamento_id = ?";
-        
+
         try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
             stmt.setInt(1, idAgendamento);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -664,11 +696,28 @@ public class DAOManager {
                 }
             }
         }
-        
+
         // Converte List<Integer> para int[]
         return salas.stream().mapToInt(i -> i).toArray();
     }
-    
+
+    private ArrayList consultarDispositivosAgendamento(int idAgendamento) throws SQLException {
+        ArrayList<String> dispositivos = new ArrayList<>();
+        String sql = "SELECT dispositivo FROM dispositivosAgendamento WHERE agendamento_id = ?";
+
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idAgendamento);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    dispositivos.add(rs.getString("dispositivo"));
+                }
+            }
+        }
+
+        // Converte List<Integer> para int[]
+        return dispositivos;
+    }
+
     /**
      * O método adicionarAgendamento insere um novo agendamento, seus dias da
      * semana e as salas associadas no banco de dados.
@@ -742,6 +791,105 @@ public class DAOManager {
         } catch (SQLException e) {
             System.out.println("Erro ao adicionar agendamento: " + e.getMessage());
             // Em um ambiente de produção, você consideraria um rollback aqui se não estivesse usando autocommit.
+            return false;
+        }
+    }
+
+    // O objeto 'Agendamento' deve ser um objeto da sua aplicação
+    // com getters e setters para:
+    // getIdAgendamento(), getTitulo(), getAutor(), getDataIn(), getDataF(),
+    // gethAtv(), gethDesat(), getDiaSemana(), getSalas().
+    // Eu estou assumindo que a sua classe Agendamento tem esses métodos.
+    public boolean atualizarAgendamento(Agendamento agendamento) {
+        // É crucial que o objeto Agendamento tenha um ID válido para a atualização.
+        if (agendamento.getIdAgendamento() <= 0) {
+            System.out.println("Erro ao atualizar agendamento: O ID do agendamento é inválido.");
+            return false;
+        }
+
+        // O ID do agendamento que será atualizado
+        int idAgendamento = agendamento.getIdAgendamento();
+
+        // 1. Atualizar o Agendamento principal (Tabela 'agendamento')
+        // Usamos UPDATE e a cláusula WHERE com o ID.
+        String sqlAgendamento = "UPDATE agendamento SET "
+                + "titulo = ?, autor = ?, dataInicio = ?, dataFim = ?, hAtiv = ?, hDesat = ? "
+                + "WHERE idAgendamento = ?"; // Chave crucial
+
+        try {
+            // Uso de try-with-resources para garantir que o PreparedStatement seja fechado.
+            try (PreparedStatement stmt = this.conexao.prepareStatement(sqlAgendamento)) {
+
+                // Conversão de Calendar para java.sql.Date
+                java.sql.Date dataInicio = new java.sql.Date(agendamento.getDataIn().getTimeInMillis());
+                java.sql.Date dataFim = new java.sql.Date(agendamento.getDataF().getTimeInMillis());
+
+                // Define os parâmetros da coluna
+                stmt.setString(1, agendamento.getTitulo());
+                stmt.setString(2, agendamento.getAutor());
+                stmt.setDate(3, dataInicio);
+                stmt.setDate(4, dataFim);
+                stmt.setTime(5, agendamento.gethAtv());
+                stmt.setTime(6, agendamento.gethDesat());
+
+                // Define o parâmetro do WHERE
+                stmt.setInt(7, idAgendamento);
+
+                int affectedRows = stmt.executeUpdate();
+
+                if (affectedRows == 0) {
+                    // Isso pode indicar um erro ou que o agendamento com esse ID não existe.
+                    System.out.println("Aviso: Agendamento com ID " + idAgendamento + " não encontrado ou nenhum dado alterado.");
+                    // Aqui você pode decidir se retorna true (se não mudar nada não é um erro fatal) ou false.
+                    // Vou manter o fluxo para atualizar os detalhes, mas o aviso é importante.
+                }
+            } // stmt é fechado automaticamente aqui
+
+            // As etapas 2 e 3 (dias da semana e salas) são de **1:N**. 
+            // A melhor prática para atualização é **apagar os antigos e inserir os novos**.
+            // 2. Excluir dias da semana antigos e Inserir novos (Tabela 'diasDaSemana')
+            // a. Exclusão
+            String sqlDeleteDias = "DELETE FROM diasDaSemana WHERE agendamento_id = ?";
+            try (PreparedStatement stmtDeleteDias = conexao.prepareStatement(sqlDeleteDias)) {
+                stmtDeleteDias.setInt(1, idAgendamento);
+                stmtDeleteDias.executeUpdate();
+            }
+
+            // b. Inserção
+            String sqlInsertDias = "INSERT INTO diasDaSemana (agendamento_id, dia) VALUES (?, ?)";
+            try (PreparedStatement stmtInsertDias = conexao.prepareStatement(sqlInsertDias)) {
+                for (int dia : agendamento.getDiaSemana()) {
+                    stmtInsertDias.setInt(1, idAgendamento);
+                    stmtInsertDias.setInt(2, dia);
+                    stmtInsertDias.addBatch();
+                }
+                stmtInsertDias.executeBatch();
+            }
+
+            // 3. Excluir salas antigas e Inserir novas (Tabela 'nSalaAgendamento')
+            // a. Exclusão
+            String sqlDeleteSalas = "DELETE FROM nSalaAgendamento WHERE agendamento_id = ?";
+            try (PreparedStatement stmtDeleteSalas = conexao.prepareStatement(sqlDeleteSalas)) {
+                stmtDeleteSalas.setInt(1, idAgendamento);
+                stmtDeleteSalas.executeUpdate();
+            }
+
+            // b. Inserção
+            String sqlInsertSalas = "INSERT INTO nSalaAgendamento (agendamento_id, nSala) VALUES (?, ?)";
+            try (PreparedStatement stmtInsertSalas = conexao.prepareStatement(sqlInsertSalas)) {
+                for (int nSala : agendamento.getSalas()) {
+                    stmtInsertSalas.setInt(1, idAgendamento);
+                    stmtInsertSalas.setInt(2, nSala);
+                    stmtInsertSalas.addBatch();
+                }
+                stmtInsertSalas.executeBatch();
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar agendamento: " + e.getMessage());
+            // Considere um rollback se estiver usando transações manuais.
             return false;
         }
     }

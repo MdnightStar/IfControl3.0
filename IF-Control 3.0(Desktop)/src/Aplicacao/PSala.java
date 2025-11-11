@@ -339,9 +339,11 @@ public class PSala extends javax.swing.JFrame {
             for (SalaPanel sp : salasP) {
                 if (sp.getN()==sala.getnSala()) {
                     return sp;
+                }else{
+                    System.out.println("Não foi posssivel encontrar nem um Panel para a sala: " + sala.getnSala());
+                    return null;
                 }
             }
-            System.out.println("Não foi posssivel encontrar nem um Panel para a sala: " + sala.getnSala());
             return null;
         }
 
@@ -370,13 +372,7 @@ public class PSala extends javax.swing.JFrame {
                                                 sala.isEstadoAr(), sala.isPresenca());
                                     }
                                 }else{
-                                    if(newSp==null){
-                                        String nSala = "Sala " + sala.getnSala() + ":";
-                                        SalaPanel ps = new SalaPanel(nSala, sala.isEstadoAr(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
-                                                sala.isEstadoSala(), sala.isPresenca(), sala.getnSala());
-                                        salasP.add(ps);
-                                        Salas.add(ps);
-                                    }else{
+                                    if(newSp!=null){
                                         Salas.remove(newSp);
                                     }
                                 }
@@ -391,7 +387,7 @@ public class PSala extends javax.swing.JFrame {
                 }
 
             }
-            System.exit(0);
+            
         }
     }
 

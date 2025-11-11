@@ -31,7 +31,9 @@ public class AddAgendamento extends javax.swing.JFrame {
     public AddAgendamento() {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -656,7 +658,13 @@ public class AddAgendamento extends javax.swing.JFrame {
         ArrayList<String> dispositivos = new ArrayList<>();
         for (JRadioButton rb : radiobuttons) {
             if (rb.isSelected()) {
-                dispositivos.add(rb.getText());
+                if(rb.getText().equals("Ar-condicionado")){
+                    dispositivos.add("AR");
+                }else if(rb.getText().equals("Luzes")){
+                    dispositivos.add("LZ");
+                }else if(rb.getText().equals("DataShow")){
+                    dispositivos.add("DS");
+                }
             }
         }
         return dispositivos;
