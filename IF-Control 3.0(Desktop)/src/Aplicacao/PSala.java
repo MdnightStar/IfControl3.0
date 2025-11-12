@@ -29,6 +29,8 @@ public class PSala extends javax.swing.JFrame {
     private Gson gs;
     private java.lang.reflect.Type tipoSala;
     private int salasConectadas;
+    private volatile boolean runningUpdate = true;
+    private Thread updateThread;
 
     /**
      * Creates new form PSala
@@ -43,7 +45,16 @@ public class PSala extends javax.swing.JFrame {
         }.getType();
         adicionarSalas();
 
-        new Thread(new AtulizaDadosSala()).start();
+        updateThread = new Thread(new AtulizaDadosSala());
+        updateThread.start();
+    }
+
+    public void stopUpdateThread() {
+        runningUpdate = false; // Sinaliza para a thread parar
+        if (updateThread != null && updateThread.isAlive()) {
+            // Opcional, mas recomendado: interrompe o sleep
+            updateThread.interrupt();
+        }
     }
 
     public void adicionarSalas() {
@@ -51,7 +62,7 @@ public class PSala extends javax.swing.JFrame {
         MainApp.sessao.salas();
         String resp = MainApp.sessao.verificarResposta();
         salas = gs.fromJson(resp, tipoSala);
-        salasP= new ArrayList();
+        salasP = new ArrayList();
         Collections.sort(salas, Comparator.comparingInt(s -> s.getnSala()));
         String salaDes = "Salas desconectadas: ";
         int salaD = 0;
@@ -257,6 +268,7 @@ public class PSala extends javax.swing.JFrame {
 
     private void jMenuAgendamentoMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuAgendamentoMenuSelected
         // TODO add your handling code here:
+        stopUpdateThread();
         dispose();
         MainApp.showPAngendamento();
 
@@ -273,18 +285,21 @@ public class PSala extends javax.swing.JFrame {
 
     private void jMenuAcaoesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuAcaoesMenuSelected
         // TODO add your handling code here:
+        stopUpdateThread();
         dispose();
         MainApp.showPAAcoes();
     }//GEN-LAST:event_jMenuAcaoesMenuSelected
 
     private void jMenuDIRMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuDIRMenuSelected
         // TODO add your handling code here:
+        stopUpdateThread();
         dispose();
         MainApp.showPDispositivos();
     }//GEN-LAST:event_jMenuDIRMenuSelected
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
+        
         MainApp.showAddSala();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -325,21 +340,12 @@ public class PSala extends javax.swing.JFrame {
     }
 
     private class AtulizaDadosSala implements Runnable {
-        
-        public boolean salaAberta(){
-            for(SalaPanel panel:salasP){
-                if(panel.getSalaAberta()){
-                    return false;
-                }
-            }
-            return true;
-        }
 
         public SalaPanel procurarSP(Sala sala) {
             for (SalaPanel sp : salasP) {
-                if (sp.getN()==sala.getnSala()) {
+                if (sp.getN() == sala.getnSala()) {
                     return sp;
-                }else{
+                } else {
                     System.out.println("Não foi posssivel encontrar nem um Panel para a sala: " + sala.getnSala());
                     return null;
                 }
@@ -349,45 +355,50 @@ public class PSala extends javax.swing.JFrame {
 
         @Override
         public void run() {
-            while ((salaAberta() && isDisplayable())) {
-                String resposta =MainApp.sessao.salas();
-                if (resposta.contains("nSala")) {
-                    salas = gs.fromJson(resposta, tipoSala);
-                    Collections.sort(salas, Comparator.comparingInt(s -> s.getnSala()));
-                    //Para o proximo: tenta fazer metodos para organizar os panel da esquerda a direita a partir do nome
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (Sala sala : salas) {
-                                SalaPanel newSp = procurarSP(sala);
-                                if (sala.isEstadoDaConexao()) {
-                                    if (newSp == null) {
-                                        String nSala = "Sala " + sala.getnSala() + ":";
-                                        SalaPanel ps = new SalaPanel(nSala, sala.isEstadoAr(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
-                                                sala.isEstadoSala(), sala.isPresenca(), sala.getnSala());
-                                        salasP.add(ps);
-                                        Salas.add(ps);
+            while (runningUpdate) {
+                while (runningUpdate && (!SalaPanel.salaAberta)) {
+                    String resposta = MainApp.sessao.salas();
+                    if (resposta.contains("nSala")) {
+                        salas = gs.fromJson(resposta, tipoSala);
+                        Collections.sort(salas, Comparator.comparingInt(s -> s.getnSala()));
+                        //Para o proximo: tenta fazer metodos para organizar os panel da esquerda a direita a partir do nome
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (Sala sala : salas) {
+                                    SalaPanel newSp = procurarSP(sala);
+                                    if (sala.isEstadoDaConexao()) {
+                                        if (newSp == null) {
+                                            String nSala = "Sala " + sala.getnSala() + ":";
+                                            SalaPanel ps = new SalaPanel(nSala, sala.isEstadoAr(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
+                                                    sala.isEstadoSala(), sala.isPresenca(), sala.getnSala());
+                                            salasP.add(ps);
+                                            Salas.add(ps);
+                                        } else {
+                                            newSp.atualizar(sala.isEstadoSala(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
+                                                    sala.isEstadoAr(), sala.isPresenca());
+                                        }
                                     } else {
-                                        newSp.atualizar(sala.isEstadoSala(), sala.isEstadoDataShow(), sala.isEstadoLuzes(),
-                                                sala.isEstadoAr(), sala.isPresenca());
-                                    }
-                                }else{
-                                    if(newSp!=null){
-                                        Salas.remove(newSp);
+                                        if (newSp != null) {
+                                            Salas.remove(newSp);
+                                        }
                                     }
                                 }
+                                Salas.revalidate();
+                                Salas.repaint();
                             }
-                        }
-                    });
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    System.out.println("Erro ao atualizar");
+                           
+                        });
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        System.out.println("Erro ao atualizar");
+                    }
+
                 }
 
             }
-            
         }
     }
 

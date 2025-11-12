@@ -109,6 +109,7 @@ public class TratarAcao extends SocketArduino {
     }
     
     public String cadastrarAgendamento(Agendamento agendamento){
+        agendamento.setAutor(_login);
         if(manager.adicionarAgendamento(agendamento)){
             return "CAD_AGENDAMENTO_OK";
         }else{
@@ -182,6 +183,7 @@ public class TratarAcao extends SocketArduino {
     }
     
     public String editAgendamento(Agendamento agen) {
+        agen.setAutor(user.getLogin());
         boolean resp = manager.atualizarAgendamento(agen);
         if (resp) {
             return ("SUCESSO_EDIT_AGENDAMENTO");

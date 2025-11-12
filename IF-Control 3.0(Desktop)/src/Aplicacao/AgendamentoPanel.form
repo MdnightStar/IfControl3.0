@@ -14,7 +14,7 @@
       <Dimension value="[800, 120]"/>
     </Property>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1062, 80]"/>
+      <Dimension value="[1343, 85]"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -93,7 +93,7 @@
               <Component id="jSeparator2" min="-2" pref="11" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel5" min="-2" pref="220" max="-2" attributes="0"/>
-              <EmptySpace pref="74" max="32767" attributes="0"/>
+              <EmptySpace pref="179" max="32767" attributes="0"/>
               <Component id="jButton4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonEditar" min="-2" max="-2" attributes="0"/>

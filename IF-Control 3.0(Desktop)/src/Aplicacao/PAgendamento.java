@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Aplicacao;
+
 import Modelo.Agendamento;
 import Modelo.Sala;
 
@@ -11,27 +12,62 @@ import com.google.gson.reflect.TypeToken;
 import javax.swing.Box;
 import java.awt.Dimension;
 import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingUtilities;
+
 /**
  *
  * @author LENOVO
  */
 public class PAgendamento extends javax.swing.JFrame {
+
     private List<AgendamentoPanel> agendamentoP;
     private List<Agendamento> agendamentos;
     private Gson gs;
     private java.lang.reflect.Type tipoAgendamento;
+    private volatile boolean runningUpdate = true;
+    private Thread updateThread;
+
     /**
      * Creates new form PAgendamento
      */
     public PAgendamento() {
         initComponents();
+        agendamentoP = new ArrayList<>();
+        agendamentos = new ArrayList<>();
         this.setExtendedState(MAXIMIZED_BOTH);
         gs = new Gson();
         tipoAgendamento = new TypeToken<List<Agendamento>>() {
         }.getType();
-        new Thread(new PAgendamento.AtualizaDadosAgendamento()).start();
+        updateThread = new Thread(new PAgendamento.AtualizaDadosAgendamento());
+        updateThread.start();
+        adicionarAgendamentos();
+
+    }
+
+    public void stopUpdateThread() {
+        runningUpdate = false; // Sinaliza para a thread parar
+        if (updateThread != null && updateThread.isAlive()) {
+            // Opcional, mas recomendado: interrompe o sleep
+            updateThread.interrupt();
+        }
+    }
+
+    public void adicionarAgendamentos() {
+        jPanelAgendamentos.removeAll();
+        String msg = MainApp.sessao.agendamentos();
+        String parte[]=msg.split("--agendamentos--");
+        agendamentos = gs.fromJson(parte[1], tipoAgendamento);
+        for (Agendamento agen : agendamentos) {
+            AgendamentoPanel novoP = new AgendamentoPanel(agen.getIdAgendamento(), agen.getAutor(),
+                    agen.getTitulo(), agen.getDataIn(), agen.getDataF(), agen.gethAtv(), agen.gethDesat(), agen.getDiaSemana(),
+                    agen.getSalas(), agen.getDispositivos());
+            agendamentoP.add(novoP);
+            jPanelAgendamentos.add(novoP);
+            jPanelAgendamentos.revalidate();
+            jPanelAgendamentos.repaint();
+        }
     }
 
     /**
@@ -67,7 +103,7 @@ public class PAgendamento extends javax.swing.JFrame {
 
         jPanelAgendamentos.setBackground(new java.awt.Color(0, 51, 102));
         jPanelAgendamentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelAgendamentos.setLayout(new javax.swing.BoxLayout(jPanelAgendamentos, javax.swing.BoxLayout.Y_AXIS));
+        jPanelAgendamentos.setLayout(new java.awt.GridLayout(8, 1));
 
         jPanelAgendamentos.add(Box.createRigidArea(new Dimension(0,20)));
 
@@ -101,10 +137,10 @@ public class PAgendamento extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelIfamLogo1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPaneAgendamentos, javax.swing.GroupLayout.DEFAULT_SIZE, 1343, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneAgendamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabelAgendamentos)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 940, Short.MAX_VALUE)
@@ -195,11 +231,12 @@ public class PAgendamento extends javax.swing.JFrame {
 
     private void jMenuSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalasActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenuSalasActionPerformed
 
     private void jMenuSalasMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuSalasMenuSelected
         // TODO add your handling code here:
+        stopUpdateThread();
         dispose();
         MainApp.showPSalas();
     }//GEN-LAST:event_jMenuSalasMenuSelected
@@ -210,12 +247,14 @@ public class PAgendamento extends javax.swing.JFrame {
 
     private void jMenuAcaoesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuAcaoesMenuSelected
         // TODO add your handling code here:
+        stopUpdateThread();
         dispose();
         MainApp.showPAAcoes();
     }//GEN-LAST:event_jMenuAcaoesMenuSelected
 
     private void jMenuDIRMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuDIRMenuSelected
         // TODO add your handling code here:
+        stopUpdateThread();
         dispose();
         MainApp.showPDispositivos();
     }//GEN-LAST:event_jMenuDIRMenuSelected
@@ -259,49 +298,81 @@ public class PAgendamento extends javax.swing.JFrame {
             }
         });
     }
-    
-    private class AtualizaDadosAgendamento implements Runnable{
-        
+
+    private class AtualizaDadosAgendamento implements Runnable {
+
         public AgendamentoPanel procurarAP(Agendamento agen) {
             for (AgendamentoPanel ap : agendamentoP) {
-                if (ap.getIdAgendamento()==agen.getIdAgendamento()) {
+                if (ap.getIdAgendamento() == agen.getIdAgendamento()) {
                     return ap;
                 }
+
             }
-            System.out.println("Não foi posssivel encontrar nem um Panel para o agendamento: " + agen.getIdAgendamento());
+
             return null;
         }
-        
+
+        public boolean procurarA(AgendamentoPanel panel) {
+
+            for (Agendamento agen : agendamentos) {
+                if (agen.getIdAgendamento() == panel.getIdAgendamento()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         @Override
         public void run() {
-            while(isDisplayable()){
-                String resp=MainApp.sessao.verificarResposta();
-                if(resp.contains("--modAgendamento--")){
-                    String parte[]=resp.split("--modAgendamento--");
-                    agendamentos = gs.fromJson(parte[1],tipoAgendamento);
+            while (runningUpdate) {
+                String resp = MainApp.sessao.agendamentos();
+                String parte[]=resp.split("--agendamentos--");
+                if (resp.contains("--agendamentos--")) {
+                    agendamentos = gs.fromJson(parte[1], tipoAgendamento);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                             for(Agendamento agen:agendamentos){
-                                 AgendamentoPanel agenP=procurarAP(agen);
-                                 if(agenP==null){
-                                    AgendamentoPanel novoP=new AgendamentoPanel(agen.getIdAgendamento(),agen.getAutor(), 
-                                            agen.getTitulo(), agen.getDataIn(), agen.getDataF(),agen.gethAtv(), agen.gethDesat(), agen.getDiaSemana(), 
+                            
+
+                            for (AgendamentoPanel panel : new ArrayList<>(agendamentoP)) {
+                                if (!procurarA(panel)) {
+                                    // Remove do painel pai (Container)
+                                    jPanelAgendamentos.remove(panel);
+                                    // Remove da lista de controle interna
+                                    agendamentoP.remove(panel);
+                                }
+                            }
+                            for (Agendamento agen : agendamentos) {
+
+                                if (procurarAP(agen) == null) {
+                                    AgendamentoPanel novoP = new AgendamentoPanel(agen.getIdAgendamento(), agen.getAutor(),
+                                            agen.getTitulo(), agen.getDataIn(), agen.getDataF(), agen.gethAtv(), agen.gethDesat(), agen.getDiaSemana(),
                                             agen.getSalas(), agen.getDispositivos());
                                     agendamentoP.add(novoP);
                                     jPanelAgendamentos.add(novoP);
-                                 }else{
-                                     agenP.atualizar(agen.getAutor(), 
-                                            agen.getTitulo(), agen.getDataIn(), agen.getDataF(),agen.gethAtv(), agen.gethDesat(), agen.getDiaSemana(), 
+
+                                } else {
+                                    AgendamentoPanel agenP = procurarAP(agen);
+                                    agenP.atualizar(agen.getAutor(),
+                                            agen.getTitulo(), agen.getDataIn(), agen.getDataF(), agen.gethAtv(), agen.gethDesat(), agen.getDiaSemana(),
                                             agen.getSalas(), agen.getDispositivos());
-                                 }
-                             }
+                                }
+                            }
+
+                            jPanelAgendamentos.revalidate();
+                            jPanelAgendamentos.repaint();
                         }
+                        
                     });
+                }
+
+                try {
+                    Thread.sleep(5000);
+                } catch (Exception e) {
                 }
             }
         }
-    
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

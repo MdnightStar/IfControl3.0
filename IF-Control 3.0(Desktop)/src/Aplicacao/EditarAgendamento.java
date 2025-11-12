@@ -30,19 +30,20 @@ import javax.swing.JOptionPane;
  * @author cauaa
  */
 public class EditarAgendamento extends javax.swing.JFrame {
-
+    private int id;
     /**
      * Creates new form g
      */
     public EditarAgendamento(Agendamento agen) {
         initComponents();
+        setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+        id=agen.getIdAgendamento();
         jTextFieldTitulo.setText(agen.getTitulo());
         jDataInicio.setCalendar(agen.getDataIn());
         jDataFim.setCalendar(agen.getDataF());
         
-        List<JRadioButton> radioSemana = null;
+        List<JRadioButton> radioSemana = new ArrayList();
         JRadioButton[] radioSemanaArray={jRadioButtonDomingo,jRadioButtonSegunda, jRadioButtonTerca, jRadioButtonQuarta,
         jRadioButtonQuinta, jRadioButtonSexta, jRadioButtonSabado};
         Collections.addAll(radioSemana,radioSemanaArray );
@@ -589,6 +590,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
 
         // 5. Dispositivos (JRadioButtons - Múltipla Seleção)
         novoAgendamento.setDispositivos(coletarDispositivos(radioDispositivos)); // Usa o array de RBs da validação
+        novoAgendamento.setIdAgendamento(id);
 
         // 6. Salas (JTextField)
         try {
@@ -599,16 +601,15 @@ public class EditarAgendamento extends javax.swing.JFrame {
             System.err.println("Erro de formato de salas: " + e.getMessage());
             return;
         }
-
-        // A partir daqui, o objeto 'novoAgendamento' está preenchido e pronto para ser usado (ex: salvar no DB)
-        JOptionPane.showMessageDialog(this, "Agendamento Adicionado com Sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println("Agendamento editado e pronto para salvar: " + novoAgendamento.toString());
+        
         Gson gson = new Gson();
         String u = "--editAgendamento--";
         u+=gson.toJson(novoAgendamento);
         String resp=MainApp.sessao.trataAcao(u);
         if (resp.equals("SUCESSO_EDIT_AGENDAMENTO")) {
+            
             JOptionPane.showMessageDialog(null, "Edit do agendamento reaalizado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
         }else{
             JOptionPane.showMessageDialog(this, "Erro no banco de dados", "Erro", JOptionPane.WARNING_MESSAGE);
         }

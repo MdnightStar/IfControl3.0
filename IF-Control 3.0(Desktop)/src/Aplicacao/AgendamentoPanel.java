@@ -40,6 +40,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
             Time hAtv, Time hDesat, int[] diaSemana, int[] salas, ArrayList<String> dispositivos) {
         initComponents();
         this.idAgendamento=idAgendamento;
+        
         atualizar(autor, titulo, dataIn, dataF, hAtv, hDesat, diaSemana, salas, dispositivos);
         
     }
@@ -55,8 +56,11 @@ public class AgendamentoPanel extends javax.swing.JPanel {
     public void atualizar(String autor, String titulo, Calendar dataIn, Calendar dataF, 
             Time hAtv, Time hDesat, int[] diaSemana, int[] salas, ArrayList<String> dispositivos){
         agen=new Agendamento(autor, titulo, dataIn, dataF, hAtv, hDesat, diaSemana, salas, dispositivos);
+        agen.setIdAgendamento(this.idAgendamento);
         
-        jLabelAutor.setText(autor);
+        
+        
+        jLabelAutorEd.setText(autor);
         jLabelTituloEd.setText(titulo);
         
         SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
@@ -67,7 +71,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         jLabelInicioEd.setText(formatador.format(dateAtv));
         jLabelFimEd.setText(formatador.format(dateDesat));
         
-        List<JRadioButton> radioSemana = null;
+        List<JRadioButton> radioSemana = new ArrayList<>();
         JRadioButton[] radioSemanaArray={jRadioButtonDomingo,jRadioButtonSegunda, jRadioButtonTerca, jRadioButtonQuarta,
         jRadioButtonQuinta, jRadioButtonSexta, jRadioButtonSabado};
         Collections.addAll(radioSemana,radioSemanaArray );
@@ -83,7 +87,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
    
         String horaAtvFormatada =timeParaStringHHMM(hAtv);
         String horaDesatFormatada =timeParaStringHHMM(hDesat);
-        jLabelInicioEd.setText(horaAtvFormatada);
+        jLabelhoraAtivEd.setText(horaAtvFormatada);
         jLabelhoraDesativEd.setText(horaDesatFormatada);
         
         jLabelSalasEd.setText(Arrays.stream(salas).boxed().map(Object::toString).collect(Collectors.joining(", ")));
@@ -173,7 +177,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         setMaximumSize(new java.awt.Dimension(800, 120));
-        setPreferredSize(new java.awt.Dimension(1062, 80));
+        setPreferredSize(new java.awt.Dimension(1343, 85));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -431,7 +435,7 @@ public class AgendamentoPanel extends javax.swing.JPanel {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonEditar)
