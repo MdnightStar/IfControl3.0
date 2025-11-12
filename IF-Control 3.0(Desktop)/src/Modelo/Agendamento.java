@@ -18,11 +18,12 @@ public class Agendamento {
     Time hAtv,hDesat;
     int[] diaSemana,salas;
     ArrayList <String> dispositivos;
+    boolean statusAgendamento;
     
     public Agendamento(){
     }
 
-    public Agendamento(String autor, String titulo, Calendar dataIn, Calendar dataF, Time hAtv, Time hDesat, int[] diaSemana, int[] salas, ArrayList<String> dispositivos) {
+    public Agendamento(String autor, String titulo, Calendar dataIn, Calendar dataF, Time hAtv, Time hDesat, int[] diaSemana, int[] salas, ArrayList<String> dispositivos, boolean statusAgendamento) {
         this.autor = autor;
         this.titulo = titulo;
         this.dataIn = dataIn;
@@ -32,6 +33,15 @@ public class Agendamento {
         this.diaSemana = diaSemana;
         this.salas = salas;
         this.dispositivos = dispositivos;
+        this.statusAgendamento=statusAgendamento;
+    }
+
+    public boolean isStatusAgendamento() {
+        return statusAgendamento;
+    }
+
+    public void setStatusAgendamento(boolean statusAgendamento) {
+        this.statusAgendamento = statusAgendamento;
     }
     
     

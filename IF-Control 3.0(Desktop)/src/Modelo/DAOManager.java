@@ -634,6 +634,7 @@ public class DAOManager {
                 agendamento.setIdAgendamento(idAgendamento); // Assumindo a sugestão de adicionar idAgendamento
                 agendamento.setTitulo(rs.getString("titulo"));
                 agendamento.setAutor(rs.getString("autor"));
+                agendamento.setStatusAgendamento(rs.getBoolean("statusAgendamento"));
 
                 // Conversão de Date para Calendar para dataInicio
                 Calendar dataIn = Calendar.getInstance();
@@ -734,8 +735,8 @@ public class DAOManager {
     public boolean adicionarAgendamento(Agendamento agendamento) {
         // 1. Inserir o Agendamento principal
         String sqlAgendamento = "INSERT INTO agendamento "
-                + "(titulo, autor, dataInicio, dataFim, hAtiv, hDesat) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+                + "(titulo, autor, dataInicio, dataFim, hAtiv, hDesat,statusAgendamento) "
+                + "VALUES (?, ?, ?, ?, ?, ?,false)";
 
         try {
             // PreparedStatement com RETURN_GENERATED_KEYS para obter o ID gerado
@@ -829,7 +830,7 @@ public class DAOManager {
         // 1. Atualizar o Agendamento principal (Tabela 'agendamento')
         // Usamos UPDATE e a cláusula WHERE com o ID.
         String sqlAgendamento = "UPDATE agendamento SET "
-                + "titulo = ?, autor = ?, dataInicio = ?, dataFim = ?, hAtiv = ?, hDesat = ? "
+                + "titulo = ?, autor = ?, dataInicio = ?, dataFim = ?, hAtiv = ?, hDesat = ? , statusAgendamento=false"
                 + "WHERE id = ?"; // Chave crucial
 
         try {

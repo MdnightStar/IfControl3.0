@@ -60,13 +60,80 @@ public class GerenciarAgendamentos implements Runnable {
         
         for (int dia : diasAgendados) {
             if (dia == diaDaSemana) {
-                // O agendamento é válido para este dia da semana e está dentro do período de datas.
-                return true;
+               // O agendamento é válido para este dia. Agora verificamos a hora.
+                
+                // *** CHAMA A NOVA FUNÇÃO DE VERIFICAÇÃO DE HORA E EXECUÇÃO ***
+                verificaEExecutaAcao(agendamento, agora);
+                
+                // O loop pode continuar, mas como a ação é executada, 
+                // não precisamos de um 'return true' aqui, a responsabilidade é transferida.
+                break; // Sai do loop de dias da semana, pois o dia foi encontrado
             }
         }
         
         // O agendamento está no período de datas, mas não é para ser executado neste dia da semana.
         return false;
+    }
+    
+    /**
+     * Verifica se a hora atual coincide com hAtv ou hDesat do agendamento 
+     * e executa a ação correspondente, se necessário.
+     * * OBS: O rastreamento de status (se a ação já foi feita hoje) é CRÍTICO aqui.
+     *
+     * @param agendamento O objeto Agendamento.
+     * @param agora O objeto Calendar representando a data e hora atual.
+     */
+    private void verificaEExecutaAcao(Agendamento agendamento, Calendar agora) {
+        // Obter a hora atual em milissegundos do dia (útil para comparação)
+        // Por exemplo: 10:30:00 = 37800000ms
+        long horaAtualNoDia = agora.get(Calendar.HOUR_OF_DAY) * 3600000 
+                            + agora.get(Calendar.MINUTE) * 60000;
+        
+        // Obter as horas agendadas em milissegundos do dia
+        long horaAtivacaoAgendada = agendamento.gethAtv().getTime(); // Retorna o tempo em ms desde 1/1/1970 
+        long horaDesativacaoAgendada = agendamento.gethDesat().getTime(); // desde 1/1/1970
+        
+        // CORREÇÃO: Para comparar apenas o tempo, usamos o Time do SQL.
+        // O getTime() em java.sql.Time retorna ms desde 1/1/1970, mas o valor real é a 
+        // hora do dia atual + offset. Vamos usar a hora, minuto e segundo do Time.
+        
+        Calendar calAtivacao = Calendar.getInstance();
+        calAtivacao.setTime(agendamento.gethAtv());
+        long msAtv = calAtivacao.get(Calendar.HOUR_OF_DAY) * 3600000 + calAtivacao.get(Calendar.MINUTE) * 60000;
+
+        Calendar calDesativacao = Calendar.getInstance();
+        calDesativacao.setTime(agendamento.gethDesat());
+        long msDesat = calDesativacao.get(Calendar.HOUR_OF_DAY) * 3600000 + calDesativacao.get(Calendar.MINUTE) * 60000;
+        
+        // Definindo uma margem de tempo (e.g., 5 minutos = 300000 ms) para a execução do comando
+        // Isso evita que o sistema perca o exato segundo da ativação
+        final int MARGEM_MS = 120000; // 2 minutos
+
+        // Suponha que você tenha um mecanismo para verificar se a ação já foi executada hoje (CRÍTICO)
+        // boolean ativacaoJaFeitaHoje = verificarStatus(agendamento.getIdAgendamento(), "ATIVACAO");
+        // boolean desativacaoJaFeitaHoje = verificarStatus(agendamento.getIdAgendamento(), "DESATIVACAO");
+        
+        // 1. VERIFICAÇÃO DE ATIVAÇÃO (LIGAR)
+        if (horaAtualNoDia >= msAtv && horaAtualNoDia < (msAtv + MARGEM_MS)) { // && !ativacaoJaFeitaHoje) {
+            
+            // Lógica para enviar o comando de ATIVAÇÃO
+            System.out.println("EXECUTANDO ATIVAÇÃO para Agendamento ID: " + agendamento.getIdAgendamento());
+            enviarComandos(agendamento, "LIGAR");
+            
+            // Após a execução, você deve registrar que a ativação foi feita hoje.
+            // registrarStatus(agendamento.getIdAgendamento(), "ATIVACAO"); 
+        }
+
+        // 2. VERIFICAÇÃO DE DESATIVAÇÃO (DESLIGAR)
+        if (horaAtualNoDia >= msDesat && horaAtualNoDia < (msDesat + MARGEM_MS)) { // && !desativacaoJaFeitaHoje) {
+            
+            // Lógica para enviar o comando de DESATIVAÇÃO
+            System.out.println("EXECUTANDO DESATIVAÇÃO para Agendamento ID: " + agendamento.getIdAgendamento());
+            enviarComandos(agendamento, "DESLIGAR");
+            
+            // Após a execução, você deve registrar que a desativação foi feita hoje.
+            // registrarStatus(agendamento.getIdAgendamento(), "DESATIVACAO"); 
+        }
     }
 
     @Override
