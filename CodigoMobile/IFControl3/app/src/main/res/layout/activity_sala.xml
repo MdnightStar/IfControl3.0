@@ -86,6 +86,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <ImageView
+        android:id="@+id/buttonLuz"
+        android:layout_width="81dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="256dp"
+        android:layout_marginEnd="170dp"
+        android:src="@drawable/luz_on"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/buttonDS"
+        android:layout_width="81dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="256dp"
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/datashow_on"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -114,4 +134,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_tabs"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="Button"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="413dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="Button"
+        tools:layout_editor_absoluteX="241dp"
+        tools:layout_editor_absoluteY="413dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
