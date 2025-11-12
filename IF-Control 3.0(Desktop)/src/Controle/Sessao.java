@@ -228,4 +228,14 @@ public class Sessao {
         return servidor.getResposta();
        
     }
+    
+    public String agendamentos(){
+        servidor.enviar("--agendamentos--");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        return servidor.getResposta();
+    }
 }

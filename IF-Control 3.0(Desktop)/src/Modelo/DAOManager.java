@@ -791,6 +791,16 @@ public class DAOManager {
                 }
                 stmtSalas.executeBatch(); // Executa todos os comandos no lote
             }
+            
+            String sqlDispositivos = "INSERT INTO dispositivosAgendamento (agendamento_id, dispositivo) VALUES (?, ?)";
+            try (PreparedStatement stmtDispositivos = conexao.prepareStatement(sqlDispositivos)) {
+                for (String dispositivo : agendamento.getDispositivos()) {
+                    stmtDispositivos.setInt(1, idAgendamento);
+                    stmtDispositivos.setString(2, dispositivo); // A coluna é VARCHAR, então use setString
+                    stmtDispositivos.addBatch();
+                }
+                stmtDispositivos.executeBatch();
+            }
 
             return true;
 
@@ -809,7 +819,7 @@ public class DAOManager {
     public boolean atualizarAgendamento(Agendamento agendamento) {
         // É crucial que o objeto Agendamento tenha um ID válido para a atualização.
         if (agendamento.getIdAgendamento() <= 0) {
-            System.out.println("Erro ao atualizar agendamento: O ID do agendamento é inválido.");
+            System.out.println("Erro ao atualizar agendamento: O ID do agendamento é inválido."+agendamento.getIdAgendamento());
             return false;
         }
 
@@ -820,7 +830,7 @@ public class DAOManager {
         // Usamos UPDATE e a cláusula WHERE com o ID.
         String sqlAgendamento = "UPDATE agendamento SET "
                 + "titulo = ?, autor = ?, dataInicio = ?, dataFim = ?, hAtiv = ?, hDesat = ? "
-                + "WHERE idAgendamento = ?"; // Chave crucial
+                + "WHERE id = ?"; // Chave crucial
 
         try {
             // Uso de try-with-resources para garantir que o PreparedStatement seja fechado.
@@ -890,6 +900,23 @@ public class DAOManager {
                 }
                 stmtInsertSalas.executeBatch();
             }
+            
+            String sqlDeletDispositivos = "DELETE FROM dispositivosAgendamento WHERE agendamento_id = ?";
+            try (PreparedStatement stmtDeleteSalas = conexao.prepareStatement(sqlDeletDispositivos)) {
+                stmtDeleteSalas.setInt(1, idAgendamento);
+                stmtDeleteSalas.executeUpdate();
+            }
+            String sqlInsertDispositivos = "INSERT INTO dispositivosAgendamento (agendamento_id, dispositivo) VALUES (?, ?)";
+            try (PreparedStatement stmtDispositivos = conexao.prepareStatement(sqlInsertDispositivos)) {
+                for (String dispositivo : agendamento.getDispositivos()) {
+                    stmtDispositivos.setInt(1, idAgendamento);
+                    stmtDispositivos.setString(2, dispositivo); // A coluna é VARCHAR, então use setString
+                    stmtDispositivos.addBatch();
+                }
+                stmtDispositivos.executeBatch();
+            }
+            
+            
 
             return true;
 

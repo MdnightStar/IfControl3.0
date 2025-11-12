@@ -4,18 +4,17 @@
  */
 package Aplicacao;
 
-import Controle.TrataServidor;
-import Modelo.Agendamento;
+
 import com.google.gson.Gson;
-import com.toedter.calendar.JDateChooser;
+
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -31,9 +30,8 @@ public class AddAgendamento extends javax.swing.JFrame {
     public AddAgendamento() {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -223,7 +221,7 @@ public class AddAgendamento extends javax.swing.JFrame {
         jLabelSeparatorHoraIn.setForeground(new java.awt.Color(255, 255, 255));
         jLabelSeparatorHoraIn.setText(":");
 
-        jSpinnerMinutosIn.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+        jSpinnerMinutosIn.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
 
         jLabelHoraFim.setBackground(new java.awt.Color(255, 255, 255));
         jLabelHoraFim.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
@@ -237,7 +235,7 @@ public class AddAgendamento extends javax.swing.JFrame {
         jLabelSeparatorHoraFim.setForeground(new java.awt.Color(255, 255, 255));
         jLabelSeparatorHoraFim.setText(":");
 
-        jSpinnerMinutosFim.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+        jSpinnerMinutosFim.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
 
         jButtonCancelar1.setBackground(new java.awt.Color(0, 51, 102));
         jButtonCancelar1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
@@ -555,21 +553,22 @@ public class AddAgendamento extends javax.swing.JFrame {
         }
 
         // A partir daqui, o objeto 'novoAgendamento' está preenchido e pronto para ser usado (ex: salvar no DB)
-        JOptionPane.showMessageDialog(this, "Agendamento Adicionado com Sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        
         System.out.println("Agendamento criado e pronto para salvar: " + novoAgendamento.toString());
         Gson gson = new Gson();
         String u = "--addAgendamento--";
-        u+=gson.toJson(novoAgendamento);
-        String resp=MainApp.sessao.trataAcao(u);
-        if (resp.equals("CAD_ANGENDAMENTO_OK")) {
+        u += gson.toJson(novoAgendamento);
+        String resp = MainApp.sessao.trataAcao(u);
+        if (resp.equals("CAD_AGENDAMENTO_OK")) {
             JOptionPane.showMessageDialog(null, "Cadastro do agendamento reaalizado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this, "Erro no banco de dados", "Erro", JOptionPane.WARNING_MESSAGE);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro no banco de dados", "Erro", JOptionPane.WARNING_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jButtonAddActionPerformed
-         
-   
+
+
     private void jTextFieldTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldTituloActionPerformed
@@ -637,18 +636,14 @@ public class AddAgendamento extends javax.swing.JFrame {
      * Spinners.
      */
     private Time coletarHora(JSpinner spinnerHora, JSpinner spinnerMinuto) {
-        // Certifique-se de que os Spinners têm modelos de número
         int hora = (int) spinnerHora.getValue();
         int minuto = (int) spinnerMinuto.getValue();
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, hora);
-        cal.set(Calendar.MINUTE, minuto);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
+        // Cria um LocalTime que é sempre 24h
+        LocalTime localTime = LocalTime.of(hora, minuto);
 
-        // Retorna a hora como java.sql.Time
-        return new Time(cal.getTimeInMillis());
+        // Converte o LocalTime para java.sql.Time
+        return Time.valueOf(localTime);
     }
 
     /**
@@ -658,11 +653,11 @@ public class AddAgendamento extends javax.swing.JFrame {
         ArrayList<String> dispositivos = new ArrayList<>();
         for (JRadioButton rb : radiobuttons) {
             if (rb.isSelected()) {
-                if(rb.getText().equals("Ar-condicionado")){
+                if (rb.getText().equals("Ar-Condicionado")) {
                     dispositivos.add("AR");
-                }else if(rb.getText().equals("Luzes")){
+                } else if (rb.getText().equals("Luzes")) {
                     dispositivos.add("LZ");
-                }else if(rb.getText().equals("DataShow")){
+                } else if (rb.getText().equals("DataShow")) {
                     dispositivos.add("DS");
                 }
             }

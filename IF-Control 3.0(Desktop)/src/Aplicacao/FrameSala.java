@@ -37,7 +37,8 @@ public class FrameSala extends javax.swing.JFrame {
         MainApp.sessao.trataAcao("HA", nsala);
         MainApp.sessao.trataAcao("OCP", nsala);
         gs = new Gson();
-        this.tipoSala = new TypeToken<Sala>() {}.getType();
+        this.tipoSala = new TypeToken<Sala>() {
+        }.getType();
         new Thread(new AtualizaDadosSala()).start();
 
     }
@@ -486,7 +487,7 @@ public class FrameSala extends javax.swing.JFrame {
 
         funcao += (String) comboBoxTemperatura.getSelectedItem();
         funcao += (String) comboBoxModo.getSelectedItem();
-        funcao+=".";
+        funcao += ".";
         MainApp.sessao.trataAcao(funcao, nsala);
     }//GEN-LAST:event_jButtonEnviarActionPerformed
 
@@ -693,6 +694,24 @@ public class FrameSala extends javax.swing.JFrame {
                             estadoAr = sala.isEstadoAr();
                             estadoDS = sala.isEstadoDataShow();
                             estadoLuzes = sala.isEstadoLuzes();
+                            if (!estadoAr) {
+                                jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens/ar-condicionado-off (1).png")));
+                            } else {
+                                
+                                jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens/ar-condicionado-on (1).png")));
+                            }
+                            if (!estadoLuzes) {
+                                jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/Imagens/luz-off (1).png")));
+                            } else {
+                                jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/Imagens/luz-on (1).png")));
+                            }
+                            if (!estadoDS) {
+                              
+                                jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens/data-show-off (1).png")));
+                            } else {
+                                
+                                jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens/data-show-on (1).png")));
+                            }
                         }
                     });
                 }
@@ -703,9 +722,10 @@ public class FrameSala extends javax.swing.JFrame {
                 }
 
             }
-            SalaPanel.salaAberta=false;
+            
             MainApp.sessao.trataAcao("DSC", nsala);
             MainApp.sessao.trataAcao("HD", nsala);
+            SalaPanel.salaAberta = false;
         }
     }
 

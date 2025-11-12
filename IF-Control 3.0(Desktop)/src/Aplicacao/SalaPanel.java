@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 public class SalaPanel extends javax.swing.JPanel {
     
     protected int nsala;
-    protected static boolean salaAberta;
+    protected static boolean salaAberta=false;
     private FrameSala novaSala;
     
     /**
@@ -26,7 +26,7 @@ public class SalaPanel extends javax.swing.JPanel {
     boolean estadoSala, boolean presenca, int nsala) {
         initComponents();
         jLabelNSala.setText(textoNSala);
-        salaAberta=false;
+        
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
         this.nsala=nsala;
         

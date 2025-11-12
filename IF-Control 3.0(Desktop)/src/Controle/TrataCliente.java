@@ -105,14 +105,9 @@ public class TrataCliente implements Runnable {
                      String parteAcao[]=msg.split("--acao--");
                      acao = gson.fromJson(parteAcao[1], Acao.class); //Deserializa a msg em uma Acao
                      String r=sessao.tratarAcao(acao.getTipoAcao());
+                     clienteOut.println(r);
                      
-                     if(msg.contains("--addAgendamento--")){
-                         servidor.distribuiMsg("--modAgendamento--"+sessao.pegarAngemadamento());
-                     }else if(msg.contains("--editAgendamento--")){
-                         servidor.distribuiMsg("--modAgendamento--"+sessao.pegarAngemadamento());
-                     }else if(msg.contains("--deletAgendamento--")){
-                         servidor.distribuiMsg("--modAgendamento--"+sessao.pegarAngemadamento());
-                     }
+                     
                 }
                 else if (msg.contains("logs")) {
                     clienteOut.println(sessao.pegarLogs());//Imprime todas as ações
@@ -124,6 +119,8 @@ public class TrataCliente implements Runnable {
                     String nSala[]=msg.split("--getSala--");
                     int u = Integer.parseInt(nSala[1]);
                     clienteOut.println(sessao.getSala(u));
+                }else if(msg.contains("--agendamentos--")){
+                    clienteOut.println("--agendamentos--"+sessao.pegarAngemadamento());
                 }
                 /*else if(msg.contains("addSala")){
                     String texto=msg;
