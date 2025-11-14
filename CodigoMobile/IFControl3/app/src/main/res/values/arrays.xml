@@ -1,0 +1,25 @@
+<resources>
+    <!-- Array de strings para as temperaturas do ar condicionado -->
+    <string-array name="temperaturas_array">
+        <item>16°C</item>
+        <item>17°C</item>
+        <item>18°C</item>
+        <item>19°C</item>
+        <item>20°C</item>
+        <item>21°C</item>
+        <item>22°C</item>
+        <item>23°C</item>
+        <item>24°C</item>
+        <item>25°C</item>
+        <item>26°C</item>
+    </string-array>
+
+    <!-- Array de strings para os modos do ar condicionado -->
+    <string-array name="modos_ar_array">
+        <item>Cool</item>
+        <item>Heat</item>
+        <item>Dry</item>
+        <item>Fan</item>
+        <item>Auto</item>
+    </string-array>
+</resources>

@@ -116,7 +116,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:logo="@drawable/ifcontrol3_logo"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="IFControl"
+        app:title="Sala"
         app:titleMarginStart="30dp"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -136,7 +136,7 @@
         app:menu="@menu/bottom_tabs"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonAr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
@@ -147,7 +147,7 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonDataShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"

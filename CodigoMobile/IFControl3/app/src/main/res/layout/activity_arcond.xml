@@ -16,9 +16,80 @@
         app:layout_constraintTop_toTopOf="parent"
         app:logo="@drawable/ifcontrol3_logo"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="IFControl"
+        app:title="Ar-Condicionado"
         app:titleMarginStart="30dp"
         tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/labelTemperaturaAr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="110dp"
+        android:text="Temperatura:"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerTemperaturaAr"
+        android:layout_width="182dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="28dp"
+        android:background="@color/aqua"
+        android:entries="@array/temperaturas_array"
+        app:layout_constraintBottom_toBottomOf="@id/labelTemperaturaAr"
+        app:layout_constraintStart_toEndOf="@id/labelTemperaturaAr"
+        tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/labelModoAr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="190dp"
+        android:text="Modo:"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerModoAr"
+        android:layout_width="182dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="28dp"
+        android:background="@color/aqua"
+        android:entries="@array/modos_ar_array"
+        app:layout_constraintBottom_toBottomOf="@id/labelModoAr"
+        app:layout_constraintStart_toEndOf="@id/labelModoAr"
+        tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/buttonEnviar"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:text="Enviar"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="300dp" />
+
+    <Button
+        android:id="@+id/buttonVoltar"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:text="Voltar"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="350dp" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_botton"
@@ -36,28 +107,5 @@
         app:menu="@menu/bottom_tabs">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="194dp"
-        android:layout_height="50dp"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="841dp" />
-
-    <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="733dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="69dp"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textSize="20dp" />
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

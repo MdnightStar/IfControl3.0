@@ -12,4 +12,5 @@
     <color name="vermelho_indisponivel">#FF0000</color> <!-- OFF / Indisponível -->
     <color name="text_on">#009933</color>
     <color name="text_off">#FF0000</color>
+    <color name="aqua">#61C0BF</color>
 </resources>
