@@ -51,7 +51,6 @@ public class PDispositivos extends javax.swing.JFrame {
         jRadioButton8 = new javax.swing.JRadioButton();
         jLabelAgendamentos = new javax.swing.JLabel();
         jLabelIF1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabelIfamLogo1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -265,9 +264,6 @@ public class PDispositivos extends javax.swing.JFrame {
         jLabelIF1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelIF1.setText("IFControl 3.0");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa.png"))); // NOI18N
-        jButton3.setText("Pesquisar");
-
         jButton2.setBackground(new java.awt.Color(0, 51, 102));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/mais.png"))); // NOI18N
 
@@ -288,12 +284,9 @@ public class PDispositivos extends javax.swing.JFrame {
                             .addComponent(jScrollPaneDispositivos, javax.swing.GroupLayout.DEFAULT_SIZE, 1343, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabelAgendamentos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 948, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButton3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton2))
+                                    .addComponent(jButton2)
                                     .addComponent(jLabelIF1))))))
                 .addGap(27, 27, 27))
         );
@@ -305,9 +298,7 @@ public class PDispositivos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelIF1)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2)))
+                        .addComponent(jButton2))
                     .addComponent(jLabelAgendamentos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneDispositivos, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
@@ -452,7 +443,6 @@ public class PDispositivos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

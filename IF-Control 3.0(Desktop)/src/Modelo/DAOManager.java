@@ -830,7 +830,7 @@ public class DAOManager {
         // 1. Atualizar o Agendamento principal (Tabela 'agendamento')
         // Usamos UPDATE e a cláusula WHERE com o ID.
         String sqlAgendamento = "UPDATE agendamento SET "
-                + "titulo = ?, autor = ?, dataInicio = ?, dataFim = ?, hAtiv = ?, hDesat = ? , statusAgendamento=false"
+                + "titulo = ?, autor = ?, dataInicio = ?, dataFim = ?, hAtiv = ?, hDesat = ? "
                 + "WHERE id = ?"; // Chave crucial
 
         try {

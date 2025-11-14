@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.util.Collections;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -29,6 +30,8 @@ public class PAAcoes extends javax.swing.JFrame {
     private Gson gs;
     private java.lang.reflect.Type tipoAcao;
     private int tAcaoes;
+    private volatile boolean runningUpdate = true;
+    private Thread updateThread;
 
     /**
      * Creates new form PAgendamento
@@ -36,30 +39,18 @@ public class PAAcoes extends javax.swing.JFrame {
     public PAAcoes() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
-        setUndecorated(true);
-        adicionarAcoes();
         gs = new Gson();
         tipoAcao = new TypeToken<ArrayList<Acao>>() {
         }.getType();
-        new Thread(new AtualizaDadosAcao()).start();
-
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Alerta", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) {
-                    MainApp.sessao.encerrarSessao();
-                }
-            }
-        });
+        adicionarAcoes();
+        updateThread = new Thread(new AtualizaDadosAcao());
+        updateThread.start();
 
     }
 
     public void adicionarAcoes() {
         jPanelAcoes.removeAll();
-        MainApp.sessao.logs();
-        String resp = MainApp.sessao.verificarResposta();
+        String resp = MainApp.sessao.logs();
         acoes = gs.fromJson(resp, tipoAcao);
         ordenarAcoes(acoes);
         tAcaoes = acoes.size();
@@ -68,6 +59,7 @@ public class PAAcoes extends javax.swing.JFrame {
             AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
                     acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao());
             jPanelAcoes.add(pa);
+            acoesP.add(pa);
         }
 
     }
@@ -82,6 +74,14 @@ public class PAAcoes extends javax.swing.JFrame {
         });
     }
 
+    public void stopUpdateThread() {
+        runningUpdate = false; // Sinaliza para a thread parar
+        if (updateThread != null && updateThread.isAlive()) {
+            // Opcional, mas recomendado: interrompe o sleep
+            updateThread.interrupt();
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,16 +94,6 @@ public class PAAcoes extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPaneAcoes = new javax.swing.JScrollPane();
         jPanelAcoes = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabelAgendamentos = new javax.swing.JLabel();
         jLabelIF1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -126,104 +116,6 @@ public class PAAcoes extends javax.swing.JFrame {
         jPanelAcoes.setBackground(new java.awt.Color(0, 51, 102));
         jPanelAcoes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanelAcoes.setLayout(new javax.swing.BoxLayout(jPanelAcoes, javax.swing.BoxLayout.Y_AXIS));
-
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel2.setMaximumSize(new java.awt.Dimension(32767, 70));
-        jPanel2.setName(""); // NOI18N
-        jPanel2.setPreferredSize(new java.awt.Dimension(800, 120));
-
-        jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Tipo ação:");
-
-        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Autor:");
-
-        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("XXXXXXXXX");
-
-        jLabel7.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("XXXXXXXXX");
-
-        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("XXXXXXXXX");
-
-        jLabel5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Data:");
-
-        jLabel6.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("XXXXXXXXX");
-
-        jLabel8.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Hora:");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)))
-                .addContainerGap(1010, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel7)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel6))))
-                .addContainerGap())
-        );
-
-        jPanelAcoes.add(jPanel2);
 
         jPanelAcoes.add(Box.createRigidArea(new Dimension(0,20)));
 
@@ -321,6 +213,15 @@ public class PAAcoes extends javax.swing.JFrame {
         jMenuBar1.add(jMenuAgendamento);
 
         jMenuAcaoes.setText("Ações");
+        jMenuAcaoes.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenuAcaoesMenuSelected(evt);
+            }
+        });
         jMenuBar1.add(jMenuAcaoes);
 
         jMenuDIR.setText("Dispositivos IR");
@@ -342,32 +243,40 @@ public class PAAcoes extends javax.swing.JFrame {
 
     private void jMenuSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalasActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
-        PSala.main(null);
+
     }//GEN-LAST:event_jMenuSalasActionPerformed
 
     private void jMenuSalasMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuSalasMenuSelected
         // TODO add your handling code here:
-        setVisible(false);
-        PSala.main(null);
+        stopUpdateThread();
+        dispose();
+        MainApp.showPSalas();
+
     }//GEN-LAST:event_jMenuSalasMenuSelected
 
     private void jMenuAgendamentoMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuAgendamentoMenuSelected
         // TODO add your handling code here:
-        setVisible(false);
-        PAgendamento.main(null);
+        stopUpdateThread();
+        dispose();
+        MainApp.showPAngendamento();
     }//GEN-LAST:event_jMenuAgendamentoMenuSelected
 
     private void jMenuDIRMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuDIRMenuSelected
         // TODO add your handling code here:
-        setVisible(false);
-        PDispositivos.main(null);
+        stopUpdateThread();
+        dispose();
+        MainApp.showPDispositivos();
     }//GEN-LAST:event_jMenuDIRMenuSelected
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         MainApp.showPesquisarAcao();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jMenuAcaoesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuAcaoesMenuSelected
+        // TODO add your handling code here:
+        MainApp.showPAAcoes();
+    }//GEN-LAST:event_jMenuAcaoesMenuSelected
 
     /**
      * @param args the command line arguments
@@ -409,21 +318,34 @@ public class PAAcoes extends javax.swing.JFrame {
 
         @Override
         public void run() {
-            while (isDisplayable()) {
-                MainApp.sessao.logs();
-                String resp = MainApp.sessao.verificarResposta();
-                acoes = gs.fromJson(resp, tipoAcao);
-                ordenarAcoes(acoes);
-                if (tAcaoes != acoes.size()) {
-                    jPanelAcoes.removeAll();
-                    for (Acao acao : acoes) {
-                        AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
-                                acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao());
-                        jPanelAcoes.add(pa);
-                        
+            while (runningUpdate) {
+                String resp = MainApp.sessao.logs();
+                if (resp.contains("acao")) {
+                    acoes = gs.fromJson(resp, tipoAcao);
+                    ordenarAcoes(acoes);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (tAcaoes != acoes.size()) {
+                                jPanelAcoes.removeAll();
+                                for (Acao acao : acoes) {
+                                    AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
+                                            acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao());
+                                    jPanelAcoes.add(pa);
+                                    acoesP.add(pa);
+
+                                }
+                            }
+                            jPanelAcoes.revalidate();
+                            jPanelAcoes.repaint();
+                        }
                     }
+                    );
+
                 }
-            }try {
+
+            }
+            try {
                 Thread.sleep(1800);
             } catch (InterruptedException ex) {
                 System.out.println("Erro ao atualizar");
@@ -433,14 +355,6 @@ public class PAAcoes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelAgendamentos;
     private javax.swing.JLabel jLabelIF1;
     private javax.swing.JLabel jLabelIfamLogo1;
@@ -451,9 +365,7 @@ public class PAAcoes extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuLogo;
     private javax.swing.JMenu jMenuSalas;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelAcoes;
     private javax.swing.JScrollPane jScrollPaneAcoes;
-    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

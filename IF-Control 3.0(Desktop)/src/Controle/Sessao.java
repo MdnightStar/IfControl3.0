@@ -200,8 +200,14 @@ public class Sessao {
     * Pede para o TrataCliente enviar todas as ações serializadas
     *
     */
-    public void logs(){
+    public String logs(){
         servidor.enviar("logs");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        return servidor.getResposta();
     }
     
     /**
