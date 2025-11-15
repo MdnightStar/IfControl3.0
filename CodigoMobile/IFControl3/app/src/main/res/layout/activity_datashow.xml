@@ -39,7 +39,7 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageViewOK"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:srcCompat="@drawable/ok"
@@ -48,7 +48,7 @@
         tools:layout_editor_absoluteY="218dp" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewCima"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:srcCompat="@drawable/para_cima"
@@ -57,7 +57,7 @@
         tools:layout_editor_absoluteY="131dp" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageViewDireita"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:srcCompat="@drawable/direita"
@@ -66,7 +66,7 @@
         tools:layout_editor_absoluteY="218dp" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageViewBaixo"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:srcCompat="@drawable/para_baixo"
@@ -75,7 +75,7 @@
         tools:layout_editor_absoluteY="301dp" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageViewEsquerda"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:srcCompat="@drawable/esquerda"
@@ -84,7 +84,7 @@
         tools:layout_editor_absoluteY="218dp" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/imageViewEsc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/esc"
@@ -93,7 +93,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/imageViewFreeze"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/freeze"
@@ -102,12 +102,23 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/imageViewMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/menu"
         tools:layout_editor_absoluteX="257dp"
         tools:layout_editor_absoluteY="421dp"
         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buttonVoltar"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:text="Voltar"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="488dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
