@@ -128,4 +128,5 @@ public class SalaView extends ConstraintLayout {
 
         return nsala;
         }
+
     }

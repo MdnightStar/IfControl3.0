@@ -16,8 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
-public class MenuActivity extends AppCompatActivity {
+import java.util.List;
 
+public class MenuActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -48,5 +49,15 @@ public class MenuActivity extends AppCompatActivity {
             Toast.makeText(this,"Sobre o app",Toast.LENGTH_SHORT).show();
         }
         return true;
+    }
+    public void onEntrarClicked(int nsala) {
+        // Crie a intenção para ir para a SalaActivity
+        Intent intent = new Intent(MenuActivity.this, SalaActivity.class);
+
+        // Passe o número da sala (nsala) para a próxima tela, para que ela saiba qual sala mostrar
+        intent.putExtra("NumeroSala", nsala);
+
+        // Inicie a nova atividade
+        startActivity(intent);
     }
 }
