@@ -1,0 +1,6 @@
+<!-- Este arquivo serve apenas como um exemplo para a pré-visualização
+     do RecyclerView no editor de layout do Android Studio. -->
+<ifcontrol.mobile.SalaView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"/>
