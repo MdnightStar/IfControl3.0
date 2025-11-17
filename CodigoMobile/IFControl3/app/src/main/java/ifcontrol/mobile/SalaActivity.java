@@ -30,6 +30,8 @@ public class SalaActivity extends AppCompatActivity {
     Button buttonDataShow;
     boolean isArCond = true;
 
+    private int nSala;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -38,9 +40,12 @@ public class SalaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        nSala = getIntent().getIntExtra("nSala",0);
+        if(nSala!=0){
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            toolbar.setTitle("Sala"+nSala);
+            setSupportActionBar(toolbar);
+        }
         buttonAr = findViewById(R.id.buttonAr);
         buttonDataShow = findViewById(R.id.buttonDataShow);
 
