@@ -27,7 +27,6 @@ public class TratarAcao extends SocketArduino {
     private Sala sala;
     private Gson gson;
     private String quebra[];
-    
 
     /**
      * Construtor da clase, somente instância o gson
@@ -93,29 +92,29 @@ public class TratarAcao extends SocketArduino {
             }
         }
     }
-    
-    public String cadastrarSala(int nSala, String IP){
-        if(manager.NSalaexiste(nSala)){
+
+    public String cadastrarSala(int nSala, String IP) {
+        if (manager.NSalaexiste(nSala)) {
             return "INVALID_NSALA";
-        }else if(manager.IPexiste(IP)){
+        } else if (manager.IPexiste(IP)) {
             return "INVALID_IP";
-        }else{
-            if(manager.adicionarSala(nSala, IP)){
+        } else {
+            if (manager.adicionarSala(nSala, IP)) {
                 return "CAD_SALA_OK";
-            }else{
+            } else {
                 return "ERROR_BD_INSERT";
             }
         }
     }
-    
-    public String cadastrarAgendamento(Agendamento agendamento){
+
+    public String cadastrarAgendamento(Agendamento agendamento) {
         agendamento.setAutor(_login);
-        if(manager.adicionarAgendamento(agendamento)){
+        if (manager.adicionarAgendamento(agendamento)) {
             return "CAD_AGENDAMENTO_OK";
-        }else{
-            return"ERROR_BD_INSERT";
+        } else {
+            return "ERROR_BD_INSERT";
         }
-        
+
     }
 
     /**
@@ -147,8 +146,8 @@ public class TratarAcao extends SocketArduino {
             return "ERROR_SELECT_SALAS";
         }
     }
-    
-    public String pegarAngemadamento(){
+
+    public String pegarAngemadamento() {
         List<Agendamento> agendamentos = manager.consultarAgendamento();
         if (agendamentos != null) {
             return gson.toJson(agendamentos);
@@ -172,7 +171,7 @@ public class TratarAcao extends SocketArduino {
             return ("LIVRE: SALA:" + nSala);
         }
     }
-    
+
     public String deletAgendamento(int idAgendamneto) {
         boolean resp = manager.eliminarAgendamento(idAgendamneto);
         if (resp) {
@@ -181,7 +180,7 @@ public class TratarAcao extends SocketArduino {
             return ("ERRO_DELET_AGENDAMENTO");
         }
     }
-    
+
     public String editAgendamento(Agendamento agen) {
         agen.setAutor(user.getLogin());
         boolean resp = manager.atualizarAgendamento(agen);
@@ -191,15 +190,14 @@ public class TratarAcao extends SocketArduino {
             return ("ERRO_EDIT_AGENDAMENTO");
         }
     }
-    
-    
-    public String getSala(int nSala){
-         Sala sala=manager.procuraSala(nSala);
-         if(sala!=null){
-             return gson.toJson(sala);
-         }else{
-             return "ERROR_SELECT_SALA";
-         }
+
+    public String getSala(int nSala) {
+        Sala sala = manager.procuraSala(nSala);
+        if (sala != null) {
+            return gson.toJson(sala);
+        } else {
+            return "ERROR_SELECT_SALA";
+        }
     }
 
     /**
@@ -220,7 +218,7 @@ public class TratarAcao extends SocketArduino {
         this.acao.setLogin(_login); //seta o login desta classe sessao
 
         sala = manager.procuraSala(nSala); // pega a sala do BD
-        System.out.println("Tratando acao: "+acao);
+        System.out.println("Tratando acao: " + acao);
 
         //Muda o estado da sala e da ação a partir da mensagem enviada
         if ((acao.contains("OCP")) || (acao.contains("DSC"))) {
@@ -250,24 +248,31 @@ public class TratarAcao extends SocketArduino {
                                 "ERRO", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    if (resposta.equals("OK")) {  //confirmaçao da açao
-                        this.acao.setStatus(true);
-                    } else {
+                    try {
+                        if (resposta.contains("OK")) {  //confirmaçao da açao
+                            this.acao.setStatus(true);
+                        } else {
+                            this.acao.setStatus(false);
+                        }
+                    } catch (NullPointerException e) {
                         this.acao.setStatus(false);
+                        System.out.println("Erro no envio do sinal IR");
                     }
+                        
+                    
                     //Até essa parte do código, se envia uma ação para o arduino e 
                     //verifica o recebimento
-                } else if(acao.contains("LZ")){
+                } else if (acao.contains("LZ")) {
                     try {
                         conectarArduino(nSala);
                         enviar(acao);
-                        resposta=ler();
+                        resposta = ler();
                         desconectarArduino();
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(null, "Não foi se conectar com o arduino",
                                 "ERRO", JOptionPane.ERROR_MESSAGE);
                     }
-                
+
                 }
                 switch (acao) {
                     case "DSON.":
@@ -289,7 +294,7 @@ public class TratarAcao extends SocketArduino {
                         sala.setEstadoAr(true);
                         break;
                 }
-            //Ajusta o horario de ativação e desativação da sala
+                //Ajusta o horario de ativação e desativação da sala
             } else {
                 this.acao.setStatus(true);
                 if (acao.contains("HA")) {
@@ -325,7 +330,7 @@ public class TratarAcao extends SocketArduino {
             return "ERROR_BD_UPDATE";
         }
     }
-    
+
     public String tratarAcao(String acao) throws ParseException {
         this.acao = new Acao(); // zera a ação do método
         String resposta = "";
@@ -334,32 +339,31 @@ public class TratarAcao extends SocketArduino {
         this.acao.setTipoAcao(acao);
         this.acao.setIdUser(user.getIdUser()); //seta id do usuario da classe user
         this.acao.setLogin(_login); //seta o login desta classe sessao
-        
-        if(acao.contains("--addSala--")){
-            quebra=acao.split("--addSala--");
-            sala=gson.fromJson(quebra[1], Sala.class);
+
+        if (acao.contains("--addSala--")) {
+            quebra = acao.split("--addSala--");
+            sala = gson.fromJson(quebra[1], Sala.class);
             return cadastrarSala(sala.getnSala(), sala.getIP());
-        }else if(acao.contains("--addAgendamento--")){
-            quebra=acao.split("--addAgendamento--");
-            Agendamento agendamento=gson.fromJson(quebra[1], Agendamento.class);
+        } else if (acao.contains("--addAgendamento--")) {
+            quebra = acao.split("--addAgendamento--");
+            Agendamento agendamento = gson.fromJson(quebra[1], Agendamento.class);
             return cadastrarAgendamento(agendamento);
-            
-        }else if(acao.contains("--deletAgendamento--")){
-            quebra=acao.split("--deletAgendamento--");
-            int id=Integer.parseInt(quebra[1]);
+
+        } else if (acao.contains("--deletAgendamento--")) {
+            quebra = acao.split("--deletAgendamento--");
+            int id = Integer.parseInt(quebra[1]);
             return deletAgendamento(id);
-            
-        }else if(acao.contains("--editAgendamento--")){
-            quebra=acao.split("--editAgendamento--");
-            Agendamento agendamento=gson.fromJson(quebra[1], Agendamento.class);
+
+        } else if (acao.contains("--editAgendamento--")) {
+            quebra = acao.split("--editAgendamento--");
+            Agendamento agendamento = gson.fromJson(quebra[1], Agendamento.class);
             return editAgendamento(agendamento);
-        }else{
+        } else {
             return "COMANDO_IMPOSSIVEL";
         }
-        
+
     }
-    
-    
+
     public String getLogin() {
         return _login;
     }

@@ -494,51 +494,55 @@ public class DAOManager {
      */
     public StringBuilder resgataCodIr(int nSala, String msg) throws SQLException {
         StringBuilder resp = new StringBuilder();
-
+        System.out.println("Mensagem chegou: " + msg + " Sala: " + nSala);
         resp.append("DIR,");
 
         // Extrair tipo (2 primeiros caracteres) e função (até o ponto final, se houver)
         String tipo = msg.substring(0, 2);
         String funcao = msg.contains(".") ? msg.substring(2, msg.indexOf(".")) : msg.substring(2);
+        System.out.println("Tipo: " + tipo + " Funcao: " + funcao);
 
         // 1. Buscar dispositivos da sala com o tipo especificado
         String sqlDis = "SELECT id, config FROM dis WHERE sala_id = ? AND tipo = ?";
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlDis); ResultSet rs = stmt.executeQuery()) {
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlDis)) {
             stmt.setInt(1, nSala);
             stmt.setString(2, tipo);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int disId = rs.getInt("id");
+                    String config = rs.getString("config");
 
-            while (rs.next()) {
-                int disId = rs.getInt("id");
-                String config = rs.getString("config");
+                    // 3.1 Adicionar config ao StringBuilder
+                    resp.append(config).append(",");
+                    System.out.println("Configuracoes: " + resp.toString());
 
-                // 3.1 Adicionar config ao StringBuilder
-                resp.append(config).append(",");
-
-                // 4. Buscar código IR correspondente à função
-                String sqlCodIr = "SELECT cod FROM codIR WHERE dispositivo_id = ? AND funcao = ?";
-                try (PreparedStatement stmt2 = this.conexao.prepareStatement(sqlCodIr); ResultSet rs2 = stmt2.executeQuery()) {
-                    stmt2.setInt(1, disId);
-                    stmt2.setString(2, funcao);
-
-                    if (rs2.next()) {
-                        String cod = rs2.getString("cod");
-                        // 5. Adicionar cod ao StringBuilder
-                        resp.append(cod).append(".");
+                    // 4. Buscar código IR correspondente à função
+                    String sqlCodIr = "SELECT cod FROM codIR WHERE dispositivo_id = ? AND funcao = ?";
+                    try (PreparedStatement stmt2 = this.conexao.prepareStatement(sqlCodIr)) {
+                        stmt2.setInt(1, disId);
+                        stmt2.setString(2, funcao);
+                        try (ResultSet rs2 = stmt2.executeQuery()) {
+                            if (rs2.next()) {
+                                String cod = rs2.getString("cod");
+                                // 5. Adicionar cod ao StringBuilder
+                                resp.append(cod).append(".");
+                                System.out.println("Codigo completo: "+resp.toString());
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        System.out.println(ex.getMessage());
                     }
-                } catch (SQLException ex) {
-                    System.out.println(ex.getMessage());
                 }
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        if(resp.toString().contains(".")){
+        if (resp.toString().contains(".")) {
             return resp;
-        }else {
+        } else {
             return new StringBuilder().append("ERRO.");
         }
-        
-                                                                                                                                                                                                                           
+
     }
 
     public boolean adicionarSala(int nSala, String ip) {
@@ -792,7 +796,7 @@ public class DAOManager {
                 }
                 stmtSalas.executeBatch(); // Executa todos os comandos no lote
             }
-            
+
             String sqlDispositivos = "INSERT INTO dispositivosAgendamento (agendamento_id, dispositivo) VALUES (?, ?)";
             try (PreparedStatement stmtDispositivos = conexao.prepareStatement(sqlDispositivos)) {
                 for (String dispositivo : agendamento.getDispositivos()) {
@@ -820,7 +824,7 @@ public class DAOManager {
     public boolean atualizarAgendamento(Agendamento agendamento) {
         // É crucial que o objeto Agendamento tenha um ID válido para a atualização.
         if (agendamento.getIdAgendamento() <= 0) {
-            System.out.println("Erro ao atualizar agendamento: O ID do agendamento é inválido."+agendamento.getIdAgendamento());
+            System.out.println("Erro ao atualizar agendamento: O ID do agendamento é inválido." + agendamento.getIdAgendamento());
             return false;
         }
 
@@ -901,7 +905,7 @@ public class DAOManager {
                 }
                 stmtInsertSalas.executeBatch();
             }
-            
+
             String sqlDeletDispositivos = "DELETE FROM dispositivosAgendamento WHERE agendamento_id = ?";
             try (PreparedStatement stmtDeleteSalas = conexao.prepareStatement(sqlDeletDispositivos)) {
                 stmtDeleteSalas.setInt(1, idAgendamento);
@@ -916,8 +920,6 @@ public class DAOManager {
                 }
                 stmtDispositivos.executeBatch();
             }
-            
-            
 
             return true;
 

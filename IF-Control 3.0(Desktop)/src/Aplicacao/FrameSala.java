@@ -39,6 +39,29 @@ public class FrameSala extends javax.swing.JFrame {
         gs = new Gson();
         this.tipoSala = new TypeToken<Sala>() {
         }.getType();
+        String resposta = MainApp.sessao.getSala(nsala);
+        sala = gs.fromJson(resposta, tipoSala);
+        estadoAr = sala.isEstadoAr();
+        estadoDS = sala.isEstadoDataShow();
+        estadoLuzes = sala.isEstadoLuzes();
+        if (!estadoAr) {
+            jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens/ar-condicionado-off (1).png")));
+        } else {
+
+            jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens/ar-condicionado-on (1).png")));
+        }
+        if (!estadoLuzes) {
+            jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/Imagens/luz-off (1).png")));
+        } else {
+            jLabelLuz.setIcon(new ImageIcon(getClass().getResource("/Imagens/luz-on (1).png")));
+        }
+        if (!estadoDS) {
+
+            jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens/data-show-off (1).png")));
+        } else {
+
+            jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens/data-show-on (1).png")));
+        }
         new Thread(new AtualizaDadosSala()).start();
 
     }
@@ -694,7 +717,7 @@ public class FrameSala extends javax.swing.JFrame {
                             estadoAr = sala.isEstadoAr();
                             estadoDS = sala.isEstadoDataShow();
                             estadoLuzes = sala.isEstadoLuzes();
-                            if (!estadoAr) {
+                            /*if (!estadoAr) {
                                 jLabelAr.setIcon(new ImageIcon(getClass().getResource("/Imagens/ar-condicionado-off (1).png")));
                             } else {
                                 
@@ -711,7 +734,7 @@ public class FrameSala extends javax.swing.JFrame {
                             } else {
                                 
                                 jLabelDS.setIcon(new ImageIcon(getClass().getResource("/Imagens/data-show-on (1).png")));
-                            }
+                            }*/
                         }
                     });
                 }
@@ -722,7 +745,7 @@ public class FrameSala extends javax.swing.JFrame {
                 }
 
             }
-            
+
             MainApp.sessao.trataAcao("DSC", nsala);
             MainApp.sessao.trataAcao("HD", nsala);
             SalaPanel.salaAberta = false;
