@@ -20,24 +20,12 @@
         app:titleMarginStart="30dp"
         tools:layout_editor_absoluteX="0dp" />
 
-    <TextView
-        android:id="@+id/labelTemperaturaAr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="110dp"
-        android:text="Temperatura:"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Spinner
         android:id="@+id/spinnerTemperaturaAr"
         android:layout_width="182dp"
         android:layout_height="32dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/aqua"
         android:entries="@array/temperaturas_array"
         app:layout_constraintBottom_toBottomOf="@id/labelTemperaturaAr"
@@ -45,11 +33,24 @@
         tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
 
     <TextView
+        android:id="@+id/labelTemperaturaAr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="240dp"
+        android:text="Temperatura:"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/labelModoAr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="190dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="316dp"
         android:text="Modo:"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -61,7 +62,7 @@
         android:id="@+id/spinnerModoAr"
         android:layout_width="182dp"
         android:layout_height="32dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="32dp"
         android:background="@color/aqua"
         android:entries="@array/modos_ar_array"
         app:layout_constraintBottom_toBottomOf="@id/labelModoAr"
@@ -75,9 +76,11 @@
         android:backgroundTint="@color/white"
         android:text="Enviar"
         android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.532"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="300dp" />
+        tools:layout_editor_absoluteY="412dp" />
 
     <Button
         android:id="@+id/buttonVoltar"
@@ -86,26 +89,11 @@
         android:backgroundTint="@color/white"
         android:text="Voltar"
         android:textColor="@color/black"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="350dp" />
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnv_botton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="0dp"
-        app:backgroundTint="@color/ifcontrolpanel"
-        app:itemIconSize="40dp"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_tabs">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="640dp" />
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

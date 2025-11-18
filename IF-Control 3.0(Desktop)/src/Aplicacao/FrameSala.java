@@ -283,7 +283,7 @@ public class FrameSala extends javax.swing.JFrame {
         });
 
         comboBoxTemperatura.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        comboBoxTemperatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
+        comboBoxTemperatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
         comboBoxTemperatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxTemperaturaActionPerformed(evt);
