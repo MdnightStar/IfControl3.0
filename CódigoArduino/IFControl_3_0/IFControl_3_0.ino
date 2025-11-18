@@ -11,7 +11,7 @@
 #include <SPI.h>
 #include <DHT.h>
 #include <SoftwareSerial.h>
-#include <HeatpumpIR.h>
+//#include <HeatpumpIR.h>
 
 // ---------------------------- CONFIGURAÇÕES ----------------------------
 
@@ -30,19 +30,15 @@ int falsos;
 int pinRele = 8;
 
 // Infra Vermelho
-#ifndef ESP8266
-IRSenderPWM irSender(9);
-#else
-IRSenderBitBang irSender(D1);
-#endif
+//IRSenderPWM irSender(9);
 
 // Buffer IR
-int IR_ONE_SPACE;
-int IR_ZERO_SPACE;
-int IR_BIT_MARK;
-int IR_PAUSE_SPACE;
-int IR_HEADER_MARK;
-int IR_HEADER_SPACE;
+//int IR_ONE_SPACE;
+//int IR_ZERO_SPACE;
+//int IR_BIT_MARK;
+//int IR_PAUSE_SPACE;
+//int IR_HEADER_MARK;
+//int IR_HEADER_SPACE;
 
 String cod;
 
@@ -80,8 +76,7 @@ void setup() {
 void loop() {
   receberEsp32();
   delay(10);
-  Serial.print("RAM Livre: ");
-  Serial.println(freeMemory());
+  
 }
 int freeMemory() {
   extern int __heap_start, *__brkval;
@@ -116,8 +111,8 @@ void receberEsp32() {
 void processarString(String str) {
 
   if (str.startsWith("DIR")) {
-    mySerial.print("OK");
-    sendRaw((char*)extrairConfECod(str));
+    //mySerial.print("OK");
+    //sendRaw((char*)extrairConfECod(str));
 
   } else if (str.startsWith("TEMP")) {
 
@@ -152,7 +147,7 @@ void processarString(String str) {
 // ======================================================================
 // 📌 EXTRAI CONFIGURAÇÕES + CÓDIGO IR DO COMANDO
 // ======================================================================
-char* extrairConfECod(String entrada) {
+/*char* extrairConfECod(String entrada) {
   int ini = entrada.indexOf('[');
   int fim = entrada.indexOf(']');
 
@@ -189,13 +184,13 @@ char* extrairConfECod(String entrada) {
 
   return symbols;
 
-}
+}*/
 
 
 // ======================================================================
 // 📌 ENVIA O CÓDIGO IR RAW PARA O AR-CONDICIONADO
 // ======================================================================
-void sendRaw(char *symbols) {
+/*void sendRaw(char *symbols) {
   irSender.space(0);
   irSender.setFrequency(38);
 
@@ -210,7 +205,7 @@ void sendRaw(char *symbols) {
   }
 
   irSender.space(0);
-}
+}*/
 
 
 

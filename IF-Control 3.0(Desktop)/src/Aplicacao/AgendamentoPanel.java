@@ -176,7 +176,8 @@ public class AgendamentoPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        setMaximumSize(new java.awt.Dimension(800, 120));
+        setMaximumSize(new java.awt.Dimension(1600, 85));
+        setMinimumSize(new java.awt.Dimension(1343, 85));
         setPreferredSize(new java.awt.Dimension(1343, 85));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));

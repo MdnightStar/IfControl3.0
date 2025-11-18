@@ -103,7 +103,7 @@ public class PAgendamento extends javax.swing.JFrame {
 
         jPanelAgendamentos.setBackground(new java.awt.Color(0, 51, 102));
         jPanelAgendamentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelAgendamentos.setLayout(new java.awt.GridLayout(8, 1));
+        jPanelAgendamentos.setLayout(new javax.swing.BoxLayout(jPanelAgendamentos, javax.swing.BoxLayout.Y_AXIS));
 
         jPanelAgendamentos.add(Box.createRigidArea(new Dimension(0,20)));
 

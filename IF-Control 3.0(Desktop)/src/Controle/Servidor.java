@@ -29,6 +29,7 @@ public class Servidor {
     private List<Sala> salas;
     protected static DAOManager manager;
     private ServerSocket servidor;
+    private SchedulerManager schedulerManager;
 
     /**
      * Método main principal, executa o servidor, também ja defini o valor da
@@ -85,7 +86,15 @@ public class Servidor {
             JOptionPane.showMessageDialog(frame, "Servidor Inicializado","Sucesso", JOptionPane.INFORMATION_MESSAGE);
             manager.resetSalas(); //Zera as conexões no banco de dados
         }
-        // teria esse metodo >>>iniciarAgendamentos();
+        
+        try {
+            this.schedulerManager = new SchedulerManager(manager); // Passa o DAOManager
+            this.schedulerManager.startScheduler();
+            System.out.println("Scheduler Quartz iniciado e agendamentos carregados.");
+        } catch (Exception e) {
+            System.err.println("Erro ao iniciar o Quartz Scheduler: " + e.getMessage());
+            // Decida se o servidor deve parar ou continuar sem agendamentos
+        }
 
         //Inicia as threads que vão pedir a informações para o arduino e armazenar no banco de dados     
         new Thread(new AtualizaSala(manager, this)).start();
@@ -109,6 +118,10 @@ public class Servidor {
             
         }
 
+    }
+
+    public SchedulerManager getSchedulerManager() {
+        return schedulerManager;
     }
     
     /**

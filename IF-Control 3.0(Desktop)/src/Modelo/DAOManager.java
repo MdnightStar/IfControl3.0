@@ -526,7 +526,7 @@ public class DAOManager {
                                 String cod = rs2.getString("cod");
                                 // 5. Adicionar cod ao StringBuilder
                                 resp.append(cod).append(".");
-                                System.out.println("Codigo completo: "+resp.toString());
+                                System.out.println("Codigo completo: " + resp.toString());
                             }
                         }
                     } catch (SQLException ex) {
@@ -929,4 +929,58 @@ public class DAOManager {
             return false;
         }
     }
+
+    // Dentro de DAOManager.java
+    public int getIdUserByLogin(String login) {
+        String sql = "SELECT idUser FROM user WHERE login = ?";
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+            stmt.setString(1, login);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("idUser");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar ID do usuário: " + e.getMessage());
+        }
+        return -1; // Retorna -1 ou lança uma exceção se o usuário não for encontrado
+    }
+    
+    /**
+ * Atualiza o estado de um dispositivo específico (Luzes, Ar, DataShow) na Sala.
+ * @param nSala O número da sala.
+ * @param dispositivo O código do dispositivo (ex: "LZ", "AR", "DS").
+ * @param estado True para ligar, False para desligar.
+ * @return True se a atualização for bem-sucedida.
+ */
+public boolean atualizarEstadoDispositivo(int nSala, String dispositivo, boolean estado) {
+    String campo;
+    
+    switch (dispositivo) {
+        case "LZ":
+            campo = "est_Luzes";
+            break;
+        case "AR":
+            campo = "est_Ar";
+            break;
+        case "DS":
+            campo = "est_datashow";
+            break;
+        default:
+            System.err.println("Dispositivo desconhecido: " + dispositivo);
+            return false;
+    }
+
+    String sql = "UPDATE sala SET " + campo + "=? WHERE nSala=?";
+    
+    try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+        stmt.setBoolean(1, estado);
+        stmt.setInt(2, nSala);
+        stmt.executeUpdate();
+        return true;
+    } catch (SQLException e) {
+        System.out.println("Erro ao atualizar o estado do dispositivo: " + e.getMessage());
+        return false;
+    }
+}
 }

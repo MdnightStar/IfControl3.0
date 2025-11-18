@@ -63,6 +63,7 @@ public class TrataCliente implements Runnable {
             System.out.println("Iniciando");
             while (s.hasNextLine()) { //Leitura de dados do cliente
                 sessao.setManager(manager);  //Insere o banco de dados na sessao
+                sessao.setSchedulerManager(servidor.getSchedulerManager());
                 String msg = s.nextLine();
                 System.out.println("Mensagem recebida pelo servidor: "+msg);
                 if (msg.contains("_login")) {

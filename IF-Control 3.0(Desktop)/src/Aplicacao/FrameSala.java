@@ -34,7 +34,7 @@ public class FrameSala extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         this.nsala = nsala;
-        MainApp.sessao.trataAcao("HA", nsala);
+        
         MainApp.sessao.trataAcao("OCP", nsala);
         gs = new Gson();
         this.tipoSala = new TypeToken<Sala>() {
@@ -507,9 +507,9 @@ public class FrameSala extends javax.swing.JFrame {
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
         // botão que envia as informaçoes do ar-condicionado dos comboBox's
         String funcao = "AR";
-
-        funcao += (String) comboBoxTemperatura.getSelectedItem();
         funcao += (String) comboBoxModo.getSelectedItem();
+        funcao += (String) comboBoxTemperatura.getSelectedItem();
+        
         funcao += ".";
         MainApp.sessao.trataAcao(funcao, nsala);
     }//GEN-LAST:event_jButtonEnviarActionPerformed
@@ -747,7 +747,7 @@ public class FrameSala extends javax.swing.JFrame {
             }
 
             MainApp.sessao.trataAcao("DSC", nsala);
-            MainApp.sessao.trataAcao("HD", nsala);
+            
             SalaPanel.salaAberta = false;
         }
     }

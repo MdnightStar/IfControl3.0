@@ -40,6 +40,8 @@ public class PAAcoes extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         gs = new Gson();
+        acoes = new ArrayList<>();
+        acoesP = new ArrayList<>();
         tipoAcao = new TypeToken<ArrayList<Acao>>() {
         }.getType();
         adicionarAcoes();
@@ -54,12 +56,18 @@ public class PAAcoes extends javax.swing.JFrame {
         acoes = gs.fromJson(resp, tipoAcao);
         ordenarAcoes(acoes);
         tAcaoes = acoes.size();
-
         for (Acao acao : acoes) {
-            AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
-                    acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao());
-            jPanelAcoes.add(pa);
-            acoesP.add(pa);
+            if (acao.getnSala() == -1) {
+                AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
+                        acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao());
+                jPanelAcoes.add(pa);
+                acoesP.add(pa);
+            } else {
+                AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
+                        acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao(), acao.getnSala());
+                jPanelAcoes.add(pa);
+                acoesP.add(pa);
+            }
         }
 
     }
@@ -94,6 +102,21 @@ public class PAAcoes extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPaneAcoes = new javax.swing.JScrollPane();
         jPanelAcoes = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabelIDEd = new javax.swing.JLabel();
+        jLabelAutor = new javax.swing.JLabel();
+        jLabelData = new javax.swing.JLabel();
+        jLabelHora = new javax.swing.JLabel();
+        jLabelTipoAcao = new javax.swing.JLabel();
+        jLabelAutorEd = new javax.swing.JLabel();
+        jLabelTipoAcaoEd = new javax.swing.JLabel();
+        jLabelDataEd = new javax.swing.JLabel();
+        jLabelHoraEd = new javax.swing.JLabel();
+        jLabelID = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabelSala = new javax.swing.JLabel();
+        jLabelSalaEd = new javax.swing.JLabel();
         jLabelAgendamentos = new javax.swing.JLabel();
         jLabelIF1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -116,6 +139,144 @@ public class PAAcoes extends javax.swing.JFrame {
         jPanelAcoes.setBackground(new java.awt.Color(0, 51, 102));
         jPanelAcoes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanelAcoes.setLayout(new javax.swing.BoxLayout(jPanelAcoes, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel3.setMaximumSize(new java.awt.Dimension(1343, 81));
+        jPanel3.setMinimumSize(new java.awt.Dimension(1343, 81));
+
+        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabelIDEd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelIDEd.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelIDEd.setText("XXXX");
+
+        jLabelAutor.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelAutor.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelAutor.setText("Usúario:");
+
+        jLabelData.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelData.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelData.setText("Data: ");
+
+        jLabelHora.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelHora.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelHora.setText("Hora:");
+
+        jLabelTipoAcao.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelTipoAcao.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelTipoAcao.setText("Tipo ação:");
+
+        jLabelAutorEd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelAutorEd.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelAutorEd.setText("XXXXXXXXX");
+
+        jLabelTipoAcaoEd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelTipoAcaoEd.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelTipoAcaoEd.setText("XXXXXXXXX");
+
+        jLabelDataEd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelDataEd.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelDataEd.setText("XXXXXXXXX");
+
+        jLabelHoraEd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelHoraEd.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelHoraEd.setText("XXXXXXXXX");
+
+        jLabelID.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelID.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelID.setText("ID:");
+
+        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabelSala.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelSala.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelSala.setText("Sala:");
+
+        jLabelSalaEd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelSalaEd.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelSalaEd.setText("XXXXXXXXX");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabelTipoAcao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelTipoAcaoEd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabelAutor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelAutorEd)
+                        .addGap(10, 10, 10)))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelHora)
+                    .addComponent(jLabelData))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelDataEd)
+                    .addComponent(jLabelHoraEd))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelID)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelIDEd)
+                        .addContainerGap())
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelSala)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelSalaEd)
+                        .addContainerGap(838, Short.MAX_VALUE))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelData, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelDataEd))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelAutor)
+                                .addComponent(jLabelAutorEd)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelHora)
+                                .addComponent(jLabelHoraEd))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelTipoAcao)
+                                .addComponent(jLabelTipoAcaoEd)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelSala, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelSalaEd))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelIDEd)
+                            .addComponent(jLabelID))))
+                .addContainerGap())
+        );
+
+        jPanelAcoes.add(jPanel3);
 
         jPanelAcoes.add(Box.createRigidArea(new Dimension(0,20)));
 
@@ -152,13 +313,13 @@ public class PAAcoes extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelIfamLogo1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPaneAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1343, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabelAgendamentos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1108, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabelIF1)))))
                 .addGap(27, 27, 27))
         );
@@ -275,7 +436,7 @@ public class PAAcoes extends javax.swing.JFrame {
 
     private void jMenuAcaoesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuAcaoesMenuSelected
         // TODO add your handling code here:
-        MainApp.showPAAcoes();
+
     }//GEN-LAST:event_jMenuAcaoesMenuSelected
 
     /**
@@ -316,48 +477,77 @@ public class PAAcoes extends javax.swing.JFrame {
 
     private class AtualizaDadosAcao implements Runnable {
 
+        public boolean procurarPanel(Acao acao) {
+            for (AcoesPanel panel : acoesP) {
+                if (panel.getId() == acao.getIdAcao()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         @Override
         public void run() {
             while (runningUpdate) {
                 String resp = MainApp.sessao.logs();
-                if (resp.contains("acao")) {
+                if (resp.contains("dataAcao")) {
                     acoes = gs.fromJson(resp, tipoAcao);
                     ordenarAcoes(acoes);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            if (tAcaoes != acoes.size()) {
+                            if (tAcaoes < acoes.size()) {
                                 jPanelAcoes.removeAll();
                                 for (Acao acao : acoes) {
-                                    AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
-                                            acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao());
-                                    jPanelAcoes.add(pa);
-                                    acoesP.add(pa);
+                                    if (acao.getnSala() == -1) {
+                                        AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
+                                                acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao());
+                                        jPanelAcoes.add(pa);
+                                        acoesP.add(pa);
+                                    } else {
+                                        AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
+                                                acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao(), acao.getnSala());
+                                        jPanelAcoes.add(pa);
+                                        acoesP.add(pa);
+                                    }
 
                                 }
+                                jPanelAcoes.revalidate();
+                                jPanelAcoes.repaint();
                             }
-                            jPanelAcoes.revalidate();
-                            jPanelAcoes.repaint();
                         }
                     }
                     );
 
                 }
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    System.out.println("Erro ao atualizar");
+                }
 
             }
-            try {
-                Thread.sleep(1800);
-            } catch (InterruptedException ex) {
-                System.out.println("Erro ao atualizar");
-            }
+
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabelAgendamentos;
+    private javax.swing.JLabel jLabelAutor;
+    private javax.swing.JLabel jLabelAutorEd;
+    private javax.swing.JLabel jLabelData;
+    private javax.swing.JLabel jLabelDataEd;
+    private javax.swing.JLabel jLabelHora;
+    private javax.swing.JLabel jLabelHoraEd;
+    private javax.swing.JLabel jLabelID;
+    private javax.swing.JLabel jLabelIDEd;
     private javax.swing.JLabel jLabelIF1;
     private javax.swing.JLabel jLabelIfamLogo1;
+    private javax.swing.JLabel jLabelSala;
+    private javax.swing.JLabel jLabelSalaEd;
+    private javax.swing.JLabel jLabelTipoAcao;
+    private javax.swing.JLabel jLabelTipoAcaoEd;
     private javax.swing.JMenu jMenuAcaoes;
     private javax.swing.JMenu jMenuAgendamento;
     private javax.swing.JMenuBar jMenuBar1;
@@ -365,7 +555,10 @@ public class PAAcoes extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuLogo;
     private javax.swing.JMenu jMenuSalas;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelAcoes;
     private javax.swing.JScrollPane jScrollPaneAcoes;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
 }

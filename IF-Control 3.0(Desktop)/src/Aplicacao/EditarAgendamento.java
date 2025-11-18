@@ -270,7 +270,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
         jLabelSeparatorHoraIn.setForeground(new java.awt.Color(255, 255, 255));
         jLabelSeparatorHoraIn.setText(":");
 
-        jSpinnerMinutosIn.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+        jSpinnerMinutosIn.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
 
         jLabelHoraFim.setBackground(new java.awt.Color(255, 255, 255));
         jLabelHoraFim.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
@@ -284,7 +284,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
         jLabelSeparatorHoraFim.setForeground(new java.awt.Color(255, 255, 255));
         jLabelSeparatorHoraFim.setText(":");
 
-        jSpinnerMinutosFim.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+        jSpinnerMinutosFim.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
 
         jButtonCancelar1.setBackground(new java.awt.Color(0, 51, 102));
         jButtonCancelar1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N

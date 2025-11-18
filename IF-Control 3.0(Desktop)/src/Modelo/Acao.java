@@ -86,14 +86,20 @@ public class Acao {
     }
     
     public String dataFormatada(){
-        SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(dataAcao);
-    }
+    SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
     
-    public String horaFormatada(){
-        SimpleDateFormat sdf= new SimpleDateFormat("HH:mm");
-        return sdf.format(horaAcao);
-    }
+    // Calendar.getTime() retorna java.util.Date, que é o tipo esperado.
+    // dataAcao é Calendar
+    return sdf.format(dataAcao.getTime()); 
+}
+
+public String horaFormatada(){
+    SimpleDateFormat sdf= new SimpleDateFormat("HH:mm");
+    
+    // Time.getTime() retorna java.util.Date, que é o tipo esperado.
+    // horaAcao é java.sql.Time, que herda o método getTime() de java.util.Date.
+    return sdf.format(horaAcao.getTime());
+}
     
     
 }

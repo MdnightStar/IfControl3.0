@@ -8,6 +8,7 @@ import Modelo.Sala;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,15 +16,15 @@ import javax.swing.JOptionPane;
  * @author LENOVO
  */
 public class PesquisarAcao extends javax.swing.JFrame {
-    private SimpleDateFormat formatoData;
+    
     
     /**
      * Creates new form AddSala
      */
     public PesquisarAcao() {
         initComponents();
-        formatoData= new SimpleDateFormat("dd/MM/yyyy");
-        formatoData.setLenient(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
     }
 
     /**
@@ -40,15 +41,18 @@ public class PesquisarAcao extends javax.swing.JFrame {
         jLabelIfamLogo = new javax.swing.JLabel();
         jButtonCancelar = new javax.swing.JButton();
         jLabelProcurarAcao = new javax.swing.JLabel();
-        jTextFieldTipoAcao = new javax.swing.JTextField();
         jLabelAutor = new javax.swing.JLabel();
         jLabelTipoAcao = new javax.swing.JLabel();
         jTextFielAutor = new javax.swing.JTextField();
         jButtonAdd = new javax.swing.JButton();
         jLabelData = new javax.swing.JLabel();
         jLabelHora = new javax.swing.JLabel();
-        jTextFieldData = new javax.swing.JTextField();
-        jTextFieldHora = new javax.swing.JTextField();
+        jDataInicio1 = new com.toedter.calendar.JDateChooser();
+        jSpinnerHora = new javax.swing.JSpinner();
+        jLabelSeparatorHoraIn = new javax.swing.JLabel();
+        jSpinnerMinutos = new javax.swing.JSpinner();
+        jLabelSala = new javax.swing.JLabel();
+        jTextFieldSala = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -78,12 +82,6 @@ public class PesquisarAcao extends javax.swing.JFrame {
         jLabelProcurarAcao.setForeground(new java.awt.Color(255, 255, 255));
         jLabelProcurarAcao.setText("Procurar Ação");
 
-        jTextFieldTipoAcao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldTipoAcaoActionPerformed(evt);
-            }
-        });
-
         jLabelAutor.setBackground(new java.awt.Color(255, 255, 255));
         jLabelAutor.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
         jLabelAutor.setForeground(new java.awt.Color(255, 255, 255));
@@ -103,7 +101,7 @@ public class PesquisarAcao extends javax.swing.JFrame {
         jButtonAdd.setBackground(new java.awt.Color(0, 153, 51));
         jButtonAdd.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         jButtonAdd.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonAdd.setText("Adicionar");
+        jButtonAdd.setText("Procurar");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddActionPerformed(evt);
@@ -120,17 +118,23 @@ public class PesquisarAcao extends javax.swing.JFrame {
         jLabelHora.setForeground(new java.awt.Color(255, 255, 255));
         jLabelHora.setText("Hora:");
 
-        jTextFieldData.setText("dd/mm/aaaaa");
-        jTextFieldData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDataActionPerformed(evt);
-            }
-        });
+        jSpinnerHora.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
 
-        jTextFieldHora.setText("hh:mm");
-        jTextFieldHora.addActionListener(new java.awt.event.ActionListener() {
+        jLabelSeparatorHoraIn.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelSeparatorHoraIn.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
+        jLabelSeparatorHoraIn.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSeparatorHoraIn.setText(":");
+
+        jSpinnerMinutos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
+
+        jLabelSala.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelSala.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 14)); // NOI18N
+        jLabelSala.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSala.setText("Sala:");
+
+        jTextFieldSala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldHoraActionPerformed(evt);
+                jTextFieldSalaActionPerformed(evt);
             }
         });
 
@@ -139,22 +143,7 @@ public class PesquisarAcao extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelHora)
-                    .addComponent(jLabelTipoAcao)
-                    .addComponent(jLabelAutor)
-                    .addComponent(jLabelData))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextFielAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextFieldTipoAcao, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextFieldHora, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,7 +159,32 @@ public class PesquisarAcao extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(178, 178, 178))))
+                        .addGap(178, 178, 178))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelTipoAcao)
+                            .addComponent(jLabelAutor)
+                            .addComponent(jLabelSala))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFielAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldSala, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(84, 84, 84))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelHora)
+                    .addComponent(jLabelData))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDataInicio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSpinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelSeparatorHoraIn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,23 +193,27 @@ public class PesquisarAcao extends javax.swing.JFrame {
                 .addComponent(jLabelIF)
                 .addGap(36, 36, 36)
                 .addComponent(jLabelProcurarAcao)
-                .addGap(26, 26, 26)
+                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFielAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelAutor))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldTipoAcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelTipoAcao))
+                .addComponent(jLabelTipoAcao)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSala)
+                    .addComponent(jTextFieldSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelData)
-                    .addComponent(jTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDataInicio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelHora)
-                    .addComponent(jTextFieldHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                    .addComponent(jSpinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelSeparatorHoraIn)
+                    .addComponent(jSpinnerMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -214,10 +232,6 @@ public class PesquisarAcao extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jTextFieldTipoAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTipoAcaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTipoAcaoActionPerformed
-
     private void jTextFielAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFielAutorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFielAutorActionPerformed
@@ -228,22 +242,11 @@ public class PesquisarAcao extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jButtonAddActionPerformed
 
-    private void jTextFieldDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDataActionPerformed
+    private void jTextFieldSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSalaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDataActionPerformed
+    }//GEN-LAST:event_jTextFieldSalaActionPerformed
 
-    private void jTextFieldHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHoraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldHoraActionPerformed
-
-    public boolean isValidData(String data){
-        try {
-            Date date = formatoData.parse(data);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
-    }
+   
     /**
      * @param args the command line arguments
      */
@@ -283,17 +286,20 @@ public class PesquisarAcao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancelar;
+    private com.toedter.calendar.JDateChooser jDataInicio1;
     private javax.swing.JLabel jLabelAutor;
     private javax.swing.JLabel jLabelData;
     private javax.swing.JLabel jLabelHora;
     private javax.swing.JLabel jLabelIF;
     private javax.swing.JLabel jLabelIfamLogo;
     private javax.swing.JLabel jLabelProcurarAcao;
+    private javax.swing.JLabel jLabelSala;
+    private javax.swing.JLabel jLabelSeparatorHoraIn;
     private javax.swing.JLabel jLabelTipoAcao;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSpinner jSpinnerHora;
+    private javax.swing.JSpinner jSpinnerMinutos;
     private javax.swing.JTextField jTextFielAutor;
-    private javax.swing.JTextField jTextFieldData;
-    private javax.swing.JTextField jTextFieldHora;
-    private javax.swing.JTextField jTextFieldTipoAcao;
+    private javax.swing.JTextField jTextFieldSala;
     // End of variables declaration//GEN-END:variables
 }

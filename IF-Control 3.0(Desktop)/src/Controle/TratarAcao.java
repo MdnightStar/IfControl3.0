@@ -13,6 +13,7 @@ import java.util.List;
 import Modelo.*;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import org.quartz.SchedulerException;
 
 /**
  * @author Jeison
@@ -27,6 +28,15 @@ public class TratarAcao extends SocketArduino {
     private Sala sala;
     private Gson gson;
     private String quebra[];
+    private SchedulerManager schedulerManager;
+
+    public SchedulerManager getSchedulerManager() {
+        return schedulerManager;
+    }
+
+    public void setSchedulerManager(SchedulerManager schedulerManager) {
+        this.schedulerManager = schedulerManager;
+    }
 
     /**
      * Construtor da clase, somente instância o gson
@@ -110,7 +120,16 @@ public class TratarAcao extends SocketArduino {
     public String cadastrarAgendamento(Agendamento agendamento) {
         agendamento.setAutor(_login);
         if (manager.adicionarAgendamento(agendamento)) {
-            return "CAD_AGENDAMENTO_OK";
+            try {
+                // 2. Agenda no Quartz
+                schedulerManager.scheduleAgendamento(agendamento);
+                return "CAD_AGENDAMENTO_OK";
+            } catch (SchedulerException e) {
+                // O BD salvou, mas o agendamento no Quartz falhou.
+                // Aqui, você pode querer logar e retornar um erro mais específico.
+                System.err.println("Erro ao agendar no Quartz: " + e.getMessage());
+                return "ERROR_SCHEDULER";
+            }
         } else {
             return "ERROR_BD_INSERT";
         }
@@ -175,7 +194,14 @@ public class TratarAcao extends SocketArduino {
     public String deletAgendamento(int idAgendamneto) {
         boolean resp = manager.eliminarAgendamento(idAgendamneto);
         if (resp) {
+            try {
+            // 2. Remove do Quartz
+            schedulerManager.unscheduleAgendamento(idAgendamneto);
             return ("SUCESSO_DELET_AGENDAMENTO");
+        } catch (SchedulerException e) {
+            System.err.println("Erro ao desativar agendamento no Quartz: " + e.getMessage());
+            return "ERROR_SCHEDULER";
+        }
         } else {
             return ("ERRO_DELET_AGENDAMENTO");
         }
@@ -185,7 +211,14 @@ public class TratarAcao extends SocketArduino {
         agen.setAutor(user.getLogin());
         boolean resp = manager.atualizarAgendamento(agen);
         if (resp) {
-            return ("SUCESSO_EDIT_AGENDAMENTO");
+            try {
+                // 2. Reagenda no Quartz (remove o antigo e adiciona o novo)
+                schedulerManager.scheduleAgendamento(agen);
+                return ("SUCESSO_EDIT_AGENDAMENTO");
+            } catch (SchedulerException e) {
+                System.err.println("Erro ao reagendar no Quartz: " + e.getMessage());
+                return "ERROR_SCHEDULER";
+            }
         } else {
             return ("ERRO_EDIT_AGENDAMENTO");
         }
@@ -258,8 +291,7 @@ public class TratarAcao extends SocketArduino {
                         this.acao.setStatus(false);
                         System.out.println("Erro no envio do sinal IR");
                     }
-                        
-                    
+
                     //Até essa parte do código, se envia uma ação para o arduino e 
                     //verifica o recebimento
                 } else if (acao.contains("LZ")) {
@@ -339,6 +371,7 @@ public class TratarAcao extends SocketArduino {
         this.acao.setTipoAcao(acao);
         this.acao.setIdUser(user.getIdUser()); //seta id do usuario da classe user
         this.acao.setLogin(_login); //seta o login desta classe sessao
+        this.acao.setnSala(-1);
 
         if (acao.contains("--addSala--")) {
             quebra = acao.split("--addSala--");
