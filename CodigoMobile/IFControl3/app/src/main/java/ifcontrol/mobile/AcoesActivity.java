@@ -17,11 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class AcoesActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewAçoes;
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -31,6 +33,23 @@ public class AcoesActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bnv_botton);
+
+        bottomNavigationView.setSelectedItemId(R.id.tab_acoes);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.tab_salas) {
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                overridePendingTransition(0, 0);
+                finish(); // Finaliza a AcoesActivity
+                return true;
+            } else if (itemId == R.id.tab_acoes) {
+                return true;
+            }
+            return false;
+        });
     }
 
     // Métodos do Menu da Toolbar
@@ -50,7 +69,5 @@ public class AcoesActivity extends AppCompatActivity {
             Toast.makeText(this, "Sobre o app", Toast.LENGTH_SHORT).show();
         }
         return true;
-
-
     }
 }

@@ -16,6 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +60,24 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
         // Passo 6: Definir o LayoutManager (Grid de 2 colunas) e finalmente conectar o Adapter
         recyclerViewSalas.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewSalas.setAdapter(salasAdapter);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bnv_botton);
+
+        bottomNavigationView.setSelectedItemId(R.id.tab_salas);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.tab_acoes) {
+                startActivity(new Intent(getApplicationContext(), AcoesActivity.class));
+                overridePendingTransition(0, 0);
+                finish(); // Finaliza a AcoesActivity
+                return true;
+            } else if (itemId == R.id.tab_salas) {
+                return true;
+            }
+            return false;
+        });
+
     }
 
     /**
