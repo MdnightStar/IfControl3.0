@@ -3,6 +3,7 @@ package ifcontrol.mobile;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Modelo.Sala;
+import ifcontrol.mobile.GridSpacingItemDecoration;
 
 // Passo 1: Implementar a interface do Adapter para receber os cliques
 public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSalaClickListener {
@@ -40,7 +42,7 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Passo 3: Encontrar o RecyclerView no layout
+        // Passo 3: Encontrar o RecyclerView no layout (com o ID correto)
         recyclerViewSalas = findViewById(R.id.recyclerViewSalas);
 
         // Passo 4: Criar os dados que serão exibidos (aqui usamos dados de exemplo)
@@ -48,6 +50,10 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
 
         // Passo 5: Criar o Adapter, passando a lista de dados e a Activity como "ouvinte" do clique
         salasAdapter = new SalasAdapter(listaDeSalas, this);
+
+        // Adiciona o espaçamento de 8dp entre os itens da grade
+        int spacingInPixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics());
+        recyclerViewSalas.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true));
 
         // Passo 6: Definir o LayoutManager (Grid de 2 colunas) e finalmente conectar o Adapter
         recyclerViewSalas.setLayoutManager(new GridLayoutManager(this, 2));

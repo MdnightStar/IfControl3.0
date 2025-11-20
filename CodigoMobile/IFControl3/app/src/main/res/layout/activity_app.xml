@@ -61,7 +61,8 @@
                 android:inputType="text"
                 android:text="login"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="18sp"
+                tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -91,7 +92,8 @@
                 android:inputType="textPassword"
                 android:text="senha"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="18sp"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
 
