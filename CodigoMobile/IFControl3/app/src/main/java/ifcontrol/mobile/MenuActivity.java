@@ -52,7 +52,7 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
         salasAdapter = new SalasAdapter(listaDeSalas, this);
 
         // Adiciona o espaçamento de 8dp entre os itens da grade
-        int spacingInPixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics());
+        int spacingInPixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, getResources().getDisplayMetrics());
         recyclerViewSalas.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true));
 
         // Passo 6: Definir o LayoutManager (Grid de 2 colunas) e finalmente conectar o Adapter
