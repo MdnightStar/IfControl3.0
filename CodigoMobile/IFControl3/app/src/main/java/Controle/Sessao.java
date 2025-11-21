@@ -144,8 +144,14 @@ public class Sessao {
     /**
      * Solicita lista de salas
      */
-    public void salas() {
+    public String salas() {
         servidor.enviar("salas");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        return servidor.getResposta();
     }
 
     /**

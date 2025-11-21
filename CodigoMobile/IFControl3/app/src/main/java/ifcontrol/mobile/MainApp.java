@@ -10,6 +10,10 @@ public class MainApp //extends Application
     // VARIÁVEIS ESTÁTICAS para acesso global
     protected static Sessao sessaoInstance;
     protected static boolean isSessaoAberta = false;
+    private Thread thread;
+
+
+
 
     // O Android chama este método UMA VEZ no ciclo de vida da aplicação.
     /*@Override
@@ -38,4 +42,6 @@ public class MainApp //extends Application
     public static boolean isSessaoAberta() {
         return isSessaoAberta;
     }
+
+
 }
