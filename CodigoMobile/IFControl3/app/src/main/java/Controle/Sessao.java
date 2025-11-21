@@ -169,4 +169,15 @@ public class Sessao {
 
         return servidor.getResposta();
     }
+
+    public String getSala(int nSala){
+        servidor.enviar("--getSala--"+nSala);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        return servidor.getResposta();
+
+    }
 }
