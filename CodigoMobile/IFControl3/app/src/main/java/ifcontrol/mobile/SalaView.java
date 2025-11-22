@@ -1,7 +1,6 @@
 package ifcontrol.mobile;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +15,15 @@ import androidx.core.content.ContextCompat;
 public class SalaView extends ConstraintLayout {
 
     private int nsala;
+    protected static boolean salaAberta=false;
     private OnSalaEntrarListener listener;
 
     private TextView textViewNSala, textViewArCond, textViewDS, textViewLuzes;
     private View viewEstadoSala;
     private ImageView imageViewMovimento;
     private Button buttonEntrar;
+
+
 
     public interface OnSalaEntrarListener {
         void onEntrarClicked(int nsala);
@@ -35,6 +37,7 @@ public class SalaView extends ConstraintLayout {
         super(context);
         initView();
     }
+
 
     public SalaView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -67,10 +70,13 @@ public class SalaView extends ConstraintLayout {
         });
     }
 
+    // Este é o método correto para configurar sua view
     public void setup(String textNSala,boolean estadoAr,boolean estadoDS, boolean estadoLuzes, boolean estadoSala, boolean presenca, int nsala) {
         this.nsala = nsala;
+        // É aqui que você define o texto no TextView corretamente:
         textViewNSala.setText(textNSala);
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
+        this.nsala=nsala;
     }
 
     public void atualizar(boolean estadoSala, boolean estadoDS, boolean estadoLuzes, boolean estadoAr,boolean presenca) {
@@ -81,8 +87,7 @@ public class SalaView extends ConstraintLayout {
         if(estadoAr){
             textViewArCond.setText("ON");
             textViewArCond.setTextColor(corOn);
-        }
-        else{
+        } else {
             textViewArCond.setText("OFF");
             textViewArCond.setTextColor(corOff);
         }
@@ -90,8 +95,7 @@ public class SalaView extends ConstraintLayout {
         if(estadoDS){
             textViewDS.setText("ON");
             textViewDS.setTextColor(corOn);
-        }
-        else{
+        } else {
             textViewDS.setText("OFF");
             textViewDS.setTextColor(corOff);
         }
@@ -99,8 +103,7 @@ public class SalaView extends ConstraintLayout {
         if(estadoLuzes){
             textViewLuzes.setText("ON");
             textViewLuzes.setTextColor(corOn);
-        }
-        else{
+        } else {
             textViewLuzes.setText("OFF");
             textViewLuzes.setTextColor(corOff);
         }
@@ -109,24 +112,20 @@ public class SalaView extends ConstraintLayout {
             viewEstadoSala.setBackgroundResource(R.drawable.circle_red);
             buttonEntrar.setEnabled(false);
             buttonEntrar.setText("Fechada :(");
-        }
-        else{
+        } else {
             viewEstadoSala.setBackgroundResource(R.drawable.circle_green);
             buttonEntrar.setEnabled(true);
             buttonEntrar.setText("Entrar :)");
         }
+
         if(presenca){
             imageViewMovimento.setImageResource(R.drawable.movimento);
-        }
-        else{
+        } else {
             imageViewMovimento.setImageResource(R.drawable.repouso);
         }
-
-        }
-
-        public int getNsala(){
-
-        return nsala;
-        }
-
     }
+
+    public int getNsala(){
+        return nsala;
+    }
+}

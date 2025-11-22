@@ -700,7 +700,7 @@ public class FrameSala extends javax.swing.JFrame {
             }
         });
     }
-
+    // vou ter que adaptar essa budega pro android studio
     private class AtualizaDadosSala implements Runnable {
 
         @Override
