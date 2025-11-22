@@ -4,16 +4,18 @@
  */
 package Aplicacao;
 
-import Modelo.Agendamento;
-import Modelo.Sala;
-
+import Modelo.Acao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javax.swing.Box;
 import java.awt.Dimension;
-import static java.awt.Frame.MAXIMIZED_BOTH;
+
 import java.util.ArrayList;
+
 import java.util.List;
+
+import java.util.Collections;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
@@ -22,14 +24,53 @@ import javax.swing.SwingUtilities;
  */
 public class AcoesEncontradas extends javax.swing.JFrame {
 
+
     /**
      * Creates new form PAgendamento
      */
     public AcoesEncontradas() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
 
     }
+    
+    public AcoesEncontradas(List<Acao> acoes) {
+        initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setExtendedState(MAXIMIZED_BOTH);
+        adicionarAcoes(acoes);
+
+    }
+
+    public void adicionarAcoes(List<Acao> acoes) {
+        ordenarAcoes(acoes);
+        for (Acao acao : acoes) {
+            if (acao.getnSala() == -1) {
+                AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
+                        acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao());
+                jPanelAcoes.add(pa);
+            } else {
+                AcoesPanel pa = new AcoesPanel(acao.getLogin(), acao.getTipoAcao(),
+                        acao.dataFormatada(), acao.horaFormatada(), acao.getIdAcao(), acao.getnSala());
+                jPanelAcoes.add(pa);
+                
+            }
+        }
+
+    }
+
+    public void ordenarAcoes(List<Acao> acoes) {
+        Collections.sort(acoes, (a1, a2) -> {
+            int dataR = a2.getDataAcao().compareTo(a1.getDataAcao());
+            if (dataR != 0) {
+                return dataR;
+            }
+            return a2.getHoraAcao().compareTo(a1.getHoraAcao());
+        });
+    }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,49 +82,48 @@ public class AcoesEncontradas extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPaneAgendamentos = new javax.swing.JScrollPane();
-        jPanelAgendamentos = new javax.swing.JPanel();
+        jScrollPaneAcoes = new javax.swing.JScrollPane();
+        jPanelAcoes = new javax.swing.JPanel();
         jLabelAgendamentos = new javax.swing.JLabel();
         jLabelIF1 = new javax.swing.JLabel();
-        jLabelIfamLogo1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jLabelIfamLogo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
 
-        jScrollPaneAgendamentos.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPaneAgendamentos.setMaximumSize(new java.awt.Dimension(500, 32767));
+        jScrollPaneAcoes.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPaneAcoes.setMaximumSize(new java.awt.Dimension(500, 32767));
 
-        jPanelAgendamentos.setBackground(new java.awt.Color(0, 51, 102));
-        jPanelAgendamentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelAgendamentos.setLayout(new javax.swing.BoxLayout(jPanelAgendamentos, javax.swing.BoxLayout.Y_AXIS));
+        jPanelAcoes.setBackground(new java.awt.Color(0, 51, 102));
+        jPanelAcoes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelAcoes.setLayout(new javax.swing.BoxLayout(jPanelAcoes, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanelAgendamentos.add(Box.createRigidArea(new Dimension(0,20)));
+        jPanelAcoes.add(Box.createRigidArea(new Dimension(0,20)));
 
-        jScrollPaneAgendamentos.setViewportView(jPanelAgendamentos);
+        jScrollPaneAcoes.setViewportView(jPanelAcoes);
 
         jLabelAgendamentos.setBackground(new java.awt.Color(255, 255, 255));
         jLabelAgendamentos.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 36)); // NOI18N
         jLabelAgendamentos.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelAgendamentos.setText("Agendamentos encontrados");
+        jLabelAgendamentos.setText("Ações encontradas");
 
         jLabelIF1.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 20)); // NOI18N
         jLabelIF1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelIF1.setText("IFControl 3.0");
 
-        jLabelIfamLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/IFAM_logo.png"))); // NOI18N
-
-        jButton3.setBackground(new java.awt.Color(204, 0, 0));
+        jButton3.setBackground(new java.awt.Color(255, 51, 0));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("SAIR");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
+
+        jLabelIfamLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/IFAM_logo.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,13 +133,13 @@ public class AcoesEncontradas extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelIfamLogo1))
-                    .addComponent(jScrollPaneAgendamentos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneAcoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelAgendamentos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 703, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelIF1)))
                 .addGap(27, 27, 27))
         );
@@ -108,17 +148,14 @@ public class AcoesEncontradas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelAgendamentos)
-                    .addComponent(jLabelIF1))
+                    .addComponent(jLabelIF1)
+                    .addComponent(jLabelAgendamentos))
                 .addGap(41, 41, 41)
-                .addComponent(jScrollPaneAgendamentos, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                .addComponent(jScrollPaneAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelIfamLogo1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabelIfamLogo1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -159,6 +196,8 @@ public class AcoesEncontradas extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -166,8 +205,10 @@ public class AcoesEncontradas extends javax.swing.JFrame {
                 new AcoesEncontradas().setVisible(true);
             }
         });
-
     }
+
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
@@ -175,7 +216,7 @@ public class AcoesEncontradas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelIF1;
     private javax.swing.JLabel jLabelIfamLogo1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelAgendamentos;
-    private javax.swing.JScrollPane jScrollPaneAgendamentos;
+    private javax.swing.JPanel jPanelAcoes;
+    private javax.swing.JScrollPane jScrollPaneAcoes;
     // End of variables declaration//GEN-END:variables
 }

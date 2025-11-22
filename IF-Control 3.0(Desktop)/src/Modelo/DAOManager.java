@@ -492,57 +492,72 @@ public class DAOManager {
      * @return Retorna uma StringBuilder com a msg modificada
      * @throws SQLException
      */
+    // Assumindo que a classe contenha um campo 'this.conexao'
     public StringBuilder resgataCodIr(int nSala, String msg) throws SQLException {
         StringBuilder resp = new StringBuilder();
         System.out.println("Mensagem chegou: " + msg + " Sala: " + nSala);
         resp.append("DIR,");
 
         // Extrair tipo (2 primeiros caracteres) e função (até o ponto final, se houver)
+        // Ex: "DSon" -> Tipo: "DS", Funcao: "on"
         String tipo = msg.substring(0, 2);
         String funcao = msg.contains(".") ? msg.substring(2, msg.indexOf(".")) : msg.substring(2);
         System.out.println("Tipo: " + tipo + " Funcao: " + funcao);
 
-        // 1. Buscar dispositivos da sala com o tipo especificado
-        String sqlDis = "SELECT id, config FROM dis WHERE sala_id = ? AND tipo = ?";
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlDis)) {
-            stmt.setInt(1, nSala);
-            stmt.setString(2, tipo);
+        // Consulta SQL para buscar:
+        // 1. Todos os dispositivos (T2.config) de um certo TIPO (T2.tipo)
+        // 2. Que estão na SALA (T1.sala_id)
+        // 3. E o COD IR (T3.cod) correspondente à FUNCAO (T3.funcao)
+        String sqlBuscaCompleta = "SELECT T2.config, T3.cod "
+                + "FROM conjuntodis AS T1 "
+                + "JOIN dis AS T2 ON T1.dis_id = T2.id "
+                + "LEFT JOIN codir AS T3 ON T2.id = T3.dispositivo_id AND T3.funcao = ? "
+                + "WHERE T1.sala_id = ? AND T2.tipo = ?";
+
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sqlBuscaCompleta)) {
+            // Define os parâmetros da consulta
+            stmt.setString(1, funcao); // Funcao IR (T3.funcao)
+            stmt.setInt(2, nSala);     // Número da Sala (T1.sala_id)
+            stmt.setString(3, tipo);   // Tipo do Dispositivo (T2.tipo)
+
             try (ResultSet rs = stmt.executeQuery()) {
+                boolean encontrouCodIr = false; // Flag para saber se algum código foi adicionado
+                boolean firstDeviceAdded = false; // Flag para gerenciar o separador '$'
+
                 while (rs.next()) {
-                    int disId = rs.getInt("id");
                     String config = rs.getString("config");
+                    String cod = rs.getString("cod"); // Pode ser null se não houver codir para a função
 
-                    // 3.1 Adicionar config ao StringBuilder
-                    resp.append(config).append(",");
-                    System.out.println("Configuracoes: " + resp.toString());
+                    // 1. Somente adiciona ao StringBuilder se o COD IR for encontrado para a FUNÇÃO
+                    if (cod != null) {
 
-                    // 4. Buscar código IR correspondente à função
-                    String sqlCodIr = "SELECT cod FROM codIR WHERE dispositivo_id = ? AND funcao = ?";
-                    try (PreparedStatement stmt2 = this.conexao.prepareStatement(sqlCodIr)) {
-                        stmt2.setInt(1, disId);
-                        stmt2.setString(2, funcao);
-                        try (ResultSet rs2 = stmt2.executeQuery()) {
-                            if (rs2.next()) {
-                                String cod = rs2.getString("cod");
-                                // 5. Adicionar cod ao StringBuilder
-                                resp.append(cod).append(".");
-                                System.out.println("Codigo completo: " + resp.toString());
-                            }
+                        // 2. Adiciona o separador '$' antes do segundo dispositivo (e seguintes)
+                        if (firstDeviceAdded) {
+                            resp.append("$");
+                            resp.append("DIR,");
                         }
-                    } catch (SQLException ex) {
-                        System.out.println(ex.getMessage());
+
+                        // 3. Adiciona o par config,cod. no formato: config,cod.
+                        resp.append(config).append(",").append(cod).append(".");
+
+                        encontrouCodIr = true;
+                        firstDeviceAdded = true;
+                        System.out.println("Codigo completo parcial: " + resp.toString());
                     }
+                }
+
+                // 4. Verifica se pelo menos um dispositivo e código IR foram adicionados
+                if (encontrouCodIr) {
+                    return resp;
+                } else {
+                    // Se nenhum código IR foi encontrado para a função e sala/tipo, retorna erro
+                    return new StringBuilder().append("ERRO.");
                 }
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        if (resp.toString().contains(".")) {
-            return resp;
-        } else {
+            System.out.println("Erro SQL: " + ex.getMessage());
             return new StringBuilder().append("ERRO.");
         }
-
     }
 
     public boolean adicionarSala(int nSala, String ip) {
@@ -945,42 +960,44 @@ public class DAOManager {
         }
         return -1; // Retorna -1 ou lança uma exceção se o usuário não for encontrado
     }
-    
-    /**
- * Atualiza o estado de um dispositivo específico (Luzes, Ar, DataShow) na Sala.
- * @param nSala O número da sala.
- * @param dispositivo O código do dispositivo (ex: "LZ", "AR", "DS").
- * @param estado True para ligar, False para desligar.
- * @return True se a atualização for bem-sucedida.
- */
-public boolean atualizarEstadoDispositivo(int nSala, String dispositivo, boolean estado) {
-    String campo;
-    
-    switch (dispositivo) {
-        case "LZ":
-            campo = "est_Luzes";
-            break;
-        case "AR":
-            campo = "est_Ar";
-            break;
-        case "DS":
-            campo = "est_datashow";
-            break;
-        default:
-            System.err.println("Dispositivo desconhecido: " + dispositivo);
-            return false;
-    }
 
-    String sql = "UPDATE sala SET " + campo + "=? WHERE nSala=?";
-    
-    try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
-        stmt.setBoolean(1, estado);
-        stmt.setInt(2, nSala);
-        stmt.executeUpdate();
-        return true;
-    } catch (SQLException e) {
-        System.out.println("Erro ao atualizar o estado do dispositivo: " + e.getMessage());
-        return false;
+    /**
+     * Atualiza o estado de um dispositivo específico (Luzes, Ar, DataShow) na
+     * Sala.
+     *
+     * @param nSala O número da sala.
+     * @param dispositivo O código do dispositivo (ex: "LZ", "AR", "DS").
+     * @param estado True para ligar, False para desligar.
+     * @return True se a atualização for bem-sucedida.
+     */
+    public boolean atualizarEstadoDispositivo(int nSala, String dispositivo, boolean estado) {
+        String campo;
+
+        switch (dispositivo) {
+            case "LZ":
+                campo = "est_Luzes";
+                break;
+            case "AR":
+                campo = "est_Ar";
+                break;
+            case "DS":
+                campo = "est_datashow";
+                break;
+            default:
+                System.err.println("Dispositivo desconhecido: " + dispositivo);
+                return false;
+        }
+
+        String sql = "UPDATE sala SET " + campo + "=? WHERE nSala=?";
+
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+            stmt.setBoolean(1, estado);
+            stmt.setInt(2, nSala);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar o estado do dispositivo: " + e.getMessage());
+            return false;
+        }
     }
-}
 }
