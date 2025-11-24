@@ -195,13 +195,13 @@ public class TratarAcao extends SocketArduino {
         boolean resp = manager.eliminarAgendamento(idAgendamneto);
         if (resp) {
             try {
-            // 2. Remove do Quartz
-            schedulerManager.unscheduleAgendamento(idAgendamneto);
-            return ("SUCESSO_DELET_AGENDAMENTO");
-        } catch (SchedulerException e) {
-            System.err.println("Erro ao desativar agendamento no Quartz: " + e.getMessage());
-            return "ERROR_SCHEDULER";
-        }
+                // 2. Remove do Quartz
+                schedulerManager.unscheduleAgendamento(idAgendamneto);
+                return ("SUCESSO_DELET_AGENDAMENTO");
+            } catch (SchedulerException e) {
+                System.err.println("Erro ao desativar agendamento no Quartz: " + e.getMessage());
+                return "ERROR_SCHEDULER";
+            }
         } else {
             return ("ERRO_DELET_AGENDAMENTO");
         }
@@ -268,11 +268,14 @@ public class TratarAcao extends SocketArduino {
                     //Recolhe a o codIr da determinada ação
                     try {
                         StringBuilder newAcao = manager.resgataCodIr(nSala, acao);
-                        //Solicita a ação no arduino
-                        conectarArduino(nSala);
-                        enviar(newAcao.toString());
-                        resposta = ler();//recebe um "Ok" do arduino se recebeu
-                        desconectarArduino();
+                        String partes[] = newAcao.toString().split("$");
+                        for (String parte : partes) {
+                            conectarArduino(nSala);
+                            enviar(newAcao.toString());
+                            resposta = ler();//recebe um "Ok" do arduino se recebeu
+                            desconectarArduino();
+                        }
+
                     } catch (SQLException e) {
                         JOptionPane.showMessageDialog(null, "Não foi possivel recoletar o cod IR do Banco de Dados",
                                 "ERRO", JOptionPane.ERROR_MESSAGE);

@@ -44,7 +44,7 @@ public class TrataCliente implements Runnable {
         this.clienteOut = clienteOut;
         this.manager = manager;
         sessao=new TratarAcao();
-        clienteOut.println("CONNECTOK");
+        
         gson = new Gson();
     }
 

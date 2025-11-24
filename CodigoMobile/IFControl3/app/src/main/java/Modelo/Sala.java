@@ -6,10 +6,12 @@ package Modelo;
 
 import java.sql.Time;
 
+import ifcontrol.mobile.SalaView;
+
 /**
  * @author Jeison
  */
-public class Sala {
+public class Sala  {
 
     private int nSala; //Nº da sala
     private boolean estadoSala; //Estado da sala (disponivel ou indisponivel)

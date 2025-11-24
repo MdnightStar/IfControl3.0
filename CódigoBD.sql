@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `ifcontrol3` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `ifcontrol3`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ifcontrol3
@@ -107,6 +109,34 @@ LOCK TABLES `codir` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `conjuntodis`
+--
+
+DROP TABLE IF EXISTS `conjuntodis`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `conjuntodis` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sala_id` int NOT NULL,
+  `dis_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sala_id` (`sala_id`),
+  KEY `dis_id` (`dis_id`),
+  CONSTRAINT `conjuntoDis_ibfk_1` FOREIGN KEY (`sala_id`) REFERENCES `sala` (`nSala`) ON DELETE CASCADE,
+  CONSTRAINT `conjuntoDis_ibfk_2` FOREIGN KEY (`dis_id`) REFERENCES `dis` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `conjuntodis`
+--
+
+LOCK TABLES `conjuntodis` WRITE;
+/*!40000 ALTER TABLE `conjuntodis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `conjuntodis` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `diasdasemana`
 --
 
@@ -145,10 +175,7 @@ CREATE TABLE `dis` (
   `modelo` varchar(100) DEFAULT NULL,
   `marca` varchar(50) NOT NULL,
   `config` text NOT NULL,
-  `sala_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sala_id` (`sala_id`),
-  CONSTRAINT `dis_ibfk_1` FOREIGN KEY (`sala_id`) REFERENCES `sala` (`nSala`) ON DELETE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -284,4 +311,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-13 10:58:09
+-- Dump completed on 2025-11-21 10:24:51
