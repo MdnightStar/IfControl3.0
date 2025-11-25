@@ -5,13 +5,11 @@
         <group>
             <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/FrameSala.java</file>
             <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/Sala.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TrataServidor.java</file>
+            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PesquisarAcao.java</file>
             <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/SalaPanel.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/Sessao.java</file>
+            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/AcaoAgendadaJob.java</file>
             <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PSala.java</file>
             <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PAAcoes.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/AtualizaSala.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/TratarAcao.java</file>
         </group>
     </open-files>
 </project-private>
