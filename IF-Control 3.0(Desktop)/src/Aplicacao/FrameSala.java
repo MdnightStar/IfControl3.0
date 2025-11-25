@@ -1,4 +1,5 @@
-/*
+
+   /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -507,8 +508,12 @@ public class FrameSala extends javax.swing.JFrame {
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
         // botão que envia as informaçoes do ar-condicionado dos comboBox's
         String funcao = "AR";
-        funcao += (String) comboBoxModo.getSelectedItem();
-        funcao += (String) comboBoxTemperatura.getSelectedItem();
+        if(comboBoxModo.getSelectedItem().equals("AUTO") || comboBoxModo.getSelectedItem().equals("FAN")){
+            funcao += (String) comboBoxModo.getSelectedItem();
+        }else{
+            funcao += (String) comboBoxModo.getSelectedItem();
+            funcao += (String) comboBoxTemperatura.getSelectedItem();
+        }
         
         funcao += ".";
         MainApp.sessao.trataAcao(funcao, nsala);

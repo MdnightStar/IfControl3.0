@@ -66,6 +66,18 @@ public class AcoesPanel extends javax.swing.JPanel {
         jLabelDataEd.setText(data);
         jLabelHoraEd.setText(hora);
         jLabelIDEd.setText(String.valueOf(id));
+        jLabelSalaEd.setText("Sem sala");
+        
+        
+        if(tipoAcao.contains("--addSala--")){
+            jLabelTipoAcaoEd.setText("Adicionou uma sala");
+        } else if(tipoAcao.contains("--addAgendamento--")){
+            jLabelTipoAcaoEd.setText("Adicionou um agendamento");
+        }else if(tipoAcao.contains("--deletAgendamento--")){
+            jLabelTipoAcaoEd.setText("Apagou um agendamento");
+        }else if(tipoAcao.contains("--editAgendamento--")){
+            jLabelTipoAcaoEd.setText("Deletou um agendamento");
+        }
     }
     
     /**
