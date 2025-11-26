@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class AddCodigosAr extends javax.swing.JFrame {
     private HashMap<String, String> verListaCod;
-    private List<CodIr> ListaCod;
+    private static List<CodIr> ListaCod;
     private boolean completou = false;
     /**
      * Creates new form g
@@ -28,6 +28,17 @@ public class AddCodigosAr extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ListaCod = new ArrayList<>();
         verListaCod = new HashMap<>();
+    }
+    
+    public AddCodigosAr(List<CodIr> codigos) {
+        initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ListaCod = new ArrayList<>();
+        
+        verListaCod = new HashMap<>();
+        for(CodIr cod:codigos){
+            verListaCod.put(cod.getFuncao(), cod.getCod());
+        }
     }
 
     public List<CodIr> getListaCod() {
@@ -46,7 +57,7 @@ public class AddCodigosAr extends javax.swing.JFrame {
             ListaCod.add(cod);
         }
         completou=true;
-        dispose();
+        setVisible(false);
     }
 
     /**
@@ -123,7 +134,7 @@ public class AddCodigosAr extends javax.swing.JFrame {
         });
 
         comboBoxTemperatura.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        comboBoxTemperatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
+        comboBoxTemperatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
         comboBoxTemperatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxTemperaturaActionPerformed(evt);
@@ -234,7 +245,7 @@ public class AddCodigosAr extends javax.swing.JFrame {
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
         String modo=(String) comboBoxModo.getSelectedItem();
-        String funcao="";
+        String funcao;
         if(modo.contains("ON")||modo.contains("OFF")||modo.contains("AUTO")||modo.contains("FAN")){
             funcao=modo;
         }else{
@@ -252,9 +263,11 @@ public class AddCodigosAr extends javax.swing.JFrame {
             );
             if (resposta == JOptionPane.YES_OPTION) {
                 verListaCod.put(funcao, cod);
+                JOptionPane.showMessageDialog(null, "Editado: "+funcao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             verListaCod.put(funcao, cod);
+            JOptionPane.showMessageDialog(null, "Adicionado: "+funcao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAddActionPerformed
 

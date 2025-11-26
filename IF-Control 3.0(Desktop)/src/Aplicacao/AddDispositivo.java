@@ -182,6 +182,8 @@ public class AddDispositivo extends javax.swing.JFrame {
         if(resp.contains("OK")){
             JOptionPane.showMessageDialog(null, "Cadastro do dispositivo reaalizado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
+            codAr.dispose();
+            codDs.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "Erro no banco de dados", "Erro", JOptionPane.WARNING_MESSAGE);
         }
@@ -636,8 +638,6 @@ public class AddDispositivo extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     dis.setListaCodigos(new ArrayList<>());
                     terminar(dis);
-                }else{
-                    return;
                 }
             }
         }else{
@@ -657,8 +657,6 @@ public class AddDispositivo extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     dis.setListaCodigos(new ArrayList<>());
                     terminar(dis);
-                }else{
-                    return;
                 }
             }
         }
@@ -678,6 +676,16 @@ public class AddDispositivo extends javax.swing.JFrame {
 
     private void jButtonAddCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCodActionPerformed
         // TODO add your handling code here:
+        if ((jCheckBoxAR.isSelected() || jCheckBoxDS.isSelected())) {
+            if (jCheckBoxAR.isSelected()) {
+                codAr.setVisible(true);
+            }else{
+                codDs.setVisible(true);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Selecione um tipo primeiro", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            
+        }
     }//GEN-LAST:event_jButtonAddCodActionPerformed
 
     private void jTextFieldZeroSpaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldZeroSpaceActionPerformed

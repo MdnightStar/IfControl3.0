@@ -19,7 +19,7 @@ import java.util.Map;
 public class AddCodigosDs extends javax.swing.JFrame {
 
     private HashMap<String, String> verListaCod;
-    private List<CodIr> ListaCod;
+    private static List<CodIr> ListaCod;
     private boolean completou = false;
 
     /**
@@ -30,6 +30,17 @@ public class AddCodigosDs extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ListaCod = new ArrayList<>();
         verListaCod = new HashMap<>();
+    }
+    
+    public AddCodigosDs(List<CodIr> codigos) {
+        initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ListaCod = new ArrayList<>();
+       
+        verListaCod = new HashMap<>();
+        for(CodIr cod:codigos){
+            verListaCod.put(cod.getFuncao(), cod.getCod());
+        }
     }
 
     public boolean isCompletou() {
@@ -44,7 +55,7 @@ public class AddCodigosDs extends javax.swing.JFrame {
             ListaCod.add(cod);
         }
         completou=true;
-        dispose();
+        setVisible(false);
     }
 
     public List<CodIr> getListaCod() {
@@ -230,9 +241,11 @@ public class AddCodigosDs extends javax.swing.JFrame {
             );
             if (resposta == JOptionPane.YES_OPTION) {
                 verListaCod.put(funcao, cod);
+                JOptionPane.showMessageDialog(null, "Editado: "+funcao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             verListaCod.put(funcao, cod);
+            JOptionPane.showMessageDialog(null, "Adicionado: "+funcao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAddActionPerformed
 

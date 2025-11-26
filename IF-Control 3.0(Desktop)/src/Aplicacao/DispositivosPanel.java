@@ -5,6 +5,9 @@
 package Aplicacao;
 
 import Modelo.Dispositivo;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +27,7 @@ public class DispositivosPanel extends javax.swing.JPanel {
         initComponents();
         this.id=dis.getId();
         atualizar(dis);
+        this.dis=dis;
     }
     
     public void atualizar(Dispositivo dis){
@@ -31,7 +35,7 @@ public class DispositivosPanel extends javax.swing.JPanel {
         jLabelModeloEd.setText(dis.getModelo());
         int num=dis.getListaCodigos().size();
         if(dis.getTipo().contains("AR")){
-            jLabelTipo.setText("Ar-condicionado");
+            jLabelTipoEd.setText("Ar-condicionado");
             if(num==30){
                 jRadioButtonCompleto.setSelected(true);
             }else if(num<30 && num>0 ){
@@ -40,7 +44,7 @@ public class DispositivosPanel extends javax.swing.JPanel {
                 jRadioButtonEditCod.setSelected(true);
             }
         }else{
-            jLabelTipo.setText("DataShow");
+            jLabelTipoEd.setText("DataShow");
             if(num==10){
                 jRadioButtonCompleto.setSelected(true);
             }else if(num<10 && num>0 ){
@@ -49,7 +53,8 @@ public class DispositivosPanel extends javax.swing.JPanel {
                 jRadioButtonEditCod.setSelected(true);
             }
         }
-        
+        jLabelSalasREd.setText(Arrays.stream(dis.getSalasRelacionadas()).boxed().map(Object::toString).collect(Collectors.joining(", ")));
+        this.dis=dis;
     }
 
     public void setId(int id) {
@@ -73,13 +78,13 @@ public class DispositivosPanel extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jLabelMarca = new javax.swing.JLabel();
         jLabelTipo = new javax.swing.JLabel();
-        jLabelFim = new javax.swing.JLabel();
+        jLabelSalasR = new javax.swing.JLabel();
         jButtonEditar = new javax.swing.JButton();
         jLabelTitulo = new javax.swing.JLabel();
         jLabelMarcaEd = new javax.swing.JLabel();
         jLabelModeloEd = new javax.swing.JLabel();
         jLabelTipoEd = new javax.swing.JLabel();
-        jLabelFimEd = new javax.swing.JLabel();
+        jLabelSalasREd = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jButton4 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -107,8 +112,9 @@ public class DispositivosPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        setMaximumSize(new java.awt.Dimension(800, 120));
-        setPreferredSize(new java.awt.Dimension(800, 81));
+        setMaximumSize(new java.awt.Dimension(1600, 85));
+        setMinimumSize(new java.awt.Dimension(1343, 85));
+        setPreferredSize(new java.awt.Dimension(1343, 85));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -121,9 +127,9 @@ public class DispositivosPanel extends javax.swing.JPanel {
         jLabelTipo.setForeground(new java.awt.Color(0, 0, 0));
         jLabelTipo.setText("Tipo:");
 
-        jLabelFim.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabelFim.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelFim.setText("Salas relacionadas:");
+        jLabelSalasR.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelSalasR.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelSalasR.setText("Salas relacionadas:");
 
         jButtonEditar.setBackground(new java.awt.Color(153, 153, 153));
         jButtonEditar.setForeground(new java.awt.Color(0, 0, 0));
@@ -151,9 +157,9 @@ public class DispositivosPanel extends javax.swing.JPanel {
         jLabelTipoEd.setForeground(new java.awt.Color(0, 0, 0));
         jLabelTipoEd.setText("XXXXXXXXX");
 
-        jLabelFimEd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jLabelFimEd.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelFimEd.setText("XXXXXXXXX");
+        jLabelSalasREd.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabelSalasREd.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelSalasREd.setText("XXXXXXXXX");
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -231,14 +237,14 @@ public class DispositivosPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelTipoEd))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelFim)
+                        .addComponent(jLabelSalasR)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelFimEd)))
+                        .addComponent(jLabelSalasREd)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 455, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonEditar)
@@ -261,8 +267,8 @@ public class DispositivosPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabelFim)
-                                .addComponent(jLabelFimEd))
+                                .addComponent(jLabelSalasR)
+                                .addComponent(jLabelSalasREd))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabelTitulo)
                                 .addComponent(jLabelModeloEd))))
@@ -274,16 +280,33 @@ public class DispositivosPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        int resultado = JOptionPane.showConfirmDialog(
+            null, // Componente pai (null para centralizar na tela)
+            "Você tem certeza que deseja apagar o seguinte item?", // Mensagem
+            "Confirmação de Exclusão", // Título da Janela
+            JOptionPane.OK_CANCEL_OPTION, // Opções de Botão: OK e Cancel
+            JOptionPane.WARNING_MESSAGE // Tipo de Mensagem (Geralmente um aviso)
+        );
+        if(resultado==JOptionPane.OK_OPTION){
+        String resp=MainApp.sessao.trataAcao("--deletDispositivo--"+Integer.toString(id));
+        if(resp.contains("SUCESSO")){
+            JOptionPane.showMessageDialog(null, "Dispositivo eliminado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro ao eliminar", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
+        EditarDispositivo edit= new EditarDispositivo(dis);
+        edit.setVisible(true);
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jRadioButtonCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCompletoActionPerformed
@@ -303,11 +326,11 @@ public class DispositivosPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabelFim;
-    private javax.swing.JLabel jLabelFimEd;
     private javax.swing.JLabel jLabelMarca;
     private javax.swing.JLabel jLabelMarcaEd;
     private javax.swing.JLabel jLabelModeloEd;
+    private javax.swing.JLabel jLabelSalasR;
+    private javax.swing.JLabel jLabelSalasREd;
     private javax.swing.JLabel jLabelTipo;
     private javax.swing.JLabel jLabelTipoEd;
     private javax.swing.JLabel jLabelTitulo;
