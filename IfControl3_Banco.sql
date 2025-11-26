@@ -92,7 +92,6 @@ CREATE TABLE `codir` (
   `funcao` varchar(20) NOT NULL,
   `dispositivo_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `cod` (`cod`),
   UNIQUE KEY `funcao` (`funcao`),
   KEY `dispositivo_id` (`dispositivo_id`),
   CONSTRAINT `codir_ibfk_1` FOREIGN KEY (`dispositivo_id`) REFERENCES `dis` (`id`) ON DELETE CASCADE
@@ -241,6 +240,32 @@ LOCK TABLES `nsalaagendamento` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `nsaladispositivo`
+--
+
+DROP TABLE IF EXISTS `nsaladispositivo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `nsaladispositivo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `dispositivo_id` int NOT NULL,
+  `nSala` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dispositivo_id` (`dispositivo_id`),
+  CONSTRAINT `nsaladispositivo_ibfk_1` FOREIGN KEY (`dispositivo_id`) REFERENCES `dis` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nsaladispositivo`
+--
+
+LOCK TABLES `nsaladispositivo` WRITE;
+/*!40000 ALTER TABLE `nsaladispositivo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `nsaladispositivo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sala`
 --
 
@@ -311,4 +336,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-21 10:24:51
+-- Dump completed on 2025-11-26 14:13:13

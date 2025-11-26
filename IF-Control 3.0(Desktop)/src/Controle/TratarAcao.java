@@ -232,6 +232,72 @@ public class TratarAcao extends SocketArduino {
             return "ERROR_SELECT_SALA";
         }
     }
+    
+    /**
+     * Adiciona um novo Dispositivo e seus CodIr relacionados ao banco de dados.
+     * * @param dispositivoJson String JSON contendo os dados do Dispositivo e CodIr.
+     * @return String de status da operação.
+     */
+    public String adicionarDispositivo(String dispositivoJson) {
+        try {
+            Dispositivo dispositivo = gson.fromJson(dispositivoJson, Dispositivo.class);
+            
+            if (manager.inserirDispositivo(dispositivo)) {
+                return "CAD_DISPOSITIVO_OK";
+            } else {
+                return "ERROR_BD_INSERT_DISPOSITIVO";
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao desserializar ou inserir dispositivo: " + e.getMessage());
+            return "ERROR_PROCESS_DISPOSITIVO";
+        }
+    }
+
+    /**
+     * Deleta um Dispositivo e seus CodIr e ConjuntoDis associados do banco de dados.
+     * * @param idDispositivo O ID do dispositivo a ser deletado.
+     * @return String de status da operação.
+     */
+    public String deletarDispositivo(int idDispositivo) {
+        if (manager.deletarDispositivo(idDispositivo)) {
+            return "SUCESSO_DELET_DISPOSITIVO";
+        } else {
+            return "ERRO_DELET_DISPOSITIVO";
+        }
+    }
+
+    /**
+     * Edita um Dispositivo existente e substitui seus CodIr relacionados no banco de dados.
+     * * @param dispositivoJson String JSON contendo os dados atualizados do Dispositivo.
+     * @return String de status da operação.
+     */
+    public String editarDispositivo(String dispositivoJson) {
+        try {
+            Dispositivo dispositivo = gson.fromJson(dispositivoJson, Dispositivo.class);
+            
+            if (manager.atualizarDispositivo(dispositivo)) {
+                return "SUCESSO_EDIT_DISPOSITIVO";
+            } else {
+                return "ERRO_EDIT_DISPOSITIVO";
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao desserializar ou atualizar dispositivo: " + e.getMessage());
+            return "ERROR_PROCESS_DISPOSITIVO";
+        }
+    }
+    
+    /**
+     * Retorna a lista de todos os dispositivos no formato JSON.
+     * * @return String JSON da lista de Dispositivos ou mensagem de erro.
+     */
+    public String pegarDispositivos() {
+        List<Dispositivo> dispositivos = manager.consultarDispositivos();
+        if (dispositivos != null) {
+            return gson.toJson(dispositivos);
+        } else {
+            return "ERROR_SELECT_DISPOSITIVOS";
+        }
+    }
 
     /**
      * Esse método verifica se a sala esta ocupada ou não;
@@ -394,6 +460,19 @@ public class TratarAcao extends SocketArduino {
             quebra = acao.split("--editAgendamento--");
             Agendamento agendamento = gson.fromJson(quebra[1], Agendamento.class);
             return editAgendamento(agendamento);
+        }else if (acao.contains("--addDispositivo--")) { // NOVO: Adicionar Dispositivo
+            quebra = acao.split("--addDispositivo--");
+            return adicionarDispositivo(quebra[1]);
+
+        } else if (acao.contains("--deletDispositivo--")) { // NOVO: Deletar Dispositivo
+            quebra = acao.split("--deletDispositivo--");
+            int id = Integer.parseInt(quebra[1]);
+            return deletarDispositivo(id);
+            
+        } else if (acao.contains("--editDispositivo--")) { // NOVO: Editar Dispositivo
+            quebra = acao.split("--editDispositivo--");
+            return editarDispositivo(quebra[1]);
+            
         } else {
             return "COMANDO_IMPOSSIVEL";
         }

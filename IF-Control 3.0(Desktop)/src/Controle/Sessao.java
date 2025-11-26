@@ -244,4 +244,14 @@ public class Sessao {
         }
         return servidor.getResposta();
     }
+    
+    public String dispositivos(){
+        servidor.enviar("--dispositivos--");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        return servidor.getResposta();
+    }
 }

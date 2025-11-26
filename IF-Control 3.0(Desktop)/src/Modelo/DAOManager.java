@@ -1000,4 +1000,313 @@ public class DAOManager {
             return false;
         }
     }
+    
+    /**
+     * Insere um novo dispositivo na tabela 'dis', seus códigos IR em 'codir', e
+     * suas salas relacionadas em 'nsaladispositivo' em uma única transação.
+     *
+     * @param dispositivo Instância da classe Dispositivo a ser inserida.
+     * @return V se a inserção for bem-sucedida, F caso contrário.
+     */
+    public boolean inserirDispositivo(Dispositivo dispositivo) {
+        String sqlDis = "INSERT INTO dis (tipo, modelo, marca, config) VALUES (?, ?, ?, ?)";
+        String sqlCodIr = "INSERT INTO codir (cod, funcao, dispositivo_id) VALUES (?, ?, ?)";
+        String sqlSalas = "INSERT INTO nsaladispositivo (dispositivo_id, nSala) VALUES (?, ?)"; // NOVO SQL
+        
+        // Inicia o processo de transação
+        try {
+            conexao.setAutoCommit(false); 
+
+            // 1. Inserir o Dispositivo (tabela 'dis') e obter o ID gerado
+            int idDispositivoGerado = -1;
+            try (PreparedStatement stmtDis = conexao.prepareStatement(sqlDis, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                
+                stmtDis.setString(1, dispositivo.getTipo());
+                stmtDis.setString(2, dispositivo.getModelo());
+                stmtDis.setString(3, dispositivo.getMarca());
+                stmtDis.setString(4, dispositivo.getConfig());
+                
+                if (stmtDis.executeUpdate() == 0) {
+                    throw new SQLException("Falha ao inserir dispositivo, nenhuma linha afetada.");
+                }
+
+                try (ResultSet generatedKeys = stmtDis.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        idDispositivoGerado = generatedKeys.getInt(1);
+                    } else {
+                        throw new SQLException("Falha ao inserir dispositivo, não foi possível obter o ID.");
+                    }
+                }
+            }
+            
+            // 2. Inserir os Códigos IR (tabela 'codir')
+            if (dispositivo.getListaCodigos() != null && !dispositivo.getListaCodigos().isEmpty()) {
+                try (PreparedStatement stmtCodIr = conexao.prepareStatement(sqlCodIr)) {
+                    for (CodIr codIr : dispositivo.getListaCodigos()) {
+                        stmtCodIr.setString(1, codIr.getCod());
+                        stmtCodIr.setString(2, codIr.getFuncao());
+                        stmtCodIr.setInt(3, idDispositivoGerado); 
+                        stmtCodIr.addBatch();
+                    }
+                    stmtCodIr.executeBatch();
+                }
+            }
+
+            // 3. INSERIR AS SALAS RELACIONADAS (tabela 'nsaladispositivo') - NOVO PASSO
+            if (dispositivo.getSalasRelacionadas() != null && dispositivo.getSalasRelacionadas().length > 0) {
+                try (PreparedStatement stmtSalas = conexao.prepareStatement(sqlSalas)) {
+                    for (int nSala : dispositivo.getSalasRelacionadas()) {
+                        stmtSalas.setInt(1, idDispositivoGerado);
+                        stmtSalas.setInt(2, nSala);
+                        stmtSalas.addBatch();
+                    }
+                    stmtSalas.executeBatch();
+                }
+            }
+            
+            // 4. Confirma (commit) a transação
+            conexao.commit();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Erro na transação de inserção de dispositivo/CodIr/Salas: " + e.getMessage());
+            try {
+                if (conexao != null) {
+                    conexao.rollback();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Erro ao tentar rollback: " + ex.getMessage());
+            }
+            return false;
+            
+        } finally {
+            try {
+                if (conexao != null) {
+                    conexao.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                // Logar o erro
+            }
+        }
+    }
+    
+    /**
+     * Deleta um dispositivo da tabela 'dis' com base no seu ID.
+     * A deleção de todos os CodIr e salas relacionadas é feita automaticamente
+     * pelo CASCADE do banco de dados.
+     *
+     * @param idDispositivo O ID do dispositivo a ser deletado.
+     * @return true se a deleção for bem-sucedida (pelo menos uma linha afetada), false caso contrário.
+     */
+    public boolean deletarDispositivo(int idDispositivo) {
+        // A exclusão na tabela 'dis' irá disparar a exclusão automática em 'codir' e 'nsaladispositivo' devido ao ON DELETE CASCADE.
+        String sql = "DELETE FROM dis WHERE id = ?";
+
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idDispositivo);
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+
+        } catch (SQLException ex) {
+            System.err.println("Erro ao deletar dispositivo (ID: " + idDispositivo + "): " + ex.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Atualiza um dispositivo existente na tabela 'dis' e substitui completamente
+     * seus códigos IR relacionados ('codir') e suas salas relacionadas ('nsaladispositivo')
+     * em uma única transação.
+     *
+     * @param dispositivo Instância da classe Dispositivo com os dados e ID a serem atualizados.
+     * @return V se a atualização for bem-sucedida, F caso contrário.
+     */
+    public boolean atualizarDispositivo(Dispositivo dispositivo) {
+        if (dispositivo.getId() <= 0) {
+            System.err.println("Erro ao atualizar dispositivo: O ID do dispositivo é inválido.");
+            return false;
+        }
+
+        String sqlUpdateDis = "UPDATE dis SET tipo=?, modelo=?, marca=?, config=? WHERE id=?";
+        String sqlDeleteCodIr = "DELETE FROM codir WHERE dispositivo_id=?";
+        String sqlInsertCodIr = "INSERT INTO codir (cod, funcao, dispositivo_id) VALUES (?, ?, ?)";
+        
+        String sqlDeleteSalas = "DELETE FROM nsaladispositivo WHERE dispositivo_id=?"; // NOVO SQL
+        String sqlInsertSalas = "INSERT INTO nsaladispositivo (dispositivo_id, nSala) VALUES (?, ?)"; // NOVO SQL
+
+        try {
+            conexao.setAutoCommit(false); 
+            int idDispositivo = dispositivo.getId();
+
+            // 1. Atualizar o Dispositivo (tabela 'dis')
+            try (PreparedStatement stmtDis = conexao.prepareStatement(sqlUpdateDis)) {
+                stmtDis.setString(1, dispositivo.getTipo());
+                stmtDis.setString(2, dispositivo.getModelo());
+                stmtDis.setString(3, dispositivo.getMarca());
+                stmtDis.setString(4, dispositivo.getConfig());
+                stmtDis.setInt(5, idDispositivo);
+                stmtDis.executeUpdate();
+            }
+
+            // 2. Gerenciar Códigos IR: Deletar antigos e Inserir novos
+            try (PreparedStatement stmtDeleteCodIr = conexao.prepareStatement(sqlDeleteCodIr)) {
+                stmtDeleteCodIr.setInt(1, idDispositivo);
+                stmtDeleteCodIr.executeUpdate();
+            }
+            if (dispositivo.getListaCodigos() != null && !dispositivo.getListaCodigos().isEmpty()) {
+                try (PreparedStatement stmtInsertCodIr = conexao.prepareStatement(sqlInsertCodIr)) {
+                    for (CodIr codIr : dispositivo.getListaCodigos()) {
+                        stmtInsertCodIr.setString(1, codIr.getCod());
+                        stmtInsertCodIr.setString(2, codIr.getFuncao());
+                        stmtInsertCodIr.setInt(3, idDispositivo); 
+                        stmtInsertCodIr.addBatch(); 
+                    }
+                    stmtInsertCodIr.executeBatch();
+                }
+            }
+            
+            // 3. GERENCIAR SALAS RELACIONADAS: Deletar antigas e Inserir novas - NOVOS PASSOS
+            try (PreparedStatement stmtDeleteSalas = conexao.prepareStatement(sqlDeleteSalas)) {
+                stmtDeleteSalas.setInt(1, idDispositivo);
+                stmtDeleteSalas.executeUpdate();
+            }
+            if (dispositivo.getSalasRelacionadas() != null && dispositivo.getSalasRelacionadas().length > 0) {
+                try (PreparedStatement stmtInsertSalas = conexao.prepareStatement(sqlInsertSalas)) {
+                    for (int nSala : dispositivo.getSalasRelacionadas()) {
+                        stmtInsertSalas.setInt(1, idDispositivo);
+                        stmtInsertSalas.setInt(2, nSala);
+                        stmtInsertSalas.addBatch();
+                    }
+                    stmtInsertSalas.executeBatch();
+                }
+            }
+            
+            // 4. Confirma (commit) a transação
+            conexao.commit();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Erro na transação de atualização de dispositivo/CodIr/Salas: " + e.getMessage());
+            try {
+                if (conexao != null) {
+                    conexao.rollback();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Erro ao tentar rollback: " + ex.getMessage());
+            }
+            return false;
+            
+        } finally {
+            try {
+                if (conexao != null) {
+                    conexao.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                // Logar o erro
+            }
+        }
+    }
+    
+    /**
+     * Consulta e retorna uma lista de todos os Dispositivos existentes no banco de dados,
+     * incluindo a lista de Códigos IR associados e as Salas Relacionadas.
+     *
+     * @return Uma List de Dispositivo.
+     */
+    public List<Dispositivo> consultarDispositivos() {
+        List<Dispositivo> dispositivos = new ArrayList<>();
+        String sqlDis = "SELECT * FROM dis";
+
+        try (PreparedStatement stmtDis = this.conexao.prepareStatement(sqlDis); 
+             ResultSet rsDis = stmtDis.executeQuery()) {
+
+            while (rsDis.next()) {
+                Dispositivo dis = new Dispositivo();
+                int idDispositivo = rsDis.getInt("id");
+
+                // 1. Setar dados principais do Dispositivo
+                dis.setId(idDispositivo);
+                dis.setTipo(rsDis.getString("tipo"));
+                dis.setModelo(rsDis.getString("modelo"));
+                dis.setMarca(rsDis.getString("marca"));
+                dis.setConfig(rsDis.getString("config"));
+
+                // 2. Obter e setar os Códigos IR relacionados
+                dis.setListaCodigos(consultarCodIrPorDispositivoId(idDispositivo));
+                
+                // 3. OBTER E SETAR AS SALAS RELACIONADAS - NOVO PASSO
+                dis.setSalasRelacionadas(consultarSalasRelacionadas(idDispositivo));
+
+                dispositivos.add(dis);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao consultar dispositivos: " + e.getMessage());
+        }
+        return dispositivos;
+    }
+
+    // --- Métodos Auxiliares de Consulta (Inclusão de Salas Relacionadas) ---
+
+    // O método consultarCodIrPorDispositivoId não muda.
+
+    /**
+     * Método auxiliar para consultar os números das Salas relacionadas a um Dispositivo específico.
+     *
+     * @param dispositivoId O ID do dispositivo pai.
+     * @return Um array int[] com os números das salas associadas.
+     */
+    private int[] consultarSalasRelacionadas(int dispositivoId) throws SQLException {
+        List<Integer> salas = new ArrayList<>();
+        String sqlSalas = "SELECT nSala FROM nsaladispositivo WHERE dispositivo_id = ?";
+
+        try (PreparedStatement stmtSalas = this.conexao.prepareStatement(sqlSalas)) {
+            stmtSalas.setInt(1, dispositivoId);
+            
+            try (ResultSet rsSalas = stmtSalas.executeQuery()) {
+                while (rsSalas.next()) {
+                    salas.add(rsSalas.getInt("nSala"));
+                }
+            }
+        }
+        
+        // Converte List<Integer> para int[]
+        return salas.stream().mapToInt(i -> i).toArray();
+    }
+    
+    /**
+     * Método auxiliar para consultar os Códigos IR de um Dispositivo específico.
+     *
+     * @param dispositivoId O ID do dispositivo pai.
+     * @return Uma List de CodIr associada ao dispositivo.
+     */
+    private List<CodIr> consultarCodIrPorDispositivoId(int dispositivoId) throws SQLException {
+        List<CodIr> codigosIr = new ArrayList<>();
+        // SQL para selecionar todos os campos do codir onde a chave estrangeira (dispositivo_id) corresponde ao ID fornecido.
+        String sqlCodIr = "SELECT id, cod, funcao, dispositivo_id FROM codir WHERE dispositivo_id = ?";
+
+        // Usa um try-with-resources para garantir que o PreparedStatement seja fechado automaticamente.
+        try (PreparedStatement stmtCodIr = this.conexao.prepareStatement(sqlCodIr)) {
+            // Define o parâmetro na cláusula WHERE
+            stmtCodIr.setInt(1, dispositivoId);
+            
+            // Executa a consulta e usa try-with-resources para fechar o ResultSet
+            try (ResultSet rsCodIr = stmtCodIr.executeQuery()) {
+                // Itera sobre todos os resultados encontrados
+                while (rsCodIr.next()) {
+                    CodIr codIr = new CodIr();
+                    
+                    // Mapeia os dados do ResultSet para o objeto CodIr
+                    codIr.setId(rsCodIr.getInt("id"));
+                    codIr.setCod(rsCodIr.getString("cod"));
+                    codIr.setFuncao(rsCodIr.getString("funcao"));
+                    codIr.setDispositivo_id(rsCodIr.getInt("dispositivo_id")); 
+                    
+                    codigosIr.add(codIr);
+                }
+            }
+        } // stmtCodIr é fechado automaticamente aqui.
+        
+        return codigosIr;
+    }
 }

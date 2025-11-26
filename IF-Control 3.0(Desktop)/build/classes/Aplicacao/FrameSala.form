@@ -460,7 +460,7 @@
                   <Font name="Microsoft YaHei UI" size="14" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="9">
+                  <StringArray count="14">
                     <StringItem index="0" value="17"/>
                     <StringItem index="1" value="18"/>
                     <StringItem index="2" value="19"/>
@@ -470,6 +470,11 @@
                     <StringItem index="6" value="23"/>
                     <StringItem index="7" value="24"/>
                     <StringItem index="8" value="25"/>
+                    <StringItem index="9" value="26"/>
+                    <StringItem index="10" value="27"/>
+                    <StringItem index="11" value="28"/>
+                    <StringItem index="12" value="29"/>
+                    <StringItem index="13" value="30"/>
                   </StringArray>
                 </Property>
               </Properties>
