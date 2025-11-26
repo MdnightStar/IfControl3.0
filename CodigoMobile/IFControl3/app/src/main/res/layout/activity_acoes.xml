@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ifcontrolpanel"
-    tools:context=".MenuActivity">
+    tools:context=".AcoesActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
         app:logo="@drawable/ifcontrol3_logo"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="Ações"
-        app:titleMarginStart="30dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:titleMarginStart="30dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_botton"
@@ -37,7 +36,7 @@
         tools:ignore="VisualLintBottomNav" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewAçoes"
+        android:id="@+id/recyclerViewAcoes"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="30dp"
@@ -47,8 +46,8 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/bnv_botton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="1.0" />
+        tools:listitem="@layout/item_acao" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

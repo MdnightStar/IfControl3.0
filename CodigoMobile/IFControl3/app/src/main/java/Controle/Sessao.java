@@ -136,9 +136,11 @@ public class Sessao {
 
     /**
      * Solicita logs
+     *
+     * @return
      */
-    public void logs() {
-        servidor.enviar("logs");
+    public String logs() {
+       return servidor.enviar("logs");
     }
 
     /**

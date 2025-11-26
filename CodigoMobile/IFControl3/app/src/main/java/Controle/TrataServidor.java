@@ -40,8 +40,10 @@ public class TrataServidor implements Runnable {
 
     /**
      * Envia uma mensagem para o servidor
+     *
+     * @return
      */
-    public void enviar(String message) {
+    public String enviar(String message) {
         new Thread(() -> {
             try {
                 if (out != null && conectado) {
@@ -54,6 +56,7 @@ public class TrataServidor implements Runnable {
                 Log.e(TAG, "Erro ao enviar: " + e.getMessage());
             }
         }).start();
+        return message;
     }
 
     /**

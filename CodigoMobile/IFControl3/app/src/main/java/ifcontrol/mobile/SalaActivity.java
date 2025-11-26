@@ -147,7 +147,7 @@ public class SalaActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            while (isDisplayable()) {
+            while (!isFinishing()) {
                 String resposta = MainApp.sessaoInstance.getSala(nSala);
                 if (resposta.contains("nSala")) {
                     sala = gs.fromJson(resposta, tipoSala);
