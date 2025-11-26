@@ -4,17 +4,60 @@
  */
 package Aplicacao;
 
+import Modelo.Dispositivo;
+
 /**
  *
  * @author LENOVO
  */
 public class DispositivosPanel extends javax.swing.JPanel {
-
+    private int id;
+    private Dispositivo dis;
     /**
      * Creates new form AgendamentoPanel
      */
     public DispositivosPanel() {
         initComponents();
+    }
+    
+    public DispositivosPanel(Dispositivo dis) {
+        initComponents();
+        this.id=dis.getId();
+        atualizar(dis);
+    }
+    
+    public void atualizar(Dispositivo dis){
+        jLabelMarcaEd.setText(dis.getMarca());
+        jLabelModeloEd.setText(dis.getModelo());
+        int num=dis.getListaCodigos().size();
+        if(dis.getTipo().contains("AR")){
+            jLabelTipo.setText("Ar-condicionado");
+            if(num==30){
+                jRadioButtonCompleto.setSelected(true);
+            }else if(num<30 && num>0 ){
+                jRadioButtonIncompleto.setSelected(true);
+            }else{
+                jRadioButtonEditCod.setSelected(true);
+            }
+        }else{
+            jLabelTipo.setText("DataShow");
+            if(num==10){
+                jRadioButtonCompleto.setSelected(true);
+            }else if(num<10 && num>0 ){
+                jRadioButtonIncompleto.setSelected(true);
+            }else{
+                jRadioButtonEditCod.setSelected(true);
+            }
+        }
+        
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     /**
@@ -41,9 +84,9 @@ public class DispositivosPanel extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jRadioButton9 = new javax.swing.JRadioButton();
-        jRadioButton10 = new javax.swing.JRadioButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
+        jRadioButtonCompleto = new javax.swing.JRadioButton();
+        jRadioButtonIncompleto = new javax.swing.JRadioButton();
+        jRadioButtonEditCod = new javax.swing.JRadioButton();
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -136,33 +179,33 @@ public class DispositivosPanel extends javax.swing.JPanel {
         jLabel6.setText("Códigos:");
         jPanel5.add(jLabel6);
 
-        jRadioButton9.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton9.setText("Completo");
-        jRadioButton9.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonCompleto.setForeground(new java.awt.Color(0, 0, 0));
+        jRadioButtonCompleto.setText("Completo");
+        jRadioButtonCompleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton9ActionPerformed(evt);
+                jRadioButtonCompletoActionPerformed(evt);
             }
         });
-        jPanel5.add(jRadioButton9);
+        jPanel5.add(jRadioButtonCompleto);
 
-        jRadioButton10.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton10.setText("Incompleto");
-        jRadioButton10.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonIncompleto.setForeground(new java.awt.Color(0, 0, 0));
+        jRadioButtonIncompleto.setText("Incompleto");
+        jRadioButtonIncompleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton10ActionPerformed(evt);
+                jRadioButtonIncompletoActionPerformed(evt);
             }
         });
-        jPanel5.add(jRadioButton10);
+        jPanel5.add(jRadioButtonIncompleto);
 
-        jRadioButton8.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton8.setText("Sem codigos");
-        jRadioButton8.setPreferredSize(new java.awt.Dimension(10, 20));
-        jRadioButton8.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonEditCod.setForeground(new java.awt.Color(0, 0, 0));
+        jRadioButtonEditCod.setText("Sem codigos");
+        jRadioButtonEditCod.setPreferredSize(new java.awt.Dimension(10, 20));
+        jRadioButtonEditCod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton8ActionPerformed(evt);
+                jRadioButtonEditCodActionPerformed(evt);
             }
         });
-        jPanel5.add(jRadioButton8);
+        jPanel5.add(jRadioButtonEditCod);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -243,17 +286,17 @@ public class DispositivosPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jRadioButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton9ActionPerformed
+    private void jRadioButtonCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCompletoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton9ActionPerformed
+    }//GEN-LAST:event_jRadioButtonCompletoActionPerformed
 
-    private void jRadioButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton10ActionPerformed
+    private void jRadioButtonIncompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonIncompletoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton10ActionPerformed
+    }//GEN-LAST:event_jRadioButtonIncompletoActionPerformed
 
-    private void jRadioButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton8ActionPerformed
+    private void jRadioButtonEditCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonEditCodActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton8ActionPerformed
+    }//GEN-LAST:event_jRadioButtonEditCodActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -270,9 +313,9 @@ public class DispositivosPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
+    private javax.swing.JRadioButton jRadioButtonCompleto;
+    private javax.swing.JRadioButton jRadioButtonEditCod;
+    private javax.swing.JRadioButton jRadioButtonIncompleto;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables

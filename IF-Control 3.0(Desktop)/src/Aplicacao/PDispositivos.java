@@ -3,13 +3,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Aplicacao;
+
+import Modelo.Dispositivo;
+import Modelo.CodIr;
 import javax.swing.Box;
 import java.awt.Dimension;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author LENOVO
  */
 public class PDispositivos extends javax.swing.JFrame {
+
+    private List<DispositivosPanel> dispositivosP;
+    private List<Dispositivo> dispositivos;
+    private Gson gs;
+    private java.lang.reflect.Type tipoDispositivo;
+    private volatile boolean runningUpdate = true;
+    private Thread updateThread;
 
     /**
      * Creates new form PAgendamento
@@ -17,6 +33,36 @@ public class PDispositivos extends javax.swing.JFrame {
     public PDispositivos() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+        dispositivosP = new ArrayList<>();
+        dispositivos = new ArrayList<>();
+        gs = new Gson();
+        tipoDispositivo = new TypeToken<List<Dispositivo>>() {
+        }.getType();
+        updateThread = new Thread();
+        updateThread.start();
+        adicionarDispositivos();
+    }
+
+    public void stopUpdateThread() {
+        runningUpdate = false; // Sinaliza para a thread parar
+        if (updateThread != null && updateThread.isAlive()) {
+            // Opcional, mas recomendado: interrompe o sleep
+            updateThread.interrupt();
+        }
+    }
+
+    public void adicionarDispositivos() {
+        jPanelDispositivos.removeAll();
+        String msg = MainApp.sessao.dispositivos();
+        String parte[] = msg.split("--dispositivos--");
+        dispositivos = gs.fromJson(parte[1], tipoDispositivo);
+        for (Dispositivo dis : dispositivos) {
+            DispositivosPanel panel = new DispositivosPanel(dis);
+            dispositivosP.add(panel);
+            jPanelDispositivos.add(panel);
+        }
+        jPanelDispositivos.revalidate();
+        jPanelDispositivos.repaint();
     }
 
     /**
@@ -269,6 +315,11 @@ public class PDispositivos extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(0, 51, 102));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/mais.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabelIfamLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/IFAM_logo.png"))); // NOI18N
 
@@ -366,19 +417,21 @@ public class PDispositivos extends javax.swing.JFrame {
 
     private void jMenuSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalasActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
-        PSala.main(null);
+
     }//GEN-LAST:event_jMenuSalasActionPerformed
 
     private void jMenuSalasMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuSalasMenuSelected
         // TODO add your handling code here:
-        setVisible(false);
-        PSala.main(null);
+        stopUpdateThread();
+        dispose();
+        MainApp.showPSalas();
     }//GEN-LAST:event_jMenuSalasMenuSelected
 
     private void jMenuAgendamentoMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuAgendamentoMenuSelected
         // TODO add your handling code here:
-        setVisible(true);
+        stopUpdateThread();
+        dispose();
+        MainApp.showPAngendamento();
     }//GEN-LAST:event_jMenuAgendamentoMenuSelected
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -391,8 +444,9 @@ public class PDispositivos extends javax.swing.JFrame {
 
     private void jMenuAcaoesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuAcaoesMenuSelected
         // TODO add your handling code here:
-        setVisible(false);
-        PAAcoes.main(null);
+        stopUpdateThread();
+        dispose();
+        MainApp.showPAAcoes();
     }//GEN-LAST:event_jMenuAcaoesMenuSelected
 
     private void jRadioButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton8ActionPerformed
@@ -406,6 +460,11 @@ public class PDispositivos extends javax.swing.JFrame {
     private void jRadioButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton10ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        MainApp.showAddDispositivo();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -443,6 +502,69 @@ public class PDispositivos extends javax.swing.JFrame {
         });
     }
 
+    private class AtualizaDadosDispositivos implements Runnable {
+
+        public DispositivosPanel procurarDP(Dispositivo dis) {
+            for (DispositivosPanel dp : dispositivosP) {
+                if (dp.getId() == dis.getId()) {
+                    return dp;
+                }
+
+            }
+
+            return null;
+        }
+
+        public boolean procurarD(DispositivosPanel panel) {
+
+            for (Dispositivo dis : dispositivos) {
+                if (dis.getId() == panel.getId()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public void run() {
+            while (runningUpdate) {
+                String resp = MainApp.sessao.dispositivos();
+                String parte[] = resp.split("--dispositivos--");
+                if (resp.contains("--dispositivos--")) {
+                    dispositivos = gs.fromJson(parte[1], tipoDispositivo);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (DispositivosPanel panel : new ArrayList<>(dispositivosP)) {
+                                if (!procurarD(panel)) {
+                                    jPanelDispositivos.remove(panel);
+                                    dispositivosP.remove(panel);
+                                }
+                            }
+                            for (Dispositivo dis : dispositivos) {
+                                if (procurarDP(dis) == null) {
+                                    DispositivosPanel novoP = new DispositivosPanel(dis);
+                                    dispositivosP.add(novoP);
+                                    jPanelDispositivos.add(novoP);
+                                }else{
+                                    DispositivosPanel disP = procurarDP(dis);
+                                    disP.atualizar(dis);
+                                }
+                            }
+                            jPanelDispositivos.revalidate();
+                            jPanelDispositivos.repaint();
+                        }
+                    });
+                }
+                try {
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                }
+            }
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -476,4 +598,5 @@ public class PDispositivos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
+
 }
