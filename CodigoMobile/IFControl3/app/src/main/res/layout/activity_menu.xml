@@ -7,11 +7,13 @@
     android:background="@color/ifcontrolpanel"
     tools:context=".MenuActivity">
 
+    <!-- Barra de ferramentas com elevação para criar profundidade -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
         app:logo="@drawable/ifcontrol3_logo"
@@ -19,12 +21,28 @@
         app:title="IFControl"
         app:titleMarginStart="30dp" />
 
+    <!-- Lista de salas com padding para espaçamento interno -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSalas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/bnv_botton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:spanCount="2"
+        tools:listitem="@layout/item_sala_placeholder" />
+
+    <!-- Menu de navegação inferior com elevação para consistência visual -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_botton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="0dp"
-        app:backgroundTint="@color/ifcontrolpanel"
+        android:background="@color/ifcontrolpanel"
+        android:elevation="4dp"
         app:itemIconSize="40dp"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
@@ -35,17 +53,5 @@
         app:menu="@menu/bottom_tabs"
         tools:ignore="VisualLintBottomNav" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSalas"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/bnv_botton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:spanCount="2"
-        tools:listitem="@layout/item_sala_placeholder" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+

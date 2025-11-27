@@ -5,8 +5,6 @@
 package Aplicacao;
 
 import Modelo.Agendamento;
-import Modelo.Sala;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javax.swing.Box;
@@ -65,9 +63,9 @@ public class PAgendamento extends javax.swing.JFrame {
                     agen.getSalas(), agen.getDispositivos());
             agendamentoP.add(novoP);
             jPanelAgendamentos.add(novoP);
-            jPanelAgendamentos.revalidate();
-            jPanelAgendamentos.repaint();
         }
+        jPanelAgendamentos.revalidate();
+        jPanelAgendamentos.repaint();
     }
 
     /**
@@ -331,9 +329,7 @@ public class PAgendamento extends javax.swing.JFrame {
                     agendamentos = gs.fromJson(parte[1], tipoAgendamento);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
-                        public void run() {
-                            
-
+                        public void run() {                           
                             for (AgendamentoPanel panel : new ArrayList<>(agendamentoP)) {
                                 if (!procurarA(panel)) {
                                     // Remove do painel pai (Container)

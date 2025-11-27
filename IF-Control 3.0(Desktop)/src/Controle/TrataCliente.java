@@ -122,6 +122,8 @@ public class TrataCliente implements Runnable {
                     clienteOut.println(sessao.getSala(u));
                 }else if(msg.contains("--agendamentos--")){
                     clienteOut.println("--agendamentos--"+sessao.pegarAngemadamento());
+                }else if(msg.contains("--dispositivos--")){
+                    clienteOut.println("--dispositivos--"+sessao.pegarDispositivos());
                 }
                 /*else if(msg.contains("addSala")){
                     String texto=msg;

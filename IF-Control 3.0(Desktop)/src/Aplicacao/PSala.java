@@ -7,14 +7,10 @@ package Aplicacao;
 import Modelo.Sala;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
