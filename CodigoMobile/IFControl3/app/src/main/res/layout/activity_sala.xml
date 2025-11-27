@@ -1,157 +1,329 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ifcontrolpanel"
-    tools:context=".MenuActivity">
-
-    <TextView
-        android:id="@+id/labelTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="110dp"
-        android:text="Temperatura:"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/textViewSalaTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XX"
-        android:textSize="18dp"
-        android:paddingLeft="20dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/labelTemp"
-        app:layout_constraintStart_toEndOf="@id/labelTemp"/>
-
-    <TextView
-        android:id="@+id/labelUmi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="150dp"
-        android:text="Umidade:"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/textViewSalaUmi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XX"
-        android:textSize="18dp"
-        android:paddingLeft="50dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/labelUmi"
-        app:layout_constraintStart_toEndOf="@id/labelUmi"/>
-
-    <TextView
-        android:id="@+id/labelPres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="190dp"
-        android:text="Presença:"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/textViewSalaPres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XX"
-        android:textSize="18dp"
-        android:paddingLeft="49dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/labelPres"
-        app:layout_constraintStart_toEndOf="@id/labelPres"/>
-
-    <ImageView
-        android:id="@+id/buttonArCond"
-        android:layout_width="81dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="256dp"
-        android:layout_marginEnd="300dp"
-        android:src="@drawable/arcon_on"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
-        android:id="@+id/buttonLuz"
-        android:layout_width="81dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="256dp"
-        android:layout_marginEnd="170dp"
-        android:src="@drawable/luz_on"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
-        android:id="@+id/buttonDS"
-        android:layout_width="81dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="256dp"
-        android:layout_marginEnd="40dp"
-        android:src="@drawable/datashow_on"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    android:padding="16dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:background="?attr/colorPrimary"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:logo="@drawable/ifcontrol3_logo"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Sala"
-        app:titleMarginStart="30dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:title="Controle"
+        app:titleTextColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/buttonAr"
+    <TextView
+        android:id="@+id/textViewTituloSala"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:text="Ar-Condicionado"
-        android:textColor="@color/black"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="413dp"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/buttonDataShow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:text="DataShow"
-        android:textColor="@color/black"
-        tools:layout_editor_absoluteX="241dp"
-        tools:layout_editor_absoluteY="413dp"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/buttonVoltarSala"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/white"
-        android:text="Voltar"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="4dp"
+        android:text="Sala --"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="640dp" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSensores"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="#2D3E50"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTituloSala">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iconTemp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_launcher_foreground"
+                app:tint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Corrected TextView -->
+            <TextView
+                android:id="@+id/labelTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Temperatura"
+                android:textColor="#B0BEC5"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iconTemp"
+                app:layout_constraintStart_toEndOf="@id/iconTemp"
+                app:layout_constraintTop_toTopOf="@id/iconTemp" />
+
+
+            <TextView
+                android:id="@+id/textViewSalaTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="--°C"
+                android:textColor="@android:color/white"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/iconTemp"
+                app:layout_constraintTop_toBottomOf="@+id/iconTemp" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="#546E7A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/labelUmi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Umidade"
+                android:textColor="#B0BEC5"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/divider"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewSalaUmi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--%"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/labelUmi"
+                app:layout_constraintTop_toBottomOf="@+id/labelUmi" />
+
+            <TextView
+                android:id="@+id/labelPres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Presença"
+                android:textColor="#B0BEC5"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/labelUmi"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSalaUmi" />
+
+            <TextView
+                android:id="@+id/textViewSalaPres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/labelPres"
+                app:layout_constraintTop_toBottomOf="@+id/labelPres" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/labelDispositivos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Dispositivos"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardSensores" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardArCond"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/cardLuz"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelDispositivos">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iconAr"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/arcon_on"
+                app:tint="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Ar Cond."
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusAr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="#4CAF50"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardLuz"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/cardArCond"
+        app:layout_constraintTop_toBottomOf="@+id/labelDispositivos">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iconLuz"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/luz_on"
+                app:tint="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Luzes"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusLuz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="#4CAF50"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardDS"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardArCond">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iconDS"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/datashow_on"
+                app:tint="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lblDS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="DataShow"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/statusDS"
+                app:layout_constraintStart_toEndOf="@+id/iconDS"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/statusDS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="--"
+                android:textColor="#D32F2F"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iconDS"
+                app:layout_constraintTop_toBottomOf="@+id/lblDS" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonVoltarSala"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:text="Voltar para Menu"
+        android:textColor="@android:color/white"
+        app:strokeColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

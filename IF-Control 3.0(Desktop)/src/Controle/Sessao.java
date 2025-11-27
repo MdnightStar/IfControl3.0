@@ -2,30 +2,28 @@
  *
  */
 package Controle;
-import Controle.TrataServidor;
+
 import Modelo.Acao;
-import Modelo.Sala;
 import com.google.gson.Gson;
 import java.io.IOException;
 import Modelo.User;
-import com.google.gson.reflect.TypeToken;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * @author Jeison
  */
 public class Sessao {
+
     private String _login;
     private String _senha;
     private TrataServidor servidor;
-    
-    public Sessao(){
-    
+
+    public Sessao() {
+
     }
-    
+
     public String getLogin() {
         return _login;
     }
@@ -41,13 +39,13 @@ public class Sessao {
     public void setSenha(String _senha) {
         this._senha = _senha;
     }
-    
+
     /**
-    * Instancia o socket que representa o usúario e espera ele enviar uma mensagem,
-    * logo ápos zera a String resposta para esperar uma nova mensagem
-    * 
-    * @return 
-    */
+     * Instancia o socket que representa o usúario e espera ele enviar uma
+     * mensagem, logo ápos zera a String resposta para esperar uma nova mensagem
+     *
+     * @return
+     */
     public boolean iniciarSessao() {
         try {
             servidor = new TrataServidor();
@@ -61,11 +59,11 @@ public class Sessao {
             return false;
         }
     }
-    
+
     /**
-    * Encerra a conexao do cliente com o servidor
-    * 
-    */
+     * Encerra a conexao do cliente com o servidor
+     *
+     */
     public void encerrarSessao() {
         System.out.println("ENCERRANDO SESSAO");
         try {
@@ -74,15 +72,15 @@ public class Sessao {
             System.out.println("Erro ao se desconectar: " + ex);
         }
     }
-    
+
     /**
-    * Efetua o login do cliente, enviando para o TrataCliente
-    * 
-    * @param login
-    * @param senha
-    * @return
-    */
-    public String login(String login, String senha){
+     * Efetua o login do cliente, enviando para o TrataCliente
+     *
+     * @param login
+     * @param senha
+     * @return
+     */
+    public String login(String login, String senha) {
         servidor.enviar("{\"_login\":\"" + login
                 + "\",\"_senha\":\"" + senha
                 + "\"}");
@@ -91,22 +89,22 @@ public class Sessao {
         } catch (InterruptedException ex) {
             System.out.println("Erro ao executar o TrataCliente");
         }
-        this._login=login;
-        this._senha=senha;
+        this._login = login;
+        this._senha = senha;
         return servidor.getResposta();
     }
-    
+
     /**
-    * Envia o user serializado para o TrataCliente, assim efetuando o cadastro
-    * 
-    * @param user
-    * @return
-    */
-    public String cadastrar(User user){
-        
+     * Envia o user serializado para o TrataCliente, assim efetuando o cadastro
+     *
+     * @param user
+     * @return
+     */
+    public String cadastrar(User user) {
+
         Gson gson = new Gson();
         String u = gson.toJson(user);
-        
+
         servidor.enviar(u);
         try {
             Thread.sleep(100);
@@ -115,22 +113,23 @@ public class Sessao {
         }
         return servidor.getResposta();
     }
-    
+
     /**
-    * Envia uma Acao já serializada para o TrataCliente, assim cadastrando a ação no BD
-    * 
-    * @param acao
-    */
-    public String trataAcao(String acao){
+     * Envia uma Acao já serializada para o TrataCliente, assim cadastrando a
+     * ação no BD
+     *
+     * @param acao
+     */
+    public String trataAcao(String acao) {
         Acao a = new Acao();
         a.setLogin(_login);
         a.setDataAcao(Calendar.getInstance());
-        a.setHoraAcao(Time.valueOf( LocalTime.now()));
+        a.setHoraAcao(Time.valueOf(LocalTime.now()));
         a.setTipoAcao(acao);
         Gson gson = new Gson();
         String u = "--acao--";
-        u+=gson.toJson(a);
-        
+        u += gson.toJson(a);
+
         System.out.println(u);
         servidor.enviar(u);
         try {
@@ -139,25 +138,26 @@ public class Sessao {
             System.out.println("Erro ao executar o TrataCliente");
         }
         return servidor.getResposta();
-        
+
     }
-    
+
     /**
-    * Envia uma Acao já serializada para o TrataCliente, assim cadastrando a ação no BD
-    * 
-    * @param acao
-    */
-    public String trataAcao(String acao, int nSala){ 
-         Acao a = new Acao();
-         a.setLogin(_login);
+     * Envia uma Acao já serializada para o TrataCliente, assim cadastrando a
+     * ação no BD
+     *
+     * @param acao
+     */
+    public String trataAcao(String acao, int nSala) {
+        Acao a = new Acao();
+        a.setLogin(_login);
         a.setDataAcao(Calendar.getInstance());
-        a.setHoraAcao(Time.valueOf( LocalTime.now()));
+        a.setHoraAcao(Time.valueOf(LocalTime.now()));
         a.setTipoAcao(acao);
         a.setnSala(nSala);
         Gson gson = new Gson();
         String u = "--acaoSala--";
-        u+=gson.toJson(a);
-        
+        u += gson.toJson(a);
+
         System.out.println(u);
         servidor.enviar(u);
         try {
@@ -167,40 +167,41 @@ public class Sessao {
         }
         return servidor.getResposta();
     }
-    
+
     /**
-    * Envia um pedido de verificação se a sala esta ocupada ou não, para o TrataCliente
-    * 
-    * @param sala
-    */
-    public void statusSala(String sala){
+     * Envia um pedido de verificação se a sala esta ocupada ou não, para o
+     * TrataCliente
+     *
+     * @param sala
+     */
+    public void statusSala(String sala) {
         System.out.println(sala);
-        servidor.enviar("start;"+sala);
-        
+        servidor.enviar("start;" + sala);
+
     }
-    
+
     /**
-    * Verifica o que o servidor respondeu refernte a ação executada
-    * 
-    * @return 
-    */
-    public String verificarResposta(){
+     * Verifica o que o servidor respondeu refernte a ação executada
+     *
+     * @return
+     */
+    public String verificarResposta() {
         return servidor.getResposta();
-    } 
-    
+    }
+
     /**
-    * Pede para o TrataCliente atualizar as salas
-    *
-    */
-    public void atualizar(){
+     * Pede para o TrataCliente atualizar as salas
+     *
+     */
+    public void atualizar() {
         servidor.enviar("atualizar");
     }
-    
+
     /**
-    * Pede para o TrataCliente enviar todas as ações serializadas
-    *
-    */
-    public String logs(){
+     * Pede para o TrataCliente enviar todas as ações serializadas
+     *
+     */
+    public String logs() {
         servidor.enviar("logs");
         try {
             Thread.sleep(100);
@@ -209,33 +210,33 @@ public class Sessao {
         }
         return servidor.getResposta();
     }
-    
+
     /**
-    * Pede para o TrataCliente enviar todas as salas serializadas
-    *
-    */
-    public String salas(){
+     * Pede para o TrataCliente enviar todas as salas serializadas
+     *
+     */
+    public String salas() {
         servidor.enviar("salas");
-         try {
-            Thread.sleep(100);
-        } catch (InterruptedException ex) {
-            System.out.println("Erro ao executar o TrataCliente");
-        }
-        return servidor.getResposta();
-    }
-    
-    public String getSala(int nSala){
-        servidor.enviar("--getSala--"+nSala);
         try {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
             System.out.println("Erro ao executar o TrataCliente");
         }
         return servidor.getResposta();
-       
     }
-    
-    public String agendamentos(){
+
+    public String getSala(int nSala) {
+        servidor.enviar("--getSala--" + nSala);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            System.out.println("Erro ao executar o TrataCliente");
+        }
+        return servidor.getResposta();
+
+    }
+
+    public String agendamentos() {
         servidor.enviar("--agendamentos--");
         try {
             Thread.sleep(100);
@@ -244,8 +245,8 @@ public class Sessao {
         }
         return servidor.getResposta();
     }
-    
-    public String dispositivos(){
+
+    public String dispositivos() {
         servidor.enviar("--dispositivos--");
         try {
             Thread.sleep(100);

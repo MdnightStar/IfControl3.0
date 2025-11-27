@@ -4,10 +4,19 @@
  */
 package Aplicacao;
 
-import Modelo.Sala;
-import java.text.ParseException;
+import Modelo.Acao;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -16,15 +25,37 @@ import javax.swing.JOptionPane;
  * @author LENOVO
  */
 public class PesquisarAcao extends javax.swing.JFrame {
-    
-    
+
+    private Gson gs;
+    private java.lang.reflect.Type tipoAcao;
+
     /**
      * Creates new form AddSala
      */
     public PesquisarAcao() {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+        tipoAcao = new TypeToken<ArrayList<Acao>>() {
+        }.getType();
+        gs = new Gson();
+
+    }
+
+    public String procurarTipoAcao(String texto) {
+        String regex = "\\((.*?)\\)";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(texto);
+
+        if (matcher.find()) {
+            // Retorna o conteúdo do primeiro grupo de captura (o que está dentro do (.*?) )
+            System.out.println(matcher.group(1));
+
+            return matcher.group(1);
+
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -44,7 +75,7 @@ public class PesquisarAcao extends javax.swing.JFrame {
         jLabelAutor = new javax.swing.JLabel();
         jLabelTipoAcao = new javax.swing.JLabel();
         jTextFielAutor = new javax.swing.JTextField();
-        jButtonAdd = new javax.swing.JButton();
+        jButtonProcurar = new javax.swing.JButton();
         jLabelData = new javax.swing.JLabel();
         jLabelHora = new javax.swing.JLabel();
         jDataInicio1 = new com.toedter.calendar.JDateChooser();
@@ -53,6 +84,8 @@ public class PesquisarAcao extends javax.swing.JFrame {
         jSpinnerMinutos = new javax.swing.JSpinner();
         jLabelSala = new javax.swing.JLabel();
         jTextFieldSala = new javax.swing.JTextField();
+        jComboBoxTipoAcao = new javax.swing.JComboBox<>();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -98,13 +131,13 @@ public class PesquisarAcao extends javax.swing.JFrame {
             }
         });
 
-        jButtonAdd.setBackground(new java.awt.Color(0, 153, 51));
-        jButtonAdd.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
-        jButtonAdd.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonAdd.setText("Procurar");
-        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+        jButtonProcurar.setBackground(new java.awt.Color(0, 153, 51));
+        jButtonProcurar.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        jButtonProcurar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonProcurar.setText("Procurar");
+        jButtonProcurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
+                jButtonProcurarActionPerformed(evt);
             }
         });
 
@@ -138,38 +171,14 @@ public class PesquisarAcao extends javax.swing.JFrame {
             }
         });
 
+        jComboBoxTipoAcao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ocupou a sala (OCP)", "Desocupou a sala (DSC)", "Ligou o ar (ARON)", "Desligou o ar (AROFF)", "Ligou a luz (LZON)", "Desligou a luz (LZOFF)", "Ligou a o datashow (DSON)", "Desligou o datashow (DSOFF)", "Adicionou uma sala (addSala)", "Adicionou um agendamento (addAgendamento)", "Editou um agendamento (editAgendamento)", "Deletou um agendamento (deletAgendamento)" }));
+
+        jCheckBox1.setText("Não possui");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelIF, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(411, 411, 411)
-                                    .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jButtonCancelar)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(165, 165, 165)
-                                    .addComponent(jLabelProcurarAcao))))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(178, 178, 178))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelTipoAcao)
-                            .addComponent(jLabelAutor)
-                            .addComponent(jLabelSala))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFielAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldSala, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(84, 84, 84))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -185,6 +194,38 @@ public class PesquisarAcao extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinnerMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelIF, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(411, 411, 411)
+                                    .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButtonCancelar)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonProcurar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(178, 178, 178))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelTipoAcao)
+                            .addComponent(jLabelAutor)
+                            .addComponent(jLabelSala))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFielAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxTipoAcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextFieldSala, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCheckBox1)))
+                        .addGap(30, 30, 30))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelProcurarAcao)
+                        .addGap(163, 163, 163))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,11 +239,14 @@ public class PesquisarAcao extends javax.swing.JFrame {
                     .addComponent(jTextFielAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelAutor))
                 .addGap(18, 18, 18)
-                .addComponent(jLabelTipoAcao)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTipoAcao)
+                    .addComponent(jComboBoxTipoAcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelSala)
-                    .addComponent(jTextFieldSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelData)
@@ -214,8 +258,8 @@ public class PesquisarAcao extends javax.swing.JFrame {
                         .addComponent(jSpinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelSeparatorHoraIn)
                         .addComponent(jSpinnerMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(jButtonProcurar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelIfamLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,17 +281,99 @@ public class PesquisarAcao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFielAutorActionPerformed
 
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+    private void jButtonProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProcurarActionPerformed
         // TODO add your handling code here:
-        
-       
-    }//GEN-LAST:event_jButtonAddActionPerformed
+        // 1. Coletar os parâmetros de pesquisa da tela
+        String autorPesquisa = jTextFielAutor.getText();
+        String tipoAcaoPesquisa = procurarTipoAcao((String) jComboBoxTipoAcao.getSelectedItem());
+        String salaStrPesquisa = jTextFieldSala.getText().trim();
+
+        Calendar dataPesquisa = jDataInicio1.getCalendar();
+
+        // Converte o número da sala para int (considerando 0 se vazio/não possui)
+        int nSalaPesquisa = 0;
+        boolean pesquisarPorSala = false;
+        if (jCheckBox1.isSelected()) {
+            nSalaPesquisa = -1; // Pesquisar ações sem sala (nSala = 0)
+            pesquisarPorSala = true;
+        } else if (!salaStrPesquisa.isEmpty()) {
+            try {
+                nSalaPesquisa = Integer.parseInt(salaStrPesquisa);
+                pesquisarPorSala = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Número da Sala inválido. Digite um número inteiro.", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        String resp = MainApp.sessao.logs();
+        List<Acao> todasAcoes = new ArrayList<>();
+        todasAcoes = gs.fromJson(resp, tipoAcao);
+
+        // 3. Filtrar a lista
+        List<Acao> acoesSimilares = new ArrayList<>();
+
+        for (Acao acao : todasAcoes) {
+            boolean match = true;
+
+            // Filtro por Autor (Login)
+            if (!autorPesquisa.isEmpty() && !acao.getLogin().contains(autorPesquisa)) {
+                match = false;
+                System.out.println("Sem user");
+            }
+
+            // Filtro por Tipo de Ação
+            if (!acao.getTipoAcao().contains(tipoAcaoPesquisa)) {
+                match = false;
+                System.out.println("Sem tipo");
+            }
+
+            // Filtro por Sala
+            if (pesquisarPorSala) {
+                if (acao.getnSala() != nSalaPesquisa) {
+                    match = false;
+                    System.out.println("Sem sala");
+                }
+            }
+
+            // Filtro por Data e Hora
+            if (dataPesquisa != null) {
+                dataPesquisa.set(Calendar.HOUR_OF_DAY, 0);
+                dataPesquisa.set(Calendar.MINUTE, 0);
+                dataPesquisa.set(Calendar.SECOND, 0);
+                dataPesquisa.set(Calendar.MILLISECOND, 0);
+                Calendar acaoData=acao.getDataAcao();
+                acaoData.set(Calendar.HOUR_OF_DAY, 0);
+                acaoData.set(Calendar.MINUTE, 0);
+                acaoData.set(Calendar.SECOND, 0);
+                acaoData.set(Calendar.MILLISECOND, 0);
+                if (!dataPesquisa.equals(acaoData)) {
+                   match = false; 
+                }
+            }
+            
+
+            if (match) {
+                acoesSimilares.add(acao);
+            }
+        }
+
+        // 4. Exibir os resultados
+        if (acoesSimilares.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhuma Ação encontrada com os critérios fornecidos.", "Resultado da Pesquisa", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            AcoesEncontradas n = new AcoesEncontradas(acoesSimilares);
+            n.setVisible(true);
+            dispose();
+        }
+
+    }//GEN-LAST:event_jButtonProcurarActionPerformed
 
     private void jTextFieldSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSalaActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextFieldSalaActionPerformed
 
-   
     /**
      * @param args the command line arguments
      */
@@ -285,8 +411,10 @@ public class PesquisarAcao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonProcurar;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBoxTipoAcao;
     private com.toedter.calendar.JDateChooser jDataInicio1;
     private javax.swing.JLabel jLabelAutor;
     private javax.swing.JLabel jLabelData;

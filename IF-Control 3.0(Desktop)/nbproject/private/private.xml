@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/Aplicacao/AddDispositivo.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>680</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/FrameSala.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PDispositivos.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddCodigosDs.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AcoesEncontradas.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Modelo/Sala.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PesquisarAcao.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/DispositivosPanel.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddCodigosAr.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/SalaPanel.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddSala.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Controle/AcaoAgendadaJob.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AddDispositivo.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PSala.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AcoesPanel.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PAAcoes.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/EditarDispositivo.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PAgendamento.java</file>
-            <file>file:/C:/Users/axelm/OneDrive/Documentos/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AgendamentoPanel.java</file>
+            <file>file:/C:/Users/LENOVO/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/PSala.java</file>
+            <file>file:/C:/Users/LENOVO/GitHub/IfControl3.0/IF-Control%203.0(Desktop)/src/Aplicacao/AcoesEncontradas.java</file>
         </group>
     </open-files>
 </project-private>
