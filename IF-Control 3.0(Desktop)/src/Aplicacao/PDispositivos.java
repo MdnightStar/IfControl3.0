@@ -38,7 +38,7 @@ public class PDispositivos extends javax.swing.JFrame {
         gs = new Gson();
         tipoDispositivo = new TypeToken<List<Dispositivo>>() {
         }.getType();
-        updateThread = new Thread();
+        updateThread = new Thread(new AtualizaDadosDispositivos());
         updateThread.start();
         adicionarDispositivos();
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,100 +11,193 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:elevation="4dp"
         app:layout_constraintTop_toTopOf="parent"
         app:logo="@drawable/ifcontrol3_logo"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="DataShow"
-        app:titleMarginStart="30dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:titleTextColor="@android:color/white"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <ImageView
-        android:id="@+id/imageViewOK"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:srcCompat="@drawable/ok"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="288dp" />
-
-    <ImageView
-        android:id="@+id/imageViewMenu"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardRemoteBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/menu"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="245dp"
-        tools:layout_editor_absoluteY="491dp" />
-
-    <ImageView
-        android:id="@+id/imageViewFreeze"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/freeze"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="86dp"
-        tools:layout_editor_absoluteY="492dp" />
-
-    <ImageView
-        android:id="@+id/imageViewEsc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/esc"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="491dp" />
-
-    <ImageView
-        android:id="@+id/imageViewCima"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:srcCompat="@drawable/para_cima"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="201dp" />
-
-    <ImageView
-        android:id="@+id/imageViewBaixo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:srcCompat="@drawable/para_baixo"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="371dp" />
-
-    <ImageView
-        android:id="@+id/imageViewEsquerda"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:srcCompat="@drawable/esquerda"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="288dp" />
-
-    <ImageView
-        android:id="@+id/imageViewDireita"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:srcCompat="@drawable/direita"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="243dp"
-        tools:layout_editor_absoluteY="288dp" />
-
-    <Button
-        android:id="@+id/buttonVoltar"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="28dp"
-        android:backgroundTint="@color/white"
-        android:text="Voltar"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardBackgroundColor="#263238"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="12dp"
+        app:layout_constraintBottom_toTopOf="@id/buttonVoltar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.5">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="60dp"
+            android:background="@color/ifcontrolpanel">
+
+
+            <TextView
+                android:id="@+id/lblTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAVEGAÇÃO"
+                android:textColor="#B0BEC5"
+                android:textSize="14sp"
+                android:letterSpacing="0.1"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageViewOK"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="120dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Confirmar seleção"
+                android:padding="4dp"
+                app:srcCompat="@drawable/ok"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblTitle"
+                />
+
+            <ImageView
+                android:id="@+id/imageViewCima"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Mover para Cima"
+                android:padding="4dp"
+                app:srcCompat="@drawable/para_cima"
+                app:layout_constraintBottom_toTopOf="@+id/imageViewOK"
+                app:layout_constraintEnd_toEndOf="@+id/imageViewOK"
+                app:layout_constraintStart_toStartOf="@+id/imageViewOK" />
+
+            <ImageView
+                android:id="@+id/imageViewBaixo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Mover para Baixo"
+                android:padding="4dp"
+                app:srcCompat="@drawable/para_baixo"
+                app:layout_constraintEnd_toEndOf="@+id/imageViewOK"
+                app:layout_constraintStart_toStartOf="@+id/imageViewOK"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewOK" />
+
+            <ImageView
+                android:id="@+id/imageViewEsquerda"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Mover para Esquerda"
+                android:padding="4dp"
+                app:srcCompat="@drawable/esquerda"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewOK"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewOK"
+                app:layout_constraintTop_toTopOf="@+id/imageViewOK" />
+
+            <ImageView
+                android:id="@+id/imageViewDireita"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Mover para Direita"
+                android:padding="4dp"
+                app:srcCompat="@drawable/direita"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewOK"
+                app:layout_constraintStart_toEndOf="@+id/imageViewOK"
+                app:layout_constraintTop_toTopOf="@+id/imageViewOK" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="40dp"
+                android:background="#37474F"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageViewBaixo" />
+
+            <ImageView
+                android:id="@+id/imageViewFreeze"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="40dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Congelar imagem"
+                android:tooltipText="Congelar"
+                app:srcCompat="@drawable/freeze"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewEsc"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <ImageView
+                android:id="@+id/imageViewEsc"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Sair"
+                android:tooltipText="Sair"
+                app:srcCompat="@drawable/esc"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewFreeze"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewMenu"
+                app:layout_constraintStart_toEndOf="@+id/imageViewFreeze"
+                app:layout_constraintTop_toTopOf="@+id/imageViewFreeze" />
+
+            <ImageView
+                android:id="@+id/imageViewMenu"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Abrir Menu"
+                android:tooltipText="Menu"
+                app:srcCompat="@drawable/menu"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewFreeze"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageViewEsc"
+                app:layout_constraintTop_toTopOf="@+id/imageViewFreeze" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonVoltar"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Voltar para a Sala"
+        android:textColor="@android:color/white"
+        app:icon="@android:drawable/ic_menu_revert"
+        app:iconTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

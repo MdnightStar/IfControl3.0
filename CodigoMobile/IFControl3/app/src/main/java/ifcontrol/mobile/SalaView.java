@@ -1,7 +1,6 @@
 package ifcontrol.mobile;
 
 import android.content.Context;
-import android.content.Intent; // Import necessário
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 public class SalaView extends ConstraintLayout {
 
     private int nsala;
-    // Mantendo a lógica estática do Swing para pausar atualizações quando uma sala abre
     public static boolean salaAberta = false;
     private OnSalaEntrarListener listener;
 
@@ -25,11 +23,10 @@ public class SalaView extends ConstraintLayout {
     private ImageView imageViewMovimento;
     private Button buttonEntrar;
 
-    // Cores baseadas no Swing (SalaPanel)
+    // Cores
     private final int COLOR_ON = Color.parseColor("#009933");
     private final int COLOR_OFF = Color.RED;
 
-    // Interface mantida caso precise usar externamente, mas a ação principal será feita aqui dentro agora
     public interface OnSalaEntrarListener {
         void onEntrarClicked(int nsala);
     }
@@ -70,19 +67,13 @@ public class SalaView extends ConstraintLayout {
                 // 1. Define que uma sala foi aberta (pausa a thread no MenuActivity)
                 salaAberta = true;
 
-                // 2. IMPLEMENTAÇÃO DA NAVEGAÇÃO DIRETA AQUI
-                // Usamos getContext() pois estamos dentro de uma View, não de uma Activity
-                Intent intent = new Intent(getContext(), SalaActivity.class);
+                /* * CORREÇÃO AQUI:
+                 * Removemos o 'startActivity' direto.
+                 * Agora confiamos apenas no listener abaixo.
+                 * O Adapter vai receber esse aviso e disparar a abertura da tela pela Activity Principal.
+                 */
 
-                // Passa o número da sala
-                intent.putExtra("NUMERO_SALA", nsala);
-                // Fallback caso sua Activity use a chave antiga
-                intent.putExtra("nSala", nsala);
-
-                // Inicia a nova tela
-                getContext().startActivity(intent);
-
-                // 3. Mantemos o listener caso o Adapter precise saber que houve um clique (opcional)
+                // 2. Avisa o listener (que vai avisar o Adapter -> Activity)
                 if (listener != null) {
                     listener.onEntrarClicked(nsala);
                 }
@@ -96,11 +87,7 @@ public class SalaView extends ConstraintLayout {
         atualizar(estadoSala, estadoDS, estadoLuzes, estadoAr, presenca);
     }
 
-    /**
-     * Lógica copiada e adaptada de SalaPanel.java
-     */
     public void atualizar(boolean estadoSala, boolean estadoDS, boolean estadoLuzes, boolean estadoAr, boolean presenca) {
-
         // Lógica do Ar Condicionado
         if (estadoAr) {
             textViewArCond.setText("ON");
@@ -128,13 +115,11 @@ public class SalaView extends ConstraintLayout {
             textViewLuzes.setTextColor(COLOR_OFF);
         }
 
-        // Lógica do Estado da Sala (Disponibilidade)
+        // Lógica do Estado da Sala
         if (estadoSala) {
-            // Sala Ocupada/Fechada
             viewEstadoSala.setBackgroundColor(Color.RED);
             buttonEntrar.setEnabled(false);
         } else {
-            // Sala Livre
             viewEstadoSala.setBackgroundColor(Color.GREEN);
             buttonEntrar.setEnabled(true);
         }
@@ -151,4 +136,3 @@ public class SalaView extends ConstraintLayout {
         return nsala;
     }
 }
-

@@ -8,6 +8,7 @@ import Controle.ConexaoSalas;
 import Controle.SocketArduino;
 import Modelo.DAOManager;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  *
@@ -15,16 +16,10 @@ import java.io.IOException;
  */
 public class TestarMainApp {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
 
-        SocketArduino socketArduino = new SocketArduino();
-
-        socketArduino.conectarArduino( 1);
-        
-        socketArduino.enviar("LZON.");
-        String temp = socketArduino.ler();//Recebe a temperatura do Arduino
-        socketArduino.desconectarArduino();
-
+        DAOManager dao = new DAOManager();
+        dao.resgataCodIr(1, "ARCool17");
         
     }
 }

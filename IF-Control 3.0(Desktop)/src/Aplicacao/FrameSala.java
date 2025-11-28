@@ -508,7 +508,7 @@ public class FrameSala extends javax.swing.JFrame {
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
         // botão que envia as informaçoes do ar-condicionado dos comboBox's
         String funcao = "AR";
-        if(comboBoxModo.getSelectedItem().equals("AUTO") || comboBoxModo.getSelectedItem().equals("FAN")){
+        if(comboBoxModo.getSelectedItem().equals("Auto") || comboBoxModo.getSelectedItem().equals("Fan")){
             funcao += (String) comboBoxModo.getSelectedItem();
         }else{
             funcao += (String) comboBoxModo.getSelectedItem();

@@ -25,22 +25,23 @@ import Modelo.Sala;
 
 public class SalaActivity extends AppCompatActivity {
 
-    // Componentes Visuais (Mantidos do XML existente)
+    // Componentes Visuais
     private TextView textViewTituloSala;
     private TextView textViewSalaTemp, textViewSalaUmi, textViewSalaPres;
     private MaterialCardView cardArCond, cardLuz, cardDS;
     private TextView statusAr, statusLuz, statusDS;
     private ImageView iconAr, iconLuz, iconDS;
     private MaterialButton buttonVoltarSala;
+    private boolean navegandoParaOutraTela = false;
 
-    // Variáveis Lógicas (Iguais ao FrameSala.java)
+    // Variáveis Lógicas
     private Sala sala;
     private int nsala;
     private boolean estadoAr, estadoDS, estadoLuzes;
     private Gson gs;
     private java.lang.reflect.Type tipoSala;
 
-    // Cores (Auxiliar para UI Android)
+    // Cores
     private int colorOn = Color.parseColor("#4CAF50");
     private int colorOff = Color.parseColor("#D32F2F");
 
@@ -52,49 +53,36 @@ public class SalaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala);
 
-        // 1. Inicialização de Variáveis e Gson
         gs = new Gson();
         this.tipoSala = new TypeToken<Sala>() {}.getType();
 
-        // Recupera o número da sala (Segurança para pegar "nSala" ou "NUMERO_SALA")
+        // Recupera o número da sala
         nsala = getIntent().getIntExtra("NUMERO_SALA", 0);
         if (nsala == 0) nsala = getIntent().getIntExtra("nSala", 0);
 
-        // Configura Toolbar e Título
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        vincularViews(); // Linka os IDs do XML
+        vincularViews();
 
         if (nsala != 0) textViewTituloSala.setText("Sala " + nsala);
 
-        // 2. Lógica de Rede (Igual ao Construtor do FrameSala)
-        // No Android, rede deve ser feita em Thread separada para não travar a tela
+        // Lógica de Rede Inicial
         new Thread(() -> {
             if (MainApp.sessaoInstance != null) {
-                // Envia comando de ocupação (OCP)
                 MainApp.sessaoInstance.trataAcao("OCP", nsala);
-
-                // Busca dados iniciais da sala
                 String resposta = MainApp.sessaoInstance.getSala(nsala);
 
                 if (resposta != null && resposta.contains("nSala")) {
                     sala = gs.fromJson(resposta, tipoSala);
-
-                    // Atualiza estados locais
                     estadoAr = sala.isEstadoAr();
                     estadoDS = sala.isEstadoDataShow();
                     estadoLuzes = sala.isEstadoLuzes();
-
-                    // Atualiza UI inicial
                     runOnUiThread(this::atualizarInterface);
                 }
-
-                // Inicia a thread de atualização constante (Loop)
                 new Thread(new AtualizaDadosSala()).start();
             }
         }).start();
 
-        // 3. Configura os Cliques (Botões enviando os comandos exatos do Swing)
         configurarCliques();
     }
 
@@ -116,26 +104,40 @@ public class SalaActivity extends AppCompatActivity {
     }
 
     private void configurarCliques() {
-        // AR CONDICIONADO: Abre tela de controle (Igual sua lógica anterior, mas passando o ID)
+        /*
+         * ==============================================
+         * AR CONDICIONADO
+         * ==============================================
+         */
+
+        // Clique Simples: Liga/Desliga (Toggle)
         cardArCond.setOnClickListener(v -> {
-            // Lógica de ligar/desligar rápido (Toggle) igual ao Swing jLabelArMouseClicked
             new Thread(() -> {
                 if (estadoAr) {
                     MainApp.sessaoInstance.trataAcao("AROFF.", nsala);
                 } else {
                     MainApp.sessaoInstance.trataAcao("ARON.", nsala);
                 }
-                // Opcional: Abrir a activity de controle detalhado se segurar o botão
-                // ou manter como clique simples para toggle e criar um botão "Configurar"
             }).start();
-
-            // Se quiser manter a ida para a tela de controle detalhado:
-            // Intent intent = new Intent(SalaActivity.this, ArCondActivity.class);
-            // intent.putExtra("NUMERO_SALA", nsala);
-            // startActivity(intent);
         });
 
-        // LUZ: Toggle (Igual ao Swing jLabelLuzMouseClicked)
+        // Clique Longo (Segurar): Abre a Tela de Configuração
+        cardArCond.setOnLongClickListener(v -> {
+            navegandoParaOutraTela = true;
+            Intent intent = new Intent(SalaActivity.this, ArCondActivity.class);
+            // É crucial passar o ID da sala para a próxima tela saber o que controlar
+            intent.putExtra("NUMERO_SALA", nsala);
+            startActivity(intent);
+
+            // Retornar true indica que o evento foi consumido e NÃO deve acionar o click simples depois
+            return true;
+        });
+
+        /*
+         * ==============================================
+         * LUZ (Apenas Toggle)
+         * ==============================================
+         */
         cardLuz.setOnClickListener(v -> {
             new Thread(() -> {
                 if (estadoLuzes) {
@@ -146,7 +148,13 @@ public class SalaActivity extends AppCompatActivity {
             }).start();
         });
 
-        // DATASHOW: Toggle (Igual ao Swing jLabelDSMouseClicked)
+        /*
+         * ==============================================
+         * DATASHOW
+         * ==============================================
+         */
+
+        // Clique Simples: Liga/Desliga
         cardDS.setOnClickListener(v -> {
             new Thread(() -> {
                 if (estadoDS) {
@@ -154,17 +162,21 @@ public class SalaActivity extends AppCompatActivity {
                 } else {
                     MainApp.sessaoInstance.trataAcao("DSON.", nsala);
                 }
-                // Se quiser ir para a tela de controle do DS:
-                // Intent intent = new Intent(SalaActivity.this, DataShowActivity.class);
-                // intent.putExtra("NUMERO_SALA", nsala);
-                // startActivity(intent);
             }).start();
+        });
+
+        // Clique Longo (Segurar): Abre o Controle Remoto
+        cardDS.setOnLongClickListener(v -> {
+            navegandoParaOutraTela = true;
+            Intent intent = new Intent(SalaActivity.this, DataShowActivity.class);
+            intent.putExtra("NUMERO_SALA", nsala);
+            startActivity(intent);
+            return true;
         });
 
         buttonVoltarSala.setOnClickListener(v -> finish());
     }
 
-    // Método auxiliar para atualizar visual (Icons e Textos)
     private void atualizarInterface() {
         if (sala == null) return;
 
@@ -179,7 +191,7 @@ public class SalaActivity extends AppCompatActivity {
             textViewSalaPres.setTextColor(Color.GRAY);
         }
 
-        // Atualiza Estado Ar
+        // Atualiza Ar
         if (sala.isEstadoAr()) {
             statusAr.setText("Ligado");
             statusAr.setTextColor(colorOn);
@@ -190,7 +202,7 @@ public class SalaActivity extends AppCompatActivity {
             iconAr.setColorFilter(Color.GRAY);
         }
 
-        // Atualiza Estado Luz
+        // Atualiza Luz
         if (sala.isEstadoLuzes()) {
             statusLuz.setText("Ligada");
             statusLuz.setTextColor(colorOn);
@@ -201,7 +213,7 @@ public class SalaActivity extends AppCompatActivity {
             iconLuz.setColorFilter(Color.GRAY);
         }
 
-        // Atualiza Estado DataShow
+        // Atualiza DataShow
         if (sala.isEstadoDataShow()) {
             statusDS.setText("Ligado");
             statusDS.setTextColor(colorOn);
@@ -213,65 +225,47 @@ public class SalaActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Classe Interna para Atualização de Dados (Baseada no FrameSala.java)
-     */
     private class AtualizaDadosSala implements Runnable {
-
         @Override
         public void run() {
-            // isDisplayable() do Swing vira !isFinishing() no Android
             while (!isFinishing()) {
                 try {
                     String resposta = MainApp.sessaoInstance.getSala(nsala);
-
                     if (resposta != null && resposta.contains("nSala")) {
                         sala = gs.fromJson(resposta, tipoSala);
-
-                        // SwingUtilities.invokeLater vira runOnUiThread
                         runOnUiThread(() -> {
-                            // Atualiza estados internos
                             estadoAr = sala.isEstadoAr();
                             estadoDS = sala.isEstadoDataShow();
                             estadoLuzes = sala.isEstadoLuzes();
-
-                            // Atualiza Tela
                             atualizarInterface();
                         });
                     }
-
-                    Thread.sleep(3000); // 3 Segundos
-
-                } catch (InterruptedException ex) {
-                    Log.e("SalaActivity", "Thread interrompida");
-                    break; // Sai do loop se interrompido
+                    Thread.sleep(3000);
                 } catch (Exception e) {
-                    Log.e("SalaActivity", "Erro na atualização: " + e.getMessage());
+                    Log.e("SalaActivity", "Erro atualização: " + e.getMessage());
                 }
             }
-
-            // Lógica pós-loop do Swing: Envia DSC e libera sala
-            // Nota: No Android, é garantido chamar isso no onDestroy para evitar que não rode se o app fechar rápido
         }
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        super.onDestroy(); // Sempre chame o super primeiro
 
-        // Garante que o comando de desocupar (DSC) seja enviado ao sair da tela
+        // Envia o comando em uma thread separada
         new Thread(() -> {
             if (MainApp.sessaoInstance != null) {
-                // Formato DSC usado no FrameSala: trataAcao("DSC", nsala)
-                MainApp.sessaoInstance.trataAcao("DSC", nsala);
+                try {
+                    MainApp.sessaoInstance.trataAcao("DSC", nsala);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
 
-        // Reseta flag estática
         SalaView.salaAberta = false;
     }
 
-    // Menus da Toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
@@ -284,5 +278,25 @@ public class SalaActivity extends AppCompatActivity {
         if (id == R.id.config) Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show();
         if (id == R.id.sobre) Toast.makeText(this, "Sobre o app", Toast.LENGTH_SHORT).show();
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Resetamos a variável. Se o usuário sair agora, é para valer.
+        navegandoParaOutraTela = false;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // Se a tela sumiu e NÃO estamos indo para um sub-menu (Ar ou DS),
+        // significa que o usuário minimizou o app ou apertou Home.
+        if (!navegandoParaOutraTela) {
+            // O finish() vai forçar o encerramento da Activity,
+            // o que fará o onDestroy() ser chamado logo em seguida.
+            finish();
+        }
     }
 }
