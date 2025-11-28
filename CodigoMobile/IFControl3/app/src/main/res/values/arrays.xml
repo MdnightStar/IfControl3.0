@@ -1,7 +1,7 @@
 <resources>
     <!-- Array de strings para as temperaturas do ar condicionado -->
     <string-array name="temperaturas_array">
-        <item>16</item>
+
         <item>17</item>
         <item>18</item>
         <item>19</item>
@@ -12,6 +12,11 @@
         <item>24</item>
         <item>25</item>
         <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+
     </string-array>
 
     <!-- Array de strings para os modos do ar condicionado -->

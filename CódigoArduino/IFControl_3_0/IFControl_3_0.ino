@@ -41,6 +41,7 @@ int pinRele = 8;
 //int IR_HEADER_SPACE;
 
 String cod;
+int leitura;
 
 // Comunicação ESP32
 SoftwareSerial mySerial(10, 11); // RX, TX (invertido fisicamente)
@@ -128,7 +129,7 @@ void processarString(String str) {
 
   } else if (str.startsWith("PRESENCA")) {
 
-    if (presenca) mySerial.print("TRUE");
+    if (lerPresenca()) mySerial.print("TRUE");
     else mySerial.print("FALSE");
 
   } else if (str.startsWith("LZ")) {
@@ -141,6 +142,21 @@ void processarString(String str) {
       mySerial.print("OK");
     }
   }
+}
+
+boolean lerPresenca(){
+  leitura = digitalRead(pinSensor);
+
+  if (leitura == HIGH) {
+    Serial.println("Movimento DETECTADO!");
+    leitura=0;
+    return true;
+  } else {
+    Serial.println("Sem movimento.");
+    leitura=0;
+    return false;
+  }
+  
 }
 
 

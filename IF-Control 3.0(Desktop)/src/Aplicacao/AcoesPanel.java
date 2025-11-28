@@ -40,7 +40,7 @@ public class AcoesPanel extends javax.swing.JPanel {
             jLabelTipoAcaoEd.setText("Desligou a luz");
         }else if(tipoAcao.contains("HA")||tipoAcao.contains("OCP")){
             jLabelTipoAcaoEd.setText("Ocupou a sala");
-        }else if(tipoAcao.contains("HD")||tipoAcao.contains("DSC")){
+        }else if(tipoAcao.contains("HD")||tipoAcao.equals("DSC")){
             jLabelTipoAcaoEd.setText("Desocupou a sala");
         }else 
         {
@@ -105,6 +105,7 @@ public class AcoesPanel extends javax.swing.JPanel {
 
     private static String decodificarArCondicionado(String cmd) {
         // Mapeamento dos modos possíveis do Ar-condicionado
+        cmd=cmd.replace(".", "");
         Map<String, String> modos = new HashMap<>();
         modos.put("COOL", "Cool");
         modos.put("FAN", "Fan");
@@ -123,7 +124,7 @@ public class AcoesPanel extends javax.swing.JPanel {
                     int temperatura = Integer.parseInt(tempStr);
                     
                     // 3. Valida a temperatura (16 a 25)
-                    if (temperatura >= 16 && temperatura <= 25) {
+                    if (temperatura >= 17 && temperatura <= 30) {
                         return String.format("Ar-condicionado - Modo: %s e Temperatura: %d°C", modo, temperatura);
                     } else {
                         return String.format("Erro: Temperatura inválida (%d). Deve ser entre 16 e 25.", temperatura);
@@ -138,8 +139,9 @@ public class AcoesPanel extends javax.swing.JPanel {
     }
 
     private static String decodificarDataShow(String cmd) {
+        cmd=cmd.replace(".", "");
         // Lista de comandos possíveis do Datashow
-        String[] comandosValidos = {"OK", "ESQ", "CIMA", "BAIXO", "DIR", "ESC", "FREEZER", "MENU"};
+        String[] comandosValidos = {"OK", "ESQ", "CIMA", "BAIXO", "DIR", "ESC", "FREEZE", "MENU"};
 
         // 1. Remove o prefixo "DS" e verifica o comando restante
         String comandoDS = cmd.substring(2);
