@@ -268,15 +268,15 @@ public class SalaActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.toolbar_simple, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.config) Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show();
-        if (id == R.id.sobre) Toast.makeText(this, "Sobre o app", Toast.LENGTH_SHORT).show();
+       // if (id == R.id.config) Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show();
+        //if (id == R.id.sobre) Toast.makeText(this, "Sobre o app", Toast.LENGTH_SHORT).show();
         return true;
     }
 
