@@ -37,6 +37,12 @@
         <activity
             android:name=".DataShowActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".AcoesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SobreActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"

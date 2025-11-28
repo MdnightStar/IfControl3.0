@@ -76,7 +76,13 @@ public class AcoesPanel extends javax.swing.JPanel {
         }else if(tipoAcao.contains("--deletAgendamento--")){
             jLabelTipoAcaoEd.setText("Apagou um agendamento");
         }else if(tipoAcao.contains("--editAgendamento--")){
-            jLabelTipoAcaoEd.setText("Deletou um agendamento");
+            jLabelTipoAcaoEd.setText("Editou um agendamento");
+        }else if(tipoAcao.contains("--addDispositivo--")){
+            jLabelTipoAcaoEd.setText("Adicionou um dispositivo");
+        }else if(tipoAcao.contains("--editDispositivo--")){
+            jLabelTipoAcaoEd.setText("Editou um dispositivo");
+        }else if(tipoAcao.contains("--deletDispositivo--")){
+            jLabelTipoAcaoEd.setText("Apagou um dispositivo");
         }
     }
     

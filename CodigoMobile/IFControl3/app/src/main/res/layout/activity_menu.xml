@@ -17,7 +17,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
         app:logo="@drawable/ifcontrol3_logo"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:popupTheme="@style/EstiloMenuToolbar"
         app:title="IFControl"
         app:titleMarginStart="30dp" />
 

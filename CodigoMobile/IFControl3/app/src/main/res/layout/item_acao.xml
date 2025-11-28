@@ -4,59 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="4dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="2dp">
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="6dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imgIconAcao"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_light"
+            android:padding="8dp"
+            android:src="@drawable/icone_acao"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#003366" />
+
+        <LinearLayout
+            android:id="@+id/layoutDataHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textViewAcaoData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#757575"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="25/12/24" />
+
+            <TextView
+                android:id="@+id/textViewAcaoHora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#9E9E9E"
+                android:textSize="11sp"
+                tools:text="14:35" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textViewAcaoDescricao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textViewAcaoData"
+            android:layout_marginStart="12dp"
             android:layout_marginEnd="8dp"
-            tools:text="Ação realizada pelo usuário" />
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#212121"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/layoutDataHora"
+            app:layout_constraintStart_toEndOf="@+id/imgIconAcao"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ligou o Ar Condicionado" />
+
+        <TextView
+            android:id="@+id/textViewAcaoSala"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="#003366"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/textViewAcaoDescricao"
+            app:layout_constraintStart_toStartOf="@+id/textViewAcaoDescricao"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAcaoDescricao"
+            tools:text="Sala: 15" />
 
         <TextView
             android:id="@+id/textViewAcaoUsuario"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAcaoDescricao"
-            tools:text="Login: fulano.de.tal" />
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:textColor="#546E7A"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/textViewAcaoId"
+            app:layout_constraintStart_toStartOf="@+id/textViewAcaoDescricao"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAcaoSala"
+            tools:text="Login: professor.javier" />
 
         <TextView
-            android:id="@+id/textViewAcaoData"
+            android:id="@+id/textViewAcaoId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textColor="#BDBDBD"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="25/12/2024" />
-
-        <TextView
-            android:id="@+id/textViewAcaoHora"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAcaoData"
-            tools:text="14:35:00" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutDataHora"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="#1045" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

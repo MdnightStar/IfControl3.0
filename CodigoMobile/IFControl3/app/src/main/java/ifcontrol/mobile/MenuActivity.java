@@ -54,6 +54,9 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Salas");
+        }
 
         // Inicializa Gson
         gs = new Gson();
@@ -61,8 +64,6 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
 
         // Configura RecyclerView
         recyclerViewSalas = findViewById(R.id.recyclerViewSalas);
-
-        // Inicializa Adapter com lista vazia inicialmente
         salasAdapter = new SalasAdapter(new ArrayList<>(), this);
 
         // Decoração (Espaçamento)
@@ -72,26 +73,40 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
         recyclerViewSalas.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewSalas.setAdapter(salasAdapter);
 
-        // Menu Inferior
+        // Menu Inferior (Navegação)
+        setupBottomNavigation();
+
+        // Inicia a Thread
+        updateThread = new Thread(new AtulizaDadosSala());
+        updateThread.start();
+    }
+
+    private void setupBottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bnv_botton);
-        bottomNavigationView.setSelectedItemId(R.id.tab_salas);
+        bottomNavigationView.setSelectedItemId(R.id.tab_salas); // Marca item atual
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+
             if (itemId == R.id.tab_acoes) {
-                stopUpdateThread(); // Parar thread ao sair
-                startActivity(new Intent(getApplicationContext(), AcoesActivity.class));
+                // 1. Para a thread desta tela
+                stopUpdateThread();
+
+                // 2. Vai para a tela de Ações
+                Intent intent = new Intent(getApplicationContext(), AcoesActivity.class);
+                startActivity(intent);
+
+                // 3. Limpa e fecha a atual
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
+
             } else if (itemId == R.id.tab_salas) {
+                // Já estamos aqui
                 return true;
             }
             return false;
         });
-
-        // Inicia a Thread de atualização (Mesma lógica do PSala)
-        updateThread = new Thread(new AtulizaDadosSala());
-        updateThread.start();
     }
 
     @Override
@@ -107,10 +122,8 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
         }
     }
 
-    // Clique na sala (Vindo do Adapter -> SalaView -> Button)
     @Override
     public void onSalaClick(Sala sala) {
-        // A flag estática salaAberta já foi setada como TRUE dentro da SalaView antes de chegar aqui
         Intent intent = new Intent(MenuActivity.this, SalaActivity.class);
         intent.putExtra("NUMERO_SALA", sala.getnSala());
         startActivity(intent);
@@ -125,83 +138,59 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.config) {
-            Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show();
-        }
         if (id == R.id.sobre) {
-            Toast.makeText(this, "Sobre o app", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, SobreActivity.class);
+            startActivity(intent);
+            return true;
         }
         return true;
     }
 
-    /**
-     * Classe Runnable idêntica à lógica do PSala.java
-     */
+    // --- Inner Class Runnable ---
     private class AtulizaDadosSala implements Runnable {
-
         @Override
         public void run() {
             while (runningUpdate) {
-                // Verifica se NÃO há sala aberta (Pausa atualização se estiver em uma sala)
-                // Nota: SalaView.salaAberta deve ser resetado para false quando voltar para esta tela (onResume)
+                // Pausa atualização se uma sala estiver aberta (lógica específica de Sala)
                 while (runningUpdate && (!SalaView.salaAberta)) {
                     try {
-                        // Chama o servidor (Assumindo que MainApp e sessaoInstance existem e são estáticos)
-                        // Caso não tenha MainApp, substitua pela sua lógica de chamada de socket
                         String resposta = "";
-
                         if (MainApp.sessaoInstance != null) {
                             resposta = MainApp.sessaoInstance.salas();
                         }
 
-                        // Verifica se a resposta é válida
                         if (resposta != null && resposta.contains("nSala")) {
-
                             List<Sala> todasSalas = gs.fromJson(resposta, tipoSala);
-
-                            // Filtra apenas salas conectadas (conforme lógica do PSala)
                             List<Sala> salasConectadas = new ArrayList<>();
+
                             for (Sala s : todasSalas) {
                                 if (s.isEstadoDaConexao()) {
                                     salasConectadas.add(s);
                                 }
                             }
 
-                            // Ordena
+                            // Ordenação
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                 Collections.sort(salasConectadas, Comparator.comparingInt(Sala::getnSala));
                             } else {
-                                // Fallback para Android antigo
-                                Collections.sort(salasConectadas, new Comparator<Sala>() {
-                                    @Override
-                                    public int compare(Sala o1, Sala o2) {
-                                        return Integer.compare(o1.getnSala(), o2.getnSala());
-                                    }
-                                });
+                                Collections.sort(salasConectadas, (o1, o2) -> Integer.compare(o1.getnSala(), o2.getnSala()));
                             }
 
-                            // Atualiza a UI na Thread Principal
                             final List<Sala> finalSalas = salasConectadas;
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // Atualiza o adapter com a nova lista
-                                    salasAdapter.atualizarDados(finalSalas);
-                                }
-                            });
+                            runOnUiThread(() -> salasAdapter.atualizarDados(finalSalas));
                         }
                     } catch (Exception e) {
-                        Log.e("MenuActivity", "Erro ao atualizar salas: " + e.getMessage());
+                        Log.e("MenuActivity", "Erro: " + e.getMessage());
                     }
 
                     try {
-                        Thread.sleep(1000); // 1 segundo de intervalo
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         Log.e("MenuActivity", "Thread interrompida");
+                        break; // Sai do loop interno
                     }
                 }
-
-                // Pequeno sleep caso o loop interno (salaAberta) pare, para não fritar a CPU
+                // Pequeno sleep caso o loop interno (salaAberta) esteja bloqueando
                 try { Thread.sleep(500); } catch (Exception e) {}
             }
         }
@@ -210,7 +199,6 @@ public class MenuActivity extends AppCompatActivity implements SalasAdapter.OnSa
     @Override
     protected void onResume() {
         super.onResume();
-        // Quando volta para o menu, libera a atualização novamente
         SalaView.salaAberta = false;
     }
 }

@@ -86,13 +86,20 @@ public class Acao {
     }
 
     public String dataFormatada(){
-        SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(dataAcao);
+        if (dataAcao == null) return "--/--/----"; // Proteção contra null
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        // ERRO ERA AQUI: return sdf.format(dataAcao);
+
+        // CORREÇÃO: Pegar o .getTime()
+        return sdf.format(dataAcao.getTime());
     }
 
     public String horaFormatada(){
-        SimpleDateFormat sdf= new SimpleDateFormat("HH:mm");
-        return sdf.format(horaAcao);
+        if (horaAcao == null) return "--:--"; // Proteção contra null
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(horaAcao); // Esse funciona normal
     }
 
 

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">IFControl3</string>
+
+    <string name="texto_sobre_nos">
+      O IFControl 3.0 representa o ápice da jornada acadêmica e técnica de Cauã Adriel, Axel Miguel e Jeison Andres. O que nasceu como uma proposta de projeto final, evoluiu para se tornar um ecossistema complexo de automação e controle institucional.\n\n
+
+    <b>A Engenharia do Sistema</b>\n\n
+    O diferencial deste projeto reside no que não se vê: desenvolvemos, inteiramente do zero, um <b>Servidor Multithread em Java</b>. Sem depender de frameworks prontos de alto nível, implementamos a lógica bruta de <b>Sockets TCP/IP</b> para criar uma ponte de comunicação em tempo real, segura e eficiente. Este servidor atua como o cérebro da operação, orquestrando simultaneamente as requisições do aplicativo Desktop (Java Swing) e deste aplicativo Mobile (Android Nativo), garantindo que cada comando — seja ligar um ar-condicionado ou agendar uma sala — seja executado instantaneamente e sincronizado em todos os dispositivos.\n\n
+
+    <b>O Desafio Autodidata</b>\n\n
+    Nossa trajetória no IFAM - Campus Manaus Centro foi marcada por um desafio Hercúleo. Enfrentamos um período crítico de escassez de professores na área técnica, o que nos deixou sem o suporte tradicional em momentos cruciais do curso. No entanto, recusamo-nos a deixar que essa lacuna definisse nosso aprendizado.\n\n
+
+    Assumimos o protagonismo de nossa educação. Tornamo-nos pesquisadores e autodidatas. Buscamos cursos externos, devoramos documentações técnicas em inglês e passamos incontáveis madrugadas decifrando a arquitetura de sistemas distribuídos. Aprendemos a lidar com concorrência de Threads, persistência em Banco de Dados MySQL e design de interfaces responsivas na base da experimentação e persistência.\n\n
+
+    Este aplicativo não é apenas um conjunto de códigos funcionais; é a prova viva de que a curiosidade e a determinação de três estudantes, guiados pelo professor Jucimar Brito, podem superar barreiras estruturais e criar tecnologia de verdade.
+    </string>
 </resources>
