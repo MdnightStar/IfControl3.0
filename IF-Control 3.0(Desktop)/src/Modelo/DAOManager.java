@@ -249,7 +249,8 @@ public class DAOManager {
      * @return retorna uma instancia de Sala
      * @exception Uma excção SQLException será lançada se a comunicação falhar
      */
-    public Sala procuraSala(int nSala) {  //cria o objeto da sala, recebe valores do bd e envia
+    public Sala procuraSala(int nSala) 
+    {  //cria o objeto da sala, recebe valores do bd e envia
         Sala sala = new Sala();
         String sql = "SELECT * FROM sala WHERE nSala = ?";
         try {
