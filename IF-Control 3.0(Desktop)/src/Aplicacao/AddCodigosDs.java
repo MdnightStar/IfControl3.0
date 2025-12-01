@@ -126,7 +126,7 @@ public class AddCodigosDs extends javax.swing.JFrame {
         });
 
         comboBoxModo.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        comboBoxModo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Direita", "Esquerda", "Em cima", "Em baixo", "Menu", "Frezee", "OK", "ESC" }));
+        comboBoxModo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Direita", "Esquerda", "Em cima", "Em baixo", "Menu", "Frezee", "OK", "ESC", "ON", "OFF" }));
         comboBoxModo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxModoActionPerformed(evt);

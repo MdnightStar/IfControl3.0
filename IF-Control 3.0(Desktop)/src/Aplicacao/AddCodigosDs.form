@@ -180,7 +180,7 @@
               <Font name="Microsoft YaHei UI" size="14" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="8">
+              <StringArray count="10">
                 <StringItem index="0" value="Direita"/>
                 <StringItem index="1" value="Esquerda"/>
                 <StringItem index="2" value="Em cima"/>
@@ -189,6 +189,8 @@
                 <StringItem index="5" value="Frezee"/>
                 <StringItem index="6" value="OK"/>
                 <StringItem index="7" value="ESC"/>
+                <StringItem index="8" value="ON"/>
+                <StringItem index="9" value="OFF"/>
               </StringArray>
             </Property>
           </Properties>

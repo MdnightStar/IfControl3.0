@@ -126,7 +126,7 @@ public class AddCodigosAr extends javax.swing.JFrame {
         });
 
         comboBoxModo.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        comboBoxModo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cool", "Fan", "Auto", "Dry", "Ligar", "Desligar" }));
+        comboBoxModo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cool", "Fan", "Auto", "Dry", "ON", "OFF" }));
         comboBoxModo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxModoActionPerformed(evt);
@@ -146,8 +146,9 @@ public class AddCodigosAr extends javax.swing.JFrame {
         jLabelSeparatorHoraFim.setForeground(new java.awt.Color(255, 255, 255));
         jLabelSeparatorHoraFim.setText(":");
 
-        jLabelDesc1.setBackground(new java.awt.Color(187, 187, 187));
-        jLabelDesc1.setText("Ao escolher o modo AUTO ou FAN não é necessario mudar a temperatura");
+        jLabelDesc1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelDesc1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDesc1.setText("Ao escolher o modo AUTO, FAN, ON ou OFF não é necessario mudar a temperatura");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -176,7 +177,7 @@ public class AddCodigosAr extends javax.swing.JFrame {
                             .addComponent(jLabelIF)
                             .addComponent(jButtonAdd)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelDesc1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelDesc1)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(242, 242, 242)
@@ -224,7 +225,7 @@ public class AddCodigosAr extends javax.swing.JFrame {
             if (resposta == JOptionPane.YES_OPTION) {
                 terminar();
             }
-        }else if(verListaCod.size()<30){
+        }else if(verListaCod.size()<32){
             int resposta = JOptionPane.showConfirmDialog(
                     null, // Componente pai (null para centrar na tela)
                     "Falta mais codigos; Deseja procesguir?", // A mensagem a ser exibida
@@ -246,7 +247,7 @@ public class AddCodigosAr extends javax.swing.JFrame {
         // TODO add your handling code here:
         String modo=(String) comboBoxModo.getSelectedItem();
         String funcao;
-        if(modo.contains("ON")||modo.contains("OFF")||modo.contains("AUTO")||modo.contains("FAN")){
+        if(modo.contains("ON")||modo.contains("OFF")||modo.contains("Auto")||modo.contains("Fan")){
             funcao=modo;
         }else{
             funcao = (String) modo + comboBoxTemperatura.getSelectedItem();

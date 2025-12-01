@@ -2,16 +2,16 @@
     <string name="app_name">IFControl3</string>
 
     <string name="texto_sobre_nos">
-      O IFControl 3.0 representa o ápice da jornada acadêmica e técnica de Cauã Adriel, Axel Miguel e Jeison Andres. O que nasceu como uma proposta de projeto final, evoluiu para se tornar um ecossistema complexo de automação e controle institucional.\n\n
+      O IFControl 3.0 é a culminação da jornada acadêmica e técnica de Cauã Adriel, Axel Miguel e Jeison Andres. O que começou como uma proposta de projeto final, transformou-se em um sistema de controle e gerenciamento institucional.\n\n
 
     <b>A Engenharia do Sistema</b>\n\n
-    O diferencial deste projeto reside no que não se vê: desenvolvemos, inteiramente do zero, um <b>Servidor Multithread em Java</b>. Sem depender de frameworks prontos de alto nível, implementamos a lógica bruta de <b>Sockets TCP/IP</b> para criar uma ponte de comunicação em tempo real, segura e eficiente. Este servidor atua como o cérebro da operação, orquestrando simultaneamente as requisições do aplicativo Desktop (Java Swing) e deste aplicativo Mobile (Android Nativo), garantindo que cada comando — seja ligar um ar-condicionado ou agendar uma sala — seja executado instantaneamente e sincronizado em todos os dispositivos.\n\n
+    O diferencial deste projeto reside na sua infraestrutura: desenvolver e aprimorar um <b>Servidor Multithread em Java</b>. Em vez de depender de frameworks prontos, implementamos a comunicação baseada em <b>Sockets TCP/IP</b> para criar uma ponte de dados em tempo real, segura e eficiente. Este servidor centraliza a operação, coordenando simultaneamente as requisições do aplicativo Desktop (Java Swing) e deste aplicativo Mobile (Android Nativo). Isso garante que comandos de controle — como ligar um ar-condicionado ou agendar uma sala — sejam executados instantaneamente e sincronizados em todos os dispositivos.\n\n
 
-    <b>O Desafio Autodidata</b>\n\n
-    Nossa trajetória no IFAM - Campus Manaus Centro foi marcada por um desafio Hercúleo. Enfrentamos um período crítico de escassez de professores na área técnica, o que nos deixou sem o suporte tradicional em momentos cruciais do curso. No entanto, recusamo-nos a deixar que essa lacuna definisse nosso aprendizado.\n\n
+    <b>Desafio e Autonomia Técnica</b>\n\n
+    Nossa trajetória no IFAM - Campus Manaus Centro enfrentou um período de desafios no ano final do curso. Devido a questões de saúde e transferências, alguns professores da área técnica precisaram se afastar das atividades em sala de aula. A dificuldade da instituição em prover substituições imediatas resultou em lacunas na grade curricular, impedindo que uma série de conteúdos essenciais fossem repassados.\n\n
 
-    Assumimos o protagonismo de nossa educação. Tornamo-nos pesquisadores e autodidatas. Buscamos cursos externos, devoramos documentações técnicas em inglês e passamos incontáveis madrugadas decifrando a arquitetura de sistemas distribuídos. Aprendemos a lidar com concorrência de Threads, persistência em Banco de Dados MySQL e design de interfaces responsivas na base da experimentação e persistência.\n\n
+    Diante desta realidade e da necessidade de finalizar o projeto de forma robusta, nossa equipe adotou uma postura proativa em relação ao aprendizado. Buscamos cursos complementares, aprofundamos o estudo de documentações técnicas (frequentemente em inglês) e dedicamos tempo extra para decifrar a arquitetura de sistemas distribuídos. Aprendemos a lidar com concorrência de Threads, persistência de dados em Banco de Dados MySQL e design de interfaces na base da experimentação e persistência.\n\n
 
-    Este aplicativo não é apenas um conjunto de códigos funcionais; é a prova viva de que a curiosidade e a determinação de três estudantes, guiados pelo professor Jucimar Brito, podem superar barreiras estruturais e criar tecnologia de verdade.
+    Este aplicativo não é apenas um conjunto de códigos funcionais; é o resultado da nossa determinação em superar dificuldades estruturais. É a prova de que a iniciativa e o esforço de três estudantes, orientados pelo professor Jucimar Brito, podem gerar uma solução tecnológica completa e funcional.
     </string>
 </resources>

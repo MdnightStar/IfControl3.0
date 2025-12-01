@@ -198,6 +198,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
         jLabelData.setForeground(new java.awt.Color(255, 255, 255));
         jLabelData.setText("Data:");
 
+        jRadioButtonSegunda.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonSegunda.setText("S");
         jRadioButtonSegunda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,6 +206,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
             }
         });
 
+        jRadioButtonTerca.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonTerca.setText("T");
         jRadioButtonTerca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,6 +219,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
         jLabelDispositivos.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDispositivos.setText("Dispositivos:");
 
+        jRadioButtonQuarta.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonQuarta.setText("Q");
         jRadioButtonQuarta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,6 +227,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
             }
         });
 
+        jRadioButtonQuinta.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonQuinta.setText("Q");
         jRadioButtonQuinta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,6 +235,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
             }
         });
 
+        jRadioButtonSexta.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonSexta.setText("S");
         jRadioButtonSexta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,6 +243,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
             }
         });
 
+        jRadioButtonSabado.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonSabado.setText("S");
         jRadioButtonSabado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,6 +251,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
             }
         });
 
+        jRadioButtonDomingo.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonDomingo.setText("D");
         jRadioButtonDomingo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,8 +259,10 @@ public class EditarAgendamento extends javax.swing.JFrame {
             }
         });
 
+        jRadioButtonAR.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonAR.setText("Ar-Condicionado");
 
+        jRadioButtonLZ.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonLZ.setText("Luzes");
         jRadioButtonLZ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,6 +270,7 @@ public class EditarAgendamento extends javax.swing.JFrame {
             }
         });
 
+        jRadioButtonDS.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonDS.setText("DataShow");
 
         jSpinnerHoraIn.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
@@ -307,10 +317,12 @@ public class EditarAgendamento extends javax.swing.JFrame {
             }
         });
 
-        jLabelDesc1.setBackground(new java.awt.Color(187, 187, 187));
+        jLabelDesc1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelDesc1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDesc1.setText("Em salas diferentes separe com \",\" Exemplo: \"1, 3, 6\"");
 
-        jLabelDesc2.setBackground(new java.awt.Color(187, 187, 187));
+        jLabelDesc2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelDesc2.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDesc2.setText("Em salas sequenciais utilizar \"-\" Exemplo: \"1-3\"");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
