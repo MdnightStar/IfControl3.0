@@ -173,6 +173,7 @@ public class PesquisarAcao extends javax.swing.JFrame {
 
         jComboBoxTipoAcao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ocupou a sala (OCP)", "Desocupou a sala (DSC)", "Ligou o ar (ARON)", "Desligou o ar (AROFF)", "Ligou a luz (LZON)", "Desligou a luz (LZOFF)", "Ligou a o datashow (DSON)", "Desligou o datashow (DSOFF)", "Adicionou uma sala (addSala)", "Adicionou um agendamento (addAgendamento)", "Editou um agendamento (editAgendamento)", "Deletou um agendamento (deletAgendamento)" }));
 
+        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setText("Não possui");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

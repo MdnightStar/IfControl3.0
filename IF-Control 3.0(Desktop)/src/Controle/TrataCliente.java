@@ -106,6 +106,7 @@ public class TrataCliente implements Runnable {
                      String parteAcao[]=msg.split("--acao--");
                      acao = gson.fromJson(parteAcao[1], Acao.class); //Deserializa a msg em uma Acao
                      String r=sessao.tratarAcao(acao.getTipoAcao());
+                     
                      clienteOut.println(r);
                      
                      
@@ -136,5 +137,9 @@ public class TrataCliente implements Runnable {
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    private void delay(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

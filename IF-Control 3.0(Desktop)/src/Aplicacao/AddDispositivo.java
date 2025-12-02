@@ -297,9 +297,11 @@ public class AddDispositivo extends javax.swing.JFrame {
         jLabelModelo1.setText("Tipo:");
 
         jCheckBoxAR.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jCheckBoxAR.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxAR.setText("Ar-condicionado");
 
         jCheckBoxDS.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jCheckBoxDS.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxDS.setText("DataShow");
 
         jLabelSalaRe.setBackground(new java.awt.Color(255, 255, 255));
@@ -394,10 +396,12 @@ public class AddDispositivo extends javax.swing.JFrame {
             }
         });
 
-        jLabelDesc1.setBackground(new java.awt.Color(187, 187, 187));
+        jLabelDesc1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelDesc1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDesc1.setText("Em salas diferentes separe com \",\" Exemplo: \"1, 3, 6\"");
 
-        jLabelDesc2.setBackground(new java.awt.Color(187, 187, 187));
+        jLabelDesc2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelDesc2.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDesc2.setText("Em salas sequenciais utilizar \"-\" Exemplo: \"1-3\"");
 
         jLabelAdicionarDispositivo1.setBackground(new java.awt.Color(187, 187, 187));
