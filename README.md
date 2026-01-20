@@ -50,10 +50,10 @@ O **IFControl** tem como foco principal a automação de ambientes escolares, pe
 - [x] Controle e monitoramento em tempo real (desktop)
 - [x] Registro de logs de ações e eventos
 - [x] Comunicação estável via Sockets TCP/IP
-- [ ] **Agendamento inteligente** de eventos automatizados
+- [x] **Agendamento inteligente** de eventos automatizados
 - [ ] **Controle por comandos de voz** (com NLP e reconhecimento offline)
 - [ ] **Visão computacional** para reconhecimento de presença e gestos
-- [ ] **Compatibilidade com dispositivos móveis**
+- [x] **Compatibilidade com dispositivos móveis**
 - [ ] **Versão web integrada** com dashboards e controle remoto
 
 ---
